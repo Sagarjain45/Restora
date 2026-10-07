@@ -1,1 +1,1 @@
-# Restora
+# Restora restaurant management system
