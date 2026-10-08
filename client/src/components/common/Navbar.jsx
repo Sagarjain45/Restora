@@ -147,6 +147,12 @@ const Navbar = () => {
                   >
                     Queue
                   </Link>
+                  <Link
+                    to="/restaurant/reservations"
+                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                  >
+                    Reservations
+                  </Link>
                 </>
               )}
               <Link

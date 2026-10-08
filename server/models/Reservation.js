@@ -40,7 +40,7 @@ const reservationSchema = new mongoose.Schema(
       min: [1, 'Guest count must be at least 1'],
     },
     date: {
-      type: String, // Stored as ISO YYYY-MM-DD or Date
+      type: String, // Format "YYYY-MM-DD"
       required: [true, 'Reservation date is required'],
     },
     startTime: {
@@ -63,6 +63,18 @@ const reservationSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    arrivedAt: {
+      type: Date,
+      default: null,
+    },
+    seatedAt: {
+      type: Date,
+      default: null,
+    },
+    completedAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -71,7 +83,7 @@ const reservationSchema = new mongoose.Schema(
 
 // Compound indexes for conflict detection and schedule lookups
 reservationSchema.index({ restaurantId: 1, date: 1 });
-reservationSchema.index({ restaurantId: 1, tableId: 1 });
+reservationSchema.index({ restaurantId: 1, tableId: 1, date: 1 });
 reservationSchema.index({ restaurantId: 1, status: 1 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);

@@ -20,6 +20,7 @@ import MenuManagementPage from './MenuManagementPage';
 import OrderManagementPage from './OrderManagementPage';
 import BillingManagementPage from './BillingManagementPage';
 import QueueManagementPage from './QueueManagementPage';
+import ReservationManagementPage from './ReservationManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -334,6 +335,13 @@ const RestaurantDashboardPage = () => {
           <Clock size={15} /> Waiting Queue
         </button>
         <button
+          onClick={() => setActiveTab('reservations')}
+          className={activeTab === 'reservations' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <Calendar size={15} /> Reservations
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -530,7 +538,12 @@ const RestaurantDashboardPage = () => {
         <QueueManagementPage />
       )}
 
-      {/* TAB 7: RESTAURANT PROFILE */}
+      {/* TAB 7: TABLE RESERVATIONS (PHASE 12) */}
+      {activeTab === 'reservations' && (
+        <ReservationManagementPage />
+      )}
+
+      {/* TAB 8: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
