@@ -6,6 +6,7 @@ import { env } from './config/env.js';
 import healthRoutes from './routes/healthRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import tenantRoutes from './routes/tenantRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/tenant', tenantRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Catch-all 404 & Global Error Handler
 app.use(notFoundHandler);
