@@ -28,9 +28,13 @@ import {
 import { getTablesApi } from '../../services/tableService';
 import ReservationCard from '../../components/restaurant/ReservationCard';
 import ReservationModal from '../../components/restaurant/ReservationModal';
+import EmptyState from '../../components/common/EmptyState';
+import { SkeletonGrid } from '../../components/common/LoadingState';
+import useToast from '../../hooks/useToast';
 
 const ReservationManagementPage = () => {
   const { token } = useAuth();
+  const toast = useToast();
 
   const getTodayStr = () => new Date().toISOString().split('T')[0];
   const getTomorrowStr = () => {
@@ -123,12 +127,14 @@ const ReservationManagementPage = () => {
     setProcessingId(reservationId);
     try {
       await updateReservationStatusApi(token, reservationId, newStatus);
+      toast.success(`Reservation status updated to ${newStatus}.`);
       setNotice({
         type: 'success',
         message: `Reservation status updated to ${newStatus}.`,
       });
       await loadReservationsData();
     } catch (err) {
+      toast.error(err.message || 'Failed to update reservation status.');
       setNotice({ type: 'error', message: err.message || 'Failed to update reservation status.' });
     } finally {
       setProcessingId(null);
@@ -142,12 +148,14 @@ const ReservationManagementPage = () => {
       setProcessingId(reservation._id);
       try {
         const res = await seatReservationApi(token, reservation._id, reservation.tableId._id || reservation.tableId);
+        toast.success(`${res.reservation.customerName} seated at Table ${res.table.tableNumber}!`);
         setNotice({
           type: 'success',
           message: `${res.reservation.customerName} seated at Table ${res.table.tableNumber}! Table occupied.`,
         });
         await loadReservationsData();
       } catch (err) {
+        toast.error(err.message || 'Failed to seat reservation.');
         setNotice({ type: 'error', message: err.message || 'Failed to seat reservation.' });
       } finally {
         setProcessingId(null);
@@ -170,6 +178,7 @@ const ReservationManagementPage = () => {
     setProcessingId(seatingReservation._id);
     try {
       const res = await seatReservationApi(token, seatingReservation._id, selectedTableForSeat);
+      toast.success(`${res.reservation.customerName} seated at Table ${res.table.tableNumber}!`);
       setNotice({
         type: 'success',
         message: `${res.reservation.customerName} seated at Table ${res.table.tableNumber}! Table occupied.`,
@@ -177,6 +186,7 @@ const ReservationManagementPage = () => {
       setSeatingReservation(null);
       await loadReservationsData();
     } catch (err) {
+      toast.error(err.message || 'Failed to seat reservation.');
       setNotice({ type: 'error', message: err.message || 'Failed to seat reservation.' });
     } finally {
       setProcessingId(null);
@@ -453,41 +463,22 @@ const ReservationManagementPage = () => {
 
       {/* Main Reservation Display */}
       {loading ? (
-        <div className="glass-panel" style={{ padding: '3.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem' }} />
-          <div>Loading reservation schedule...</div>
-        </div>
+        <SkeletonGrid count={6} height="200px" />
       ) : reservations.length === 0 ? (
-        <div
-          className="glass-panel"
-          style={{
-            padding: '4rem 2rem',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-          <Calendar size={48} color="var(--text-dim)" />
-          <h3 style={{ fontSize: '1.2rem', margin: 0 }}>No reservations found</h3>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '420px', fontSize: '0.9rem', margin: 0 }}>
-            {dateFilter
+        <EmptyState
+          icon={Calendar}
+          title="No reservations found"
+          description={
+            dateFilter
               ? `No reservations scheduled for ${dateFilter}.`
-              : 'No reservations match the specified search and filter criteria.'}
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setEditingReservation(null);
-              setIsModalOpen(true);
-            }}
-            className="btn-primary"
-            style={{ marginTop: '0.5rem', padding: '0.65rem 1.25rem', fontSize: '0.85rem' }}
-          >
-            <Plus size={16} /> Book Table Reservation
-          </button>
-        </div>
+              : "No reservations match the specified search and filter criteria."
+          }
+          actionText="Book Table Reservation"
+          onAction={() => {
+            setEditingReservation(null);
+            setIsModalOpen(true);
+          }}
+        />
       ) : viewMode === 'grid' ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))', gap: '1.25rem' }}>
           {reservations.map((res) => (

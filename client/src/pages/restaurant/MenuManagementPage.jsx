@@ -13,6 +13,10 @@ import {
 } from 'lucide-react';
 import MenuItemCard from '../../components/restaurant/MenuItemCard';
 import MenuItemModal from '../../components/restaurant/MenuItemModal';
+import ConfirmModal from '../../components/common/ConfirmModal';
+import EmptyState from '../../components/common/EmptyState';
+import { SkeletonGrid } from '../../components/common/LoadingState';
+import useToast from '../../hooks/useToast';
 import {
   getMenuItemsApi,
   createMenuItemApi,
@@ -36,6 +40,7 @@ const AVAILABILITY_OPTIONS = [
 const MenuManagementPage = () => {
   const { user, token } = useAuth();
   const isOwner = user?.role === 'RESTAURANT_OWNER';
+  const toast = useToast();
 
   // Data State
   const [items, setItems] = useState([]);
@@ -54,6 +59,7 @@ const MenuManagementPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [modalSaving, setModalSaving] = useState(false);
+  const [deactivatingItem, setDeactivatingItem] = useState(null);
 
   // Load Menu Items
   const loadMenu = useCallback(async () => {
@@ -71,11 +77,12 @@ const MenuManagementPage = () => {
         setSummary(res.summary);
       }
     } catch (err) {
+      toast.error(err.message || 'Failed to load restaurant menu');
       setNotice({ type: 'error', text: err.message || 'Failed to load restaurant menu' });
     } finally {
       setLoading(false);
     }
-  }, [token, selectedCategory, dietaryFilter, availabilityFilter, searchQuery]);
+  }, [token, selectedCategory, dietaryFilter, availabilityFilter, searchQuery, toast]);
 
   useEffect(() => {
     loadMenu();
@@ -92,12 +99,14 @@ const MenuManagementPage = () => {
     setProcessingId(itemId);
     try {
       await toggleMenuItemAvailabilityApi(token, itemId, nextAvailable);
+      toast.success(`Item marked as ${nextAvailable ? 'IN STOCK' : 'SOLD OUT'}.`);
       setNotice({
         type: 'success',
         text: `Item availability marked as ${nextAvailable ? 'IN STOCK' : 'SOLD OUT'}.`,
       });
       await loadMenu();
     } catch (err) {
+      toast.error(err.message || 'Failed to toggle item availability');
       setNotice({ type: 'error', text: err.message || 'Failed to toggle item availability' });
     } finally {
       setProcessingId(null);
@@ -122,14 +131,17 @@ const MenuManagementPage = () => {
     try {
       if (editingItem) {
         await updateMenuItemApi(token, editingItem._id, formData);
+        toast.success(`Menu item "${formData.name}" updated successfully!`);
         setNotice({ type: 'success', text: `Menu item "${formData.name}" updated successfully!` });
       } else {
         await createMenuItemApi(token, formData);
+        toast.success(`Menu item "${formData.name}" added to menu catalog!`);
         setNotice({ type: 'success', text: `Menu item "${formData.name}" added to menu catalog!` });
       }
       setIsModalOpen(false);
       await loadMenu();
     } catch (err) {
+      toast.error(err.message || 'Failed to save menu item');
       setNotice({ type: 'error', text: err.message || 'Failed to save menu item' });
     } finally {
       setModalSaving(false);
@@ -137,19 +149,24 @@ const MenuManagementPage = () => {
   };
 
   // Handle Delete / Deactivate
-  const handleDeleteItem = async (item) => {
-    if (!window.confirm(`Are you sure you want to deactivate "${item.name}" from the menu?`)) {
-      return;
-    }
-    setProcessingId(item._id);
+  const handleDeleteItem = (item) => {
+    setDeactivatingItem(item);
+  };
+
+  const handleConfirmDeactivateItem = async () => {
+    if (!deactivatingItem) return;
+    setProcessingId(deactivatingItem._id);
     try {
-      await deleteMenuItemApi(token, item._id, false);
-      setNotice({ type: 'success', text: `"${item.name}" removed from active catalog.` });
+      await deleteMenuItemApi(token, deactivatingItem._id, false);
+      toast.success(`"${deactivatingItem.name}" removed from active catalog.`);
+      setNotice({ type: 'success', text: `"${deactivatingItem.name}" removed from active catalog.` });
       await loadMenu();
     } catch (err) {
+      toast.error(err.message || 'Failed to remove menu item');
       setNotice({ type: 'error', text: err.message || 'Failed to remove menu item' });
     } finally {
       setProcessingId(null);
+      setDeactivatingItem(null);
     }
   };
 
@@ -408,39 +425,19 @@ const MenuManagementPage = () => {
 
       {/* Menu Grid */}
       {loading ? (
-        <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          <RefreshCw size={28} className="spin-anim" style={{ margin: '0 auto 1rem' }} />
-          <p>Loading restaurant menu items...</p>
-        </div>
+        <SkeletonGrid count={8} height="220px" />
       ) : items.length === 0 ? (
-        <div
-          className="glass-panel"
-          style={{
-            padding: '4rem 2rem',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-          <BookOpen size={48} color="var(--text-dim)" />
-          <h3 style={{ fontSize: '1.2rem', margin: 0 }}>No dishes found matching your filters</h3>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '420px', fontSize: '0.9rem', margin: 0 }}>
-            {isOwner
-              ? 'Get started by creating delicious menu items, categories, and prices for your restaurant.'
-              : 'There are currently no menu items matching the selected filters.'}
-          </p>
-          {isOwner && (
-            <button
-              onClick={handleOpenCreate}
-              className="btn-primary"
-              style={{ marginTop: '0.5rem', padding: '0.65rem 1.25rem', fontSize: '0.85rem' }}
-            >
-              <Plus size={16} /> Add First Menu Item
-            </button>
-          )}
-        </div>
+        <EmptyState
+          icon={BookOpen}
+          title="No dishes found matching your filters"
+          description={
+            isOwner
+              ? "Get started by creating delicious menu items, categories, and prices for your restaurant."
+              : "There are currently no menu items matching the selected filters."
+          }
+          actionText={isOwner ? "Add First Menu Item" : null}
+          onAction={isOwner ? handleOpenCreate : null}
+        />
       ) : (
         <div
           style={{
@@ -471,6 +468,18 @@ const MenuManagementPage = () => {
         item={editingItem}
         isSaving={modalSaving}
         availableCategories={summary?.categories || []}
+      />
+
+      {/* Confirmation Dialog for Menu Item Deactivation */}
+      <ConfirmModal
+        isOpen={Boolean(deactivatingItem)}
+        title="Deactivate Menu Item"
+        message={`Are you sure you want to deactivate "${deactivatingItem?.name}" from your menu? It will no longer appear on guest orders.`}
+        confirmText="Deactivate Item"
+        variant="danger"
+        loading={Boolean(processingId)}
+        onConfirm={handleConfirmDeactivateItem}
+        onCancel={() => setDeactivatingItem(null)}
       />
     </div>
   );

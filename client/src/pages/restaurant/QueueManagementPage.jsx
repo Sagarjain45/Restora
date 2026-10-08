@@ -29,9 +29,13 @@ import { getTablesApi } from '../../services/tableService';
 import QueueCard from '../../components/restaurant/QueueCard';
 import AddToQueueModal from '../../components/restaurant/AddToQueueModal';
 import SeatCustomerModal from '../../components/restaurant/SeatCustomerModal';
+import EmptyState from '../../components/common/EmptyState';
+import { SkeletonGrid } from '../../components/common/LoadingState';
+import useToast from '../../hooks/useToast';
 
 const QueueManagementPage = () => {
   const { token } = useAuth();
+  const toast = useToast();
 
   // Queue Data State
   const [queueEntries, setQueueEntries] = useState([]);
@@ -127,12 +131,14 @@ const QueueManagementPage = () => {
     setProcessingId(entryId);
     try {
       await notifyPartyApi(token, entryId);
+      toast.success('Party notified via SMS/Alert! Status updated to NOTIFIED.');
       setNotice({
         type: 'success',
         message: 'Party notified! Status updated to NOTIFIED.',
       });
       await loadQueueData();
     } catch (err) {
+      toast.error(err.message || 'Failed to notify party.');
       setNotice({ type: 'error', message: err.message || 'Failed to notify party.' });
     } finally {
       setProcessingId(null);
@@ -144,12 +150,14 @@ const QueueManagementPage = () => {
     setProcessingId(entryId);
     try {
       await markNoShowApi(token, entryId);
+      toast.warning('Party marked as NO-SHOW. Queue positions advanced.');
       setNotice({
         type: 'success',
         message: 'Party marked as NO-SHOW. Position advanced for remaining queue.',
       });
       await loadQueueData();
     } catch (err) {
+      toast.error(err.message || 'Failed to update status.');
       setNotice({ type: 'error', message: err.message || 'Failed to update status.' });
     } finally {
       setProcessingId(null);
@@ -161,12 +169,14 @@ const QueueManagementPage = () => {
     setProcessingId(entryId);
     try {
       await cancelQueueEntryApi(token, entryId);
+      toast.info('Queue entry cancelled and removed from active waitlist.');
       setNotice({
         type: 'success',
         message: 'Queue entry cancelled and removed from active waitlist.',
       });
       await loadQueueData();
     } catch (err) {
+      toast.error(err.message || 'Failed to cancel entry.');
       setNotice({ type: 'error', message: err.message || 'Failed to cancel entry.' });
     } finally {
       setProcessingId(null);
@@ -409,38 +419,19 @@ const QueueManagementPage = () => {
 
       {/* Main Content: Grid or Table List */}
       {loading ? (
-        <div className="glass-panel" style={{ padding: '3.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          <RefreshCw size={28} className="animate-spin" style={{ margin: '0 auto 1rem' }} />
-          <div>Loading waiting queue...</div>
-        </div>
+        <SkeletonGrid count={6} height="200px" />
       ) : queueEntries.length === 0 ? (
-        <div
-          className="glass-panel"
-          style={{
-            padding: '4rem 2rem',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-          <Clock size={48} color="var(--text-dim)" />
-          <h3 style={{ fontSize: '1.2rem', margin: 0 }}>No waiting parties found</h3>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '420px', fontSize: '0.9rem', margin: 0 }}>
-            {selectedFilter === 'ACTIVE'
+        <EmptyState
+          icon={Clock}
+          title="No waiting parties found"
+          description={
+            selectedFilter === 'ACTIVE'
               ? 'The waiting queue is currently empty. Add a walk-in party when all tables are occupied.'
-              : `No queue entries match the filter "${selectedFilter}".`}
-          </p>
-          <button
-            type="button"
-            onClick={() => setIsAddModalOpen(true)}
-            className="btn-primary"
-            style={{ marginTop: '0.5rem', padding: '0.65rem 1.25rem', fontSize: '0.85rem' }}
-          >
-            <Plus size={16} /> Add First Walk-in to Queue
-          </button>
-        </div>
+              : `No queue entries match the filter "${selectedFilter}".`
+          }
+          actionText="Add Walk-in to Queue"
+          onAction={() => setIsAddModalOpen(true)}
+        />
       ) : viewMode === 'grid' ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))', gap: '1.25rem' }}>
           {queueEntries.map((entry) => (

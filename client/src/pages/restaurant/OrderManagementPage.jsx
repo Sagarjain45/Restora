@@ -17,6 +17,9 @@ import {
 import OrderCard from '../../components/restaurant/OrderCard';
 import CreateOrderModal from '../../components/restaurant/CreateOrderModal';
 import AddItemToOrderModal from '../../components/restaurant/AddItemToOrderModal';
+import EmptyState from '../../components/common/EmptyState';
+import { SkeletonGrid } from '../../components/common/LoadingState';
+import useToast from '../../hooks/useToast';
 import {
   getOrdersApi,
   createOrderApi,
@@ -42,6 +45,7 @@ const STATUS_TABS = [
 const OrderManagementPage = () => {
   const { user, token } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
 
   // Data State
   const [orders, setOrders] = useState([]);
@@ -382,37 +386,19 @@ const OrderManagementPage = () => {
 
       {/* Orders Grid */}
       {loading ? (
-        <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          <RefreshCw size={28} className="spin-anim" style={{ margin: '0 auto 1rem' }} />
-          <p>Loading table orders...</p>
-        </div>
+        <SkeletonGrid count={6} height="220px" />
       ) : orders.length === 0 ? (
-        <div
-          className="glass-panel"
-          style={{
-            padding: '4rem 2rem',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-          <ShoppingCart size={48} color="var(--text-dim)" />
-          <h3 style={{ fontSize: '1.2rem', margin: 0 }}>No orders found</h3>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '420px', fontSize: '0.9rem', margin: 0 }}>
-            {selectedTab === 'ACTIVE'
-              ? 'There are currently no active orders on the floor. Take an order by selecting a table.'
-              : 'No orders match the selected filter criteria.'}
-          </p>
-          <button
-            onClick={() => setIsCreateModalOpen(true)}
-            className="btn-primary"
-            style={{ marginTop: '0.5rem', padding: '0.65rem 1.25rem', fontSize: '0.85rem' }}
-          >
-            <Plus size={16} /> Place First Order
-          </button>
-        </div>
+        <EmptyState
+          icon={ShoppingCart}
+          title="No orders found"
+          description={
+            selectedTab === 'ACTIVE'
+              ? "There are currently no active orders on the floor. Take an order by selecting a table."
+              : "No orders match the selected filter criteria."
+          }
+          actionText="Place First Order"
+          onAction={() => setIsCreateModalOpen(true)}
+        />
       ) : (
         <div
           style={{

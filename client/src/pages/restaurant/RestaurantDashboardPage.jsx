@@ -31,6 +31,7 @@ import StaffManagementPage from './StaffManagementPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import ReportsPage from './ReportsPage';
 import ServiceOrchestratorModal from '../../components/restaurant/ServiceOrchestratorModal';
+import useToast from '../../hooks/useToast';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -51,6 +52,7 @@ const DEFAULT_HOURS = DAYS_OF_WEEK.map((day) => ({
 
 const RestaurantDashboardPage = () => {
   const { user, token } = useAuth();
+  const toast = useToast();
 
   // Active Tab: 'dashboard' | 'profile' | 'hours' | 'settings'
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -206,12 +208,14 @@ const RestaurantDashboardPage = () => {
       const currentStatus = Boolean(restaurantProfile?.isOpenNow);
       const res = await toggleOpenStatusApi(token, !currentStatus);
       setRestaurantProfile((prev) => prev ? { ...prev, isOpenNow: res.isOpenNow } : null);
+      toast.success(`Dining status: Restaurant is now ${res.isOpenNow ? 'OPEN' : 'CLOSED'}!`);
       setNotice({
         type: 'success',
         text: `Dining status updated: Restaurant is now ${res.isOpenNow ? 'OPEN' : 'CLOSED'} for customers.`,
       });
       await loadData();
     } catch (err) {
+      toast.error(err.message || 'Failed to toggle open status');
       setNotice({ type: 'error', text: err.message || 'Failed to toggle open status' });
     } finally {
       setSaving(false);

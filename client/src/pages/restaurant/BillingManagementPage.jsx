@@ -26,9 +26,13 @@ import {
 import { getOrdersApi } from '../../services/orderService';
 import PaymentModal from '../../components/restaurant/PaymentModal';
 import GenerateBillModal from '../../components/restaurant/GenerateBillModal';
+import EmptyState from '../../components/common/EmptyState';
+import { SkeletonGrid } from '../../components/common/LoadingState';
+import useToast from '../../hooks/useToast';
 
 const BillingManagementPage = () => {
   const { token, restaurant } = useAuth();
+  const toast = useToast();
   const currency = restaurant?.settings?.currency || 'INR';
   const currencySymbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : `${currency} `;
 
@@ -368,30 +372,21 @@ const BillingManagementPage = () => {
         </div>
 
         {loading ? (
-          <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-            <RefreshCw size={24} className="animate-spin" style={{ margin: '0 auto 0.75rem' }} />
-            <div>Loading billing records...</div>
+          <div style={{ padding: '1.5rem' }}>
+            <SkeletonGrid count={3} height="80px" />
           </div>
         ) : filteredBills.length === 0 ? (
-          <div style={{ padding: '3.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-            <Receipt size={40} style={{ margin: '0 auto 1rem', opacity: 0.3 }} />
-            <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-main)', fontSize: '1.1rem' }}>No bills found</h3>
-            <p style={{ margin: '0 0 1.25rem 0', fontSize: '0.85rem', color: 'var(--text-dim)' }}>
-              {statusFilter !== 'ALL'
-                ? `No bills match filter "${statusFilter}".`
-                : 'Generate a bill for any active table to begin settlement.'}
-            </p>
-            {activeOrders.length > 0 && (
-              <button
-                type="button"
-                onClick={() => setIsGenerateModalOpen(true)}
-                className="btn-primary"
-                style={{ fontSize: '0.85rem' }}
-              >
-                <Plus size={15} /> Generate Bill from Active Table
-              </button>
-            )}
-          </div>
+          <EmptyState
+            icon={Receipt}
+            title="No bills found"
+            description={
+              statusFilter !== 'ALL'
+                ? `No bills match the selected status filter "${statusFilter}".`
+                : "Generate a bill for any active table to begin billing settlement."
+            }
+            actionText={activeOrders.length > 0 ? "Generate Bill from Active Table" : null}
+            onAction={activeOrders.length > 0 ? () => setIsGenerateModalOpen(true) : null}
+          />
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>

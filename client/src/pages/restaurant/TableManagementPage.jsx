@@ -17,6 +17,10 @@ import {
 import TableCard from '../../components/restaurant/TableCard';
 import TableModal from '../../components/restaurant/TableModal';
 import ServiceOrchestratorModal from '../../components/restaurant/ServiceOrchestratorModal';
+import ConfirmModal from '../../components/common/ConfirmModal';
+import EmptyState from '../../components/common/EmptyState';
+import { SkeletonGrid } from '../../components/common/LoadingState';
+import useToast from '../../hooks/useToast';
 import {
   getTablesApi,
   createTableApi,
@@ -37,6 +41,7 @@ const STATUS_FILTERS = [
 const TableManagementPage = () => {
   const { user, token } = useAuth();
   const isOwner = user?.role === 'RESTAURANT_OWNER';
+  const toast = useToast();
 
   // Data State
   const [tables, setTables] = useState([]);
@@ -56,6 +61,7 @@ const TableManagementPage = () => {
   const [editingTable, setEditingTable] = useState(null);
   const [modalSaving, setModalSaving] = useState(false);
   const [isOrchestratorOpen, setIsOrchestratorOpen] = useState(false);
+  const [deactivatingTable, setDeactivatingTable] = useState(null);
 
   // Load Tables
   const loadTables = useCallback(async () => {
@@ -73,11 +79,12 @@ const TableManagementPage = () => {
         setSummary(res.summary);
       }
     } catch (err) {
+      toast.error(err.message || 'Failed to load restaurant tables');
       setNotice({ type: 'error', text: err.message || 'Failed to load restaurant tables' });
     } finally {
       setLoading(false);
     }
-  }, [token, statusFilter, sectionFilter, searchQuery, minSeats]);
+  }, [token, statusFilter, sectionFilter, searchQuery, minSeats, toast]);
 
   useEffect(() => {
     loadTables();
@@ -97,12 +104,14 @@ const TableManagementPage = () => {
     setProcessingId(tableId);
     try {
       await updateTableStatusApi(token, tableId, nextStatus);
+      toast.success(`Table transitioned to ${nextStatus}`);
       setNotice({
         type: 'success',
         text: `Table status transitioned to ${nextStatus}`,
       });
       await loadTables();
     } catch (err) {
+      toast.error(err.message || 'Status transition failed');
       setNotice({ type: 'error', text: err.message || 'Status transition failed' });
     } finally {
       setProcessingId(null);
@@ -127,14 +136,17 @@ const TableManagementPage = () => {
     try {
       if (editingTable) {
         await updateTableApi(token, editingTable._id, formData);
+        toast.success(`Table ${formData.tableNumber} updated successfully!`);
         setNotice({ type: 'success', text: `Table ${formData.tableNumber} updated successfully!` });
       } else {
         await createTableApi(token, formData);
+        toast.success(`Table ${formData.tableNumber} added to floor!`);
         setNotice({ type: 'success', text: `Table ${formData.tableNumber} added to floor!` });
       }
       setIsModalOpen(false);
       await loadTables();
     } catch (err) {
+      toast.error(err.message || 'Could not save table configuration');
       setNotice({ type: 'error', text: err.message || 'Could not save table configuration' });
     } finally {
       setModalSaving(false);
@@ -142,22 +154,27 @@ const TableManagementPage = () => {
   };
 
   // Handle Deactivate / Delete Table
-  const handleDeleteTable = async (table) => {
-    if (!window.confirm(`Are you sure you want to deactivate ${table.tableNumber}?`)) {
-      return;
-    }
-    setProcessingId(table._id);
+  const handleDeleteTable = (table) => {
+    setDeactivatingTable(table);
+  };
+
+  const handleConfirmDeactivate = async () => {
+    if (!deactivatingTable) return;
+    setProcessingId(deactivatingTable._id);
     try {
-      await deleteTableApi(token, table._id, false);
+      await deleteTableApi(token, deactivatingTable._id, false);
+      toast.success(`Table ${deactivatingTable.tableNumber} deactivated.`);
       setNotice({
         type: 'success',
-        text: `Table ${table.tableNumber} deactivated.`,
+        text: `Table ${deactivatingTable.tableNumber} deactivated.`,
       });
       await loadTables();
     } catch (err) {
+      toast.error(err.message || 'Failed to deactivate table');
       setNotice({ type: 'error', text: err.message || 'Failed to deactivate table' });
     } finally {
       setProcessingId(null);
+      setDeactivatingTable(null);
     }
   };
 
@@ -454,39 +471,19 @@ const TableManagementPage = () => {
 
       {/* Tables Grid */}
       {loading ? (
-        <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          <RefreshCw size={28} className="spin-anim" style={{ margin: '0 auto 1rem' }} />
-          <p>Loading floor table layouts...</p>
-        </div>
+        <SkeletonGrid count={8} height="240px" />
       ) : tables.length === 0 ? (
-        <div
-          className="glass-panel"
-          style={{
-            padding: '4rem 2rem',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-          <LayoutGrid size={48} color="var(--text-dim)" />
-          <h3 style={{ fontSize: '1.2rem', margin: 0 }}>No tables found matching your filters</h3>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '420px', fontSize: '0.9rem', margin: 0 }}>
-            {isOwner
-              ? 'Get started by creating your restaurant floor seating layout with table numbers and capacities.'
-              : 'There are currently no tables configured matching the current filters.'}
-          </p>
-          {isOwner && (
-            <button
-              onClick={handleOpenCreate}
-              className="btn-primary"
-              style={{ marginTop: '0.5rem', padding: '0.65rem 1.25rem', fontSize: '0.85rem' }}
-            >
-              <Plus size={16} /> Create First Table
-            </button>
-          )}
-        </div>
+        <EmptyState
+          icon={LayoutGrid}
+          title="No tables found matching your filters"
+          description={
+            isOwner
+              ? "Get started by creating your restaurant floor seating layout with table numbers, capacities, and sections."
+              : "There are currently no tables configured matching your selected filter criteria."
+          }
+          actionText={isOwner ? "Create First Table" : null}
+          onAction={isOwner ? handleOpenCreate : null}
+        />
       ) : (
         <div
           style={{
@@ -516,6 +513,18 @@ const TableManagementPage = () => {
         onSubmit={handleModalSubmit}
         table={editingTable}
         isSaving={modalSaving}
+      />
+
+      {/* Confirmation Dialog for Table Deactivation */}
+      <ConfirmModal
+        isOpen={Boolean(deactivatingTable)}
+        title="Deactivate Floor Table"
+        message={`Are you sure you want to deactivate Table ${deactivatingTable?.tableNumber}? It will no longer be available for walk-in seating or orders.`}
+        confirmText="Deactivate Table"
+        variant="danger"
+        loading={Boolean(processingId)}
+        onConfirm={handleConfirmDeactivate}
+        onCancel={() => setDeactivatingTable(null)}
       />
 
       {/* End-to-End Service Flow Orchestrator (Phase 16) */}
