@@ -3,6 +3,9 @@ import Payment from '../models/Payment.js';
 import Order from '../models/Order.js';
 import Table from '../models/Table.js';
 import Restaurant from '../models/Restaurant.js';
+import Customer from '../models/Customer.js';
+import Reservation from '../models/Reservation.js';
+import { suggestQueuePartyForTable } from './queueService.js';
 import mongoose from 'mongoose';
 
 /**
@@ -212,11 +215,51 @@ export const recordPayment = async (restaurantId, data) => {
     await table.save();
   }
 
+  // 6. Full Feature Integration (Phase 16)
+  // A. Customer Lifetime Spend & Loyalty Tracking
+  if (order && order.customerId) {
+    try {
+      await Customer.findOneAndUpdate(
+        { _id: order.customerId, restaurantId },
+        {
+          $inc: { visitCount: 1, totalSpent: bill.total },
+          $set: { lastVisit: paidAt },
+        }
+      );
+    } catch (custErr) {
+      console.warn('Customer loyalty update warning:', custErr.message);
+    }
+  }
+
+  // B. Reservation Lifecycle Completion
+  if (bill.tableId) {
+    try {
+      await Reservation.updateMany(
+        { restaurantId, tableId: bill.tableId, status: 'SEATED' },
+        { $set: { status: 'COMPLETED' } }
+      );
+    } catch (resErr) {
+      console.warn('Reservation completion warning:', resErr.message);
+    }
+  }
+
+  // C. Automated Queue Check for Newly Freed Table
+  let queueSuggestion = null;
+  if (bill.tableId) {
+    try {
+      const suggestionResult = await suggestQueuePartyForTable(restaurantId, bill.tableId);
+      queueSuggestion = suggestionResult?.bestMatch || null;
+    } catch (qErr) {
+      console.warn('Queue suggestion check warning:', qErr.message);
+    }
+  }
+
   return {
     bill,
     payment,
     order,
     table,
+    suggestedQueueParty: queueSuggestion,
   };
 };
 

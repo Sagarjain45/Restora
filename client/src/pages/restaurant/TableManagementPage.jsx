@@ -11,10 +11,12 @@ import {
   Receipt,
   AlertTriangle,
   X,
-  LayoutGrid
+  LayoutGrid,
+  Zap,
 } from 'lucide-react';
 import TableCard from '../../components/restaurant/TableCard';
 import TableModal from '../../components/restaurant/TableModal';
+import ServiceOrchestratorModal from '../../components/restaurant/ServiceOrchestratorModal';
 import {
   getTablesApi,
   createTableApi,
@@ -53,6 +55,7 @@ const TableManagementPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTable, setEditingTable] = useState(null);
   const [modalSaving, setModalSaving] = useState(false);
+  const [isOrchestratorOpen, setIsOrchestratorOpen] = useState(false);
 
   // Load Tables
   const loadTables = useCallback(async () => {
@@ -192,6 +195,24 @@ const TableManagementPage = () => {
           >
             <RefreshCw size={14} className={loading ? 'spin-anim' : ''} />
             Refresh Floor
+          </button>
+
+          <button
+            onClick={() => setIsOrchestratorOpen(true)}
+            className="btn-primary"
+            style={{
+              padding: '0.65rem 1.25rem',
+              fontSize: '0.85rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+              border: 'none',
+              fontWeight: 700,
+            }}
+          >
+            <Zap size={15} />
+            Quick Service Flow
           </button>
 
           <Link
@@ -495,6 +516,14 @@ const TableManagementPage = () => {
         onSubmit={handleModalSubmit}
         table={editingTable}
         isSaving={modalSaving}
+      />
+
+      {/* End-to-End Service Flow Orchestrator (Phase 16) */}
+      <ServiceOrchestratorModal
+        isOpen={isOrchestratorOpen}
+        onClose={() => setIsOrchestratorOpen(false)}
+        token={token}
+        onWorkflowComplete={loadTables}
       />
     </div>
   );

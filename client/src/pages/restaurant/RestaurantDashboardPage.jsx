@@ -18,6 +18,7 @@ import {
   UserCheck,
   History,
   BarChart3,
+  Zap,
 } from 'lucide-react';
 import TableManagementPage from './TableManagementPage';
 import MenuManagementPage from './MenuManagementPage';
@@ -29,6 +30,7 @@ import CustomerManagementPage from './CustomerManagementPage';
 import StaffManagementPage from './StaffManagementPage';
 import OrderHistoryPage from './OrderHistoryPage';
 import ReportsPage from './ReportsPage';
+import ServiceOrchestratorModal from '../../components/restaurant/ServiceOrchestratorModal';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -59,6 +61,7 @@ const RestaurantDashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState(null);
+  const [isOrchestratorOpen, setIsOrchestratorOpen] = useState(false);
 
   // Profile Form State
   const [profileForm, setProfileForm] = useState({
@@ -259,6 +262,25 @@ const RestaurantDashboardPage = () => {
               {restaurantProfile?.isOpenNow ? 'Dining: OPEN' : 'Dining: CLOSED'}
             </button>
           )}
+
+          <button
+            onClick={() => setIsOrchestratorOpen(true)}
+            className="btn-primary"
+            style={{
+              padding: '0.65rem 1.25rem',
+              fontSize: '0.85rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+              border: 'none',
+              fontWeight: 700,
+            }}
+            title="Start End-to-End Walk-in / Order / Billing Service Flow"
+          >
+            <Zap size={15} />
+            Quick Service Flow
+          </button>
 
           <button
             onClick={loadData}
@@ -977,6 +999,15 @@ const RestaurantDashboardPage = () => {
           </form>
         </div>
       )}
+
+      {/* End-to-End Quick Service Flow Orchestrator (Phase 16) */}
+      <ServiceOrchestratorModal
+        isOpen={isOrchestratorOpen}
+        onClose={() => setIsOrchestratorOpen(false)}
+        token={token}
+        onWorkflowComplete={loadData}
+        currency={settingsForm.currency}
+      />
     </div>
   );
 };

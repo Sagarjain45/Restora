@@ -1,6 +1,5 @@
 import QueueEntry from '../models/QueueEntry.js';
 import Table from '../models/Table.js';
-import { scopeFilter, assertTenantOwnership } from './tenantService.js';
 
 /**
  * Re-indexes FIFO queue positions for active parties (WAITING and NOTIFIED)

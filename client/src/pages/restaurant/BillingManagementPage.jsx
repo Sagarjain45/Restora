@@ -111,9 +111,12 @@ const BillingManagementPage = () => {
     setIsProcessing(true);
     try {
       const settledPayment = await recordPaymentApi(token, selectedBillForPayment._id, paymentData);
+      const queueAlert = settledPayment?.suggestedQueueParty
+        ? ` 🎉 Queue Party "${settledPayment.suggestedQueueParty.customerName}" (Party of ${settledPayment.suggestedQueueParty.guestCount}) is waiting and fits this newly available table!`
+        : '';
       setNotice({
         type: 'success',
-        message: `Payment settled via ${paymentData.paymentMethod}! Table released to AVAILABLE and order closed.`,
+        message: `Payment settled via ${paymentData.paymentMethod}! Table released to AVAILABLE and order closed.${queueAlert}`,
       });
       setSelectedBillForPayment(null);
       await loadBillingData();
