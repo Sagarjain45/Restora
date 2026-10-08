@@ -10,6 +10,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import tableRoutes from './routes/tableRoutes.js';
 import menuRoutes from './routes/menuRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -42,6 +43,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/restaurant', restaurantRoutes);
 app.use('/api/tables', tableRoutes);
 app.use('/api/menu', menuRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Catch-all 404 & Global Error Handler
 app.use(notFoundHandler);

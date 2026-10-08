@@ -7,6 +7,7 @@ import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import RestaurantDashboardPage from '../pages/restaurant/RestaurantDashboardPage';
 import TableManagementPage from '../pages/restaurant/TableManagementPage';
 import MenuManagementPage from '../pages/restaurant/MenuManagementPage';
+import OrderManagementPage from '../pages/restaurant/OrderManagementPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from '../components/common/ProtectedRoute';
 
@@ -50,6 +51,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
               <MenuManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="restaurant/orders"
+          element={
+            <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
+              <OrderManagementPage />
             </ProtectedRoute>
           }
         />

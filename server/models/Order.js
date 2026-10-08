@@ -37,6 +37,11 @@ const orderSchema = new mongoose.Schema(
       required: [true, 'Restaurant ID is required'],
       index: true,
     },
+    orderNumber: {
+      type: String,
+      trim: true,
+      index: true,
+    },
     tableId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Table',
@@ -52,9 +57,18 @@ const orderSchema = new mongoose.Schema(
       type: [orderItemSchema],
       default: [],
     },
+    notes: {
+      type: String,
+      default: '',
+    },
     subtotal: {
       type: Number,
       default: 0,
+      min: 0,
+    },
+    taxRate: {
+      type: Number,
+      default: 5,
       min: 0,
     },
     tax: {
@@ -75,7 +89,7 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: {
-        values: ['NEW', 'PREPARING', 'READY', 'SERVED', 'COMPLETED', 'CANCELLED'],
+        values: ['NEW', 'PLACED', 'PREPARING', 'READY', 'SERVED', 'COMPLETED', 'CANCELLED'],
         message: '{VALUE} is not a valid order status',
       },
       default: 'NEW',

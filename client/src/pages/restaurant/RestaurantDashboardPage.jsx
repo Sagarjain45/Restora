@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import TableManagementPage from './TableManagementPage';
 import MenuManagementPage from './MenuManagementPage';
+import OrderManagementPage from './OrderManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -310,6 +311,13 @@ const RestaurantDashboardPage = () => {
           <BookOpen size={15} /> Menu Catalog
         </button>
         <button
+          onClick={() => setActiveTab('orders')}
+          className={activeTab === 'orders' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <Utensils size={15} /> Orders & Kitchen
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -491,7 +499,12 @@ const RestaurantDashboardPage = () => {
         <MenuManagementPage />
       )}
 
-      {/* TAB 4: RESTAURANT PROFILE */}
+      {/* TAB 4: ORDER MANAGEMENT (PHASE 9) */}
+      {activeTab === 'orders' && (
+        <OrderManagementPage />
+      )}
+
+      {/* TAB 5: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
