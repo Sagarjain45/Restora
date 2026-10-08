@@ -18,6 +18,7 @@ import customerRoutes from './routes/customerRoutes.js';
 import staffRoutes from './routes/staffRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
+import { sanitizeMongoInput, apiRateLimiter, authRateLimiter } from './middleware/securityMiddleware.js';
 
 const app = express();
 
@@ -28,8 +29,18 @@ app.use(cors({
   credentials: true,
 }));
 app.use(morgan(env.NODE_ENV === 'development' ? 'dev' : 'combined'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Input sanitization against NoSQL injection
+app.use(sanitizeMongoInput);
+
+// Rate limiting (active in development and production, bypassed in test runs)
+if (env.NODE_ENV !== 'test') {
+  app.use('/api', apiRateLimiter);
+  app.use('/api/auth/login', authRateLimiter);
+  app.use('/api/auth/register', authRateLimiter);
+}
 
 // Root welcome route
 app.get('/', (req, res) => {

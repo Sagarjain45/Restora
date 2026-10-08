@@ -59,6 +59,21 @@ const userSchema = new mongoose.Schema(
 // Compound index for queries scoped to restaurant and role
 userSchema.index({ restaurantId: 1, role: 1 });
 
+// Ensure sensitive passwordHash is never returned in JSON representations
+userSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.passwordHash;
+    return ret;
+  },
+});
+
+userSchema.set('toObject', {
+  transform: (doc, ret) => {
+    delete ret.passwordHash;
+    return ret;
+  },
+});
+
 const User = mongoose.model('User', userSchema);
 
 export default User;
