@@ -50,6 +50,44 @@ const restaurantSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    description: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    website: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    postalCode: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    isOpenNow: {
+      type: Boolean,
+      default: true,
+    },
+    openingHours: [
+      {
+        day: {
+          type: String,
+          enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          required: true,
+        },
+        openTime: { type: String, default: '10:00' },
+        closeTime: { type: String, default: '23:00' },
+        isClosed: { type: Boolean, default: false },
+      },
+    ],
+    settings: {
+      currency: { type: String, default: 'INR' },
+      taxRatePercent: { type: Number, default: 5, min: 0, max: 100 },
+      serviceChargePercent: { type: Number, default: 0, min: 0, max: 50 },
+      autoAcceptReservations: { type: Boolean, default: false },
+      allowSpecialRequests: { type: Boolean, default: true },
+    },
     status: {
       type: String,
       enum: {
