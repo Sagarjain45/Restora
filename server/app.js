@@ -16,6 +16,7 @@ import queueRoutes from './routes/queueRoutes.js';
 import reservationRoutes from './routes/reservationRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
 import staffRoutes from './routes/staffRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -54,6 +55,7 @@ app.use('/api/queue', queueRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/staff', staffRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Catch-all 404 & Global Error Handler
 app.use(notFoundHandler);

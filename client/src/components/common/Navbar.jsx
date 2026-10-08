@@ -167,6 +167,18 @@ const Navbar = () => {
                       Staff
                     </Link>
                   )}
+                  <Link
+                    to="/restaurant/order-history"
+                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                  >
+                    History
+                  </Link>
+                  <Link
+                    to="/restaurant/reports"
+                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                  >
+                    Reports
+                  </Link>
                 </>
               )}
               <Link

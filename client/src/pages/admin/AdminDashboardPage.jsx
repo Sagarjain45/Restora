@@ -15,7 +15,9 @@ import {
   PlusCircle,
   Eye,
   Send,
-  Sliders
+  Sliders,
+  BarChart3,
+  TrendingUp,
 } from 'lucide-react';
 import {
   getDashboardStatsApi,
@@ -28,6 +30,7 @@ import {
   submitApplicationApi,
   seedSampleApplicationsApi,
 } from '../../services/adminService';
+import { getPlatformReportsApi } from '../../services/reportService';
 
 const AdminDashboardPage = () => {
   const { user, token } = useAuth();
@@ -37,6 +40,7 @@ const AdminDashboardPage = () => {
 
   // Dashboard Stats State
   const [stats, setStats] = useState(null);
+  const [platformReports, setPlatformReports] = useState(null);
   const [loadingStats, setLoadingStats] = useState(true);
 
   // Applications State
@@ -72,13 +76,20 @@ const AdminDashboardPage = () => {
     notes: '',
   });
 
-  // 1. Fetch Dashboard Stats
+  // 1. Fetch Dashboard Stats & Platform Reports
   const loadDashboardStats = useCallback(async () => {
     if (!token) return;
     setLoadingStats(true);
     try {
-      const data = await getDashboardStatsApi(token);
+      const [data, reportData] = await Promise.all([
+        getDashboardStatsApi(token),
+        getPlatformReportsApi(token).catch((err) => {
+          console.warn('Failed to load platform reports:', err.message);
+          return null;
+        }),
+      ]);
       setStats(data);
+      if (reportData) setPlatformReports(reportData);
     } catch (err) {
       console.warn('Failed to load stats:', err.message);
     } finally {
@@ -447,6 +458,76 @@ const AdminDashboardPage = () => {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* Platform Reports & Restaurant Activity (Phase 15) */}
+          <div className="glass-panel" style={{ padding: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <BarChart3 size={20} color="var(--accent-primary)" />
+                  Restaurant Activity & Performance Roster (Phase 15 Reports)
+                </h2>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
+                  Real database activity metrics: orders processed, gross revenue collected, and operational status per tenant.
+                </p>
+              </div>
+            </div>
+
+            {platformReports?.restaurantActivity && platformReports.restaurantActivity.length > 0 ? (
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
+                      <th style={{ padding: '0.75rem' }}>RESTAURANT</th>
+                      <th style={{ padding: '0.75rem' }}>CITY / STATE</th>
+                      <th style={{ padding: '0.75rem' }}>STATUS</th>
+                      <th style={{ padding: '0.75rem', textAlign: 'center' }}>ORDERS</th>
+                      <th style={{ padding: '0.75rem', textAlign: 'right' }}>GROSS REVENUE</th>
+                      <th style={{ padding: '0.75rem', textAlign: 'right' }}>LAST ORDER</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {platformReports.restaurantActivity.map((r) => (
+                      <tr key={r.restaurantId} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                        <td style={{ padding: '0.75rem', fontWeight: '600', color: 'var(--text-main)' }}>
+                          {r.name}
+                        </td>
+                        <td style={{ padding: '0.75rem', color: 'var(--text-muted)' }}>
+                          {r.city || 'N/A'}{r.state ? `, ${r.state}` : ''}
+                        </td>
+                        <td style={{ padding: '0.75rem' }}>
+                          <span
+                            className={`badge ${
+                              r.status === 'ACTIVE'
+                                ? 'badge-success'
+                                : r.status === 'SUSPENDED'
+                                ? 'badge-danger'
+                                : 'badge-warning'
+                            }`}
+                          >
+                            {r.status}
+                          </span>
+                        </td>
+                        <td style={{ padding: '0.75rem', textAlign: 'center', fontWeight: '600' }}>
+                          {r.orderCount}
+                        </td>
+                        <td style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '700', color: '#4ade80' }}>
+                          ₹{(r.totalRevenue || 0).toLocaleString('en-IN')}
+                        </td>
+                        <td style={{ padding: '0.75rem', textAlign: 'right', color: 'var(--text-muted)' }}>
+                          {r.lastOrderDate ? new Date(r.lastOrderDate).toLocaleDateString([], { month: 'short', day: 'numeric' }) : 'Never'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--text-muted)' }}>
+                No tenant activity records found.
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -16,6 +16,8 @@ import {
   BookOpen,
   Users,
   UserCheck,
+  History,
+  BarChart3,
 } from 'lucide-react';
 import TableManagementPage from './TableManagementPage';
 import MenuManagementPage from './MenuManagementPage';
@@ -25,6 +27,8 @@ import QueueManagementPage from './QueueManagementPage';
 import ReservationManagementPage from './ReservationManagementPage';
 import CustomerManagementPage from './CustomerManagementPage';
 import StaffManagementPage from './StaffManagementPage';
+import OrderHistoryPage from './OrderHistoryPage';
+import ReportsPage from './ReportsPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -362,6 +366,20 @@ const RestaurantDashboardPage = () => {
           </button>
         )}
         <button
+          onClick={() => setActiveTab('history')}
+          className={activeTab === 'history' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <History size={15} /> Order History
+        </button>
+        <button
+          onClick={() => setActiveTab('reports')}
+          className={activeTab === 'reports' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <BarChart3 size={15} /> Reports & Analytics
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -573,7 +591,17 @@ const RestaurantDashboardPage = () => {
         <StaffManagementPage />
       )}
 
-      {/* TAB 10: RESTAURANT PROFILE */}
+      {/* TAB 10: ORDER HISTORY (PHASE 15) */}
+      {activeTab === 'history' && (
+        <OrderHistoryPage />
+      )}
+
+      {/* TAB 11: REPORTS & ANALYTICS (PHASE 15) */}
+      {activeTab === 'reports' && (
+        <ReportsPage />
+      )}
+
+      {/* TAB 12: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
