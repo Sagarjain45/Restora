@@ -40,10 +40,27 @@ const queueEntrySchema = new mongoose.Schema(
     status: {
       type: String,
       enum: {
-        values: ['WAITING', 'NOTIFIED', 'SEATED', 'CANCELLED'],
+        values: ['WAITING', 'NOTIFIED', 'SEATED', 'CANCELLED', 'NO_SHOW'],
         message: '{VALUE} is not a valid queue status',
       },
       default: 'WAITING',
+    },
+    assignedTableId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Table',
+      default: null,
+    },
+    notifiedAt: {
+      type: Date,
+      default: null,
+    },
+    seatedAt: {
+      type: Date,
+      default: null,
+    },
+    estimatedWaitMinutes: {
+      type: Number,
+      default: null,
     },
     notes: {
       type: String,
@@ -58,6 +75,7 @@ const queueEntrySchema = new mongoose.Schema(
 // Indexes for FIFO waiting queue retrieval and status filtering
 queueEntrySchema.index({ restaurantId: 1, status: 1 });
 queueEntrySchema.index({ restaurantId: 1, arrivalTime: 1 });
+queueEntrySchema.index({ restaurantId: 1, guestCount: 1 });
 
 const QueueEntry = mongoose.model('QueueEntry', queueEntrySchema);
 

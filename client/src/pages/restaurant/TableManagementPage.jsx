@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import {
   Plus,
@@ -192,6 +193,15 @@ const TableManagementPage = () => {
             <RefreshCw size={14} className={loading ? 'spin-anim' : ''} />
             Refresh Floor
           </button>
+
+          <Link
+            to="/restaurant/queue"
+            className="btn-secondary"
+            style={{ padding: '0.65rem 1rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+          >
+            <Clock size={14} color="var(--accent-warning)" />
+            <span>Waiting Queue</span>
+          </Link>
 
           {isOwner && (
             <button

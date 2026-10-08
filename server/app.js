@@ -12,6 +12,7 @@ import tableRoutes from './routes/tableRoutes.js';
 import menuRoutes from './routes/menuRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import billRoutes from './routes/billRoutes.js';
+import queueRoutes from './routes/queueRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/api/tables', tableRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/bills', billRoutes);
+app.use('/api/queue', queueRoutes);
 
 // Catch-all 404 & Global Error Handler
 app.use(notFoundHandler);
