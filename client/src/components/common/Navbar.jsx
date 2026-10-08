@@ -135,6 +135,12 @@ const Navbar = () => {
                   >
                     Orders
                   </Link>
+                  <Link
+                    to="/restaurant/billing"
+                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                  >
+                    Billing
+                  </Link>
                 </>
               )}
               <Link

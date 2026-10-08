@@ -14,6 +14,11 @@ const paymentSchema = new mongoose.Schema(
       required: [true, 'Bill ID is required'],
       index: true,
     },
+    orderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Order',
+      index: true,
+    },
     amount: {
       type: Number,
       required: [true, 'Payment amount is required'],

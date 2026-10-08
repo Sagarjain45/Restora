@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import {
   Plus,
@@ -40,6 +41,7 @@ const STATUS_TABS = [
 
 const OrderManagementPage = () => {
   const { user, token } = useAuth();
+  const navigate = useNavigate();
 
   // Data State
   const [orders, setOrders] = useState([]);
@@ -430,6 +432,7 @@ const OrderManagementPage = () => {
                 setActiveOrderForAdd(orderToEdit);
                 setIsAddItemModalOpen(true);
               }}
+              onGenerateBill={() => navigate('/restaurant/billing')}
               isProcessing={processingId === ord._id}
             />
           ))}

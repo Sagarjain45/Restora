@@ -3,7 +3,8 @@ import {
   Plus,
   Minus,
   ArrowRight,
-  User
+  User,
+  Receipt
 } from 'lucide-react';
 
 const STATUS_CONFIG = {
@@ -22,6 +23,7 @@ const OrderCard = ({
   onUpdateItemQuantity,
   onRemoveItem,
   onOpenAddItem,
+  onGenerateBill,
   isProcessing = false,
   currency = 'INR',
 }) => {
@@ -228,6 +230,30 @@ const OrderCard = ({
             >
               <span>{statusInfo.nextLabel}</span>
               <ArrowRight size={13} />
+            </button>
+          )}
+
+          {onGenerateBill && isEditable && (
+            <button
+              type="button"
+              disabled={isProcessing}
+              onClick={() => onGenerateBill(order)}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.4rem 0.75rem',
+                background: 'rgba(16, 185, 129, 0.12)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                color: 'var(--accent-success)',
+                borderRadius: 'var(--radius-sm)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.3rem',
+                cursor: 'pointer',
+              }}
+              title="Generate Bill for Table"
+            >
+              <Receipt size={13} /> Bill Table
             </button>
           )}
 

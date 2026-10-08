@@ -14,22 +14,41 @@ const billSchema = new mongoose.Schema(
       required: [true, 'Order ID is required'],
       index: true,
     },
+    billNumber: {
+      type: String,
+      trim: true,
+      index: true,
+    },
     tableId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Table',
       required: [true, 'Table ID is required'],
     },
+    items: [
+      {
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true },
+        total: { type: Number, required: true },
+        notes: { type: String, default: '' },
+      },
+    ],
     subtotal: {
       type: Number,
       required: [true, 'Subtotal is required'],
       min: 0,
     },
-    discount: {
+    taxRate: {
+      type: Number,
+      default: 5,
+      min: 0,
+    },
+    tax: {
       type: Number,
       default: 0,
       min: 0,
     },
-    tax: {
+    discount: {
       type: Number,
       default: 0,
       min: 0,
@@ -51,6 +70,14 @@ const billSchema = new mongoose.Schema(
         message: '{VALUE} is not a valid bill status',
       },
       default: 'UNPAID',
+    },
+    paidAt: {
+      type: Date,
+      default: null,
+    },
+    notes: {
+      type: String,
+      default: '',
     },
   },
   {

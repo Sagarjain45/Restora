@@ -8,14 +8,15 @@ import RestaurantDashboardPage from '../pages/restaurant/RestaurantDashboardPage
 import TableManagementPage from '../pages/restaurant/TableManagementPage';
 import MenuManagementPage from '../pages/restaurant/MenuManagementPage';
 import OrderManagementPage from '../pages/restaurant/OrderManagementPage';
+import BillingManagementPage from '../pages/restaurant/BillingManagementPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from '../components/common/ProtectedRoute';
 
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* Public Routes */}
       <Route path="/" element={<MainLayout />}>
-        {/* Public Routes */}
         <Route index element={<HomePage />} />
         <Route path="auth/login" element={<LoginPage />} />
 
@@ -59,6 +60,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
               <OrderManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="restaurant/billing"
+          element={
+            <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
+              <BillingManagementPage />
             </ProtectedRoute>
           }
         />

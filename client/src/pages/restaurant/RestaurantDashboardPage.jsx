@@ -18,6 +18,7 @@ import {
 import TableManagementPage from './TableManagementPage';
 import MenuManagementPage from './MenuManagementPage';
 import OrderManagementPage from './OrderManagementPage';
+import BillingManagementPage from './BillingManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -318,6 +319,13 @@ const RestaurantDashboardPage = () => {
           <Utensils size={15} /> Orders & Kitchen
         </button>
         <button
+          onClick={() => setActiveTab('billing')}
+          className={activeTab === 'billing' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <Receipt size={15} /> Billing & Invoices
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -504,7 +512,12 @@ const RestaurantDashboardPage = () => {
         <OrderManagementPage />
       )}
 
-      {/* TAB 5: RESTAURANT PROFILE */}
+      {/* TAB 5: BILLING & PAYMENTS (PHASE 10) */}
+      {activeTab === 'billing' && (
+        <BillingManagementPage />
+      )}
+
+      {/* TAB 6: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
