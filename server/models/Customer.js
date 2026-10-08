@@ -48,8 +48,11 @@ const customerSchema = new mongoose.Schema(
   }
 );
 
-// Compound index for quick customer lookup by phone within restaurant
+// Compound indexes for fast tenant-scoped lookups
 customerSchema.index({ restaurantId: 1, phone: 1 });
+customerSchema.index({ restaurantId: 1, name: 1 });
+customerSchema.index({ restaurantId: 1, email: 1 });
+customerSchema.index({ restaurantId: 1, lastVisit: -1 });
 
 const Customer = mongoose.model('Customer', customerSchema);
 

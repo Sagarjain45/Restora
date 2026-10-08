@@ -14,6 +14,7 @@ import {
   Layers,
   LayoutGrid,
   BookOpen,
+  Users,
 } from 'lucide-react';
 import TableManagementPage from './TableManagementPage';
 import MenuManagementPage from './MenuManagementPage';
@@ -21,6 +22,7 @@ import OrderManagementPage from './OrderManagementPage';
 import BillingManagementPage from './BillingManagementPage';
 import QueueManagementPage from './QueueManagementPage';
 import ReservationManagementPage from './ReservationManagementPage';
+import CustomerManagementPage from './CustomerManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -342,6 +344,13 @@ const RestaurantDashboardPage = () => {
           <Calendar size={15} /> Reservations
         </button>
         <button
+          onClick={() => setActiveTab('customers')}
+          className={activeTab === 'customers' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <Users size={15} /> Customers
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -543,7 +552,12 @@ const RestaurantDashboardPage = () => {
         <ReservationManagementPage />
       )}
 
-      {/* TAB 8: RESTAURANT PROFILE */}
+      {/* TAB 8: CUSTOMER DIRECTORY & CRM (PHASE 13) */}
+      {activeTab === 'customers' && (
+        <CustomerManagementPage />
+      )}
+
+      {/* TAB 9: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
