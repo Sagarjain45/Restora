@@ -47,6 +47,11 @@ const menuItemSchema = new mongoose.Schema(
       default: 15,
       min: [1, 'Preparation time must be at least 1 minute'],
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+      index: true,
+    },
   },
   {
     timestamps: true,
@@ -56,6 +61,7 @@ const menuItemSchema = new mongoose.Schema(
 // Compound indexes for tenant-scoped menu category and availability filtering
 menuItemSchema.index({ restaurantId: 1, category: 1 });
 menuItemSchema.index({ restaurantId: 1, isAvailable: 1 });
+menuItemSchema.index({ restaurantId: 1, isActive: 1 });
 
 const MenuItem = mongoose.model('MenuItem', menuItemSchema);
 

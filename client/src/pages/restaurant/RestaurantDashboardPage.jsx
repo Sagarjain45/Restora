@@ -13,8 +13,10 @@ import {
   X,
   Layers,
   LayoutGrid,
+  BookOpen,
 } from 'lucide-react';
 import TableManagementPage from './TableManagementPage';
+import MenuManagementPage from './MenuManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -301,6 +303,13 @@ const RestaurantDashboardPage = () => {
           <LayoutGrid size={15} /> Tables & Floor
         </button>
         <button
+          onClick={() => setActiveTab('menu')}
+          className={activeTab === 'menu' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <BookOpen size={15} /> Menu Catalog
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -477,7 +486,12 @@ const RestaurantDashboardPage = () => {
         <TableManagementPage />
       )}
 
-      {/* TAB 2: RESTAURANT PROFILE */}
+      {/* TAB 3: MENU MANAGEMENT (PHASE 8) */}
+      {activeTab === 'menu' && (
+        <MenuManagementPage />
+      )}
+
+      {/* TAB 4: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>

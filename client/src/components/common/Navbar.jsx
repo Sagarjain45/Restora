@@ -116,12 +116,20 @@ const Navbar = () => {
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               {(role === 'RESTAURANT_OWNER' || role === 'RESTAURANT_STAFF') && (
-                <Link
-                  to="/restaurant/tables"
-                  style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                >
-                  Floor Tables
-                </Link>
+                <>
+                  <Link
+                    to="/restaurant/tables"
+                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                  >
+                    Floor Tables
+                  </Link>
+                  <Link
+                    to="/restaurant/menu"
+                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                  >
+                    Menu
+                  </Link>
+                </>
               )}
               <Link
                 to={getDashboardPath()}
