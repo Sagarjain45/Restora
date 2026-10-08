@@ -1,5 +1,10 @@
 import User from '../models/User.js';
 import Restaurant from '../models/Restaurant.js';
+import Table from '../models/Table.js';
+import MenuItem from '../models/MenuItem.js';
+import Customer from '../models/Customer.js';
+import QueueEntry from '../models/QueueEntry.js';
+import Reservation from '../models/Reservation.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
 import { signToken } from '../utils/jwt.js';
 
@@ -178,6 +183,43 @@ export const seedInitialAccounts = async () => {
       restaurantId: demoRestaurant._id,
       status: 'ACTIVE',
     });
+
+    // Seed Demo Tables
+    await Table.insertMany([
+      { restaurantId: demoRestaurant._id, tableNumber: 'T-01', capacity: 2, section: 'Main Dining', status: 'AVAILABLE' },
+      { restaurantId: demoRestaurant._id, tableNumber: 'T-02', capacity: 4, section: 'Main Dining', status: 'AVAILABLE' },
+      { restaurantId: demoRestaurant._id, tableNumber: 'T-03', capacity: 4, section: 'Patio', status: 'AVAILABLE' },
+      { restaurantId: demoRestaurant._id, tableNumber: 'T-04', capacity: 6, section: 'Rooftop', status: 'AVAILABLE' },
+      { restaurantId: demoRestaurant._id, tableNumber: 'T-05', capacity: 8, section: 'Private Dining', status: 'AVAILABLE' },
+    ]);
+
+    // Seed Demo Menu Items
+    await MenuItem.insertMany([
+      { restaurantId: demoRestaurant._id, name: 'Truffle Bruschetta', category: 'Starters', price: 320, isVegetarian: true, isAvailable: true, description: 'Toasted ciabatta with wild mushrooms and white truffle oil.' },
+      { restaurantId: demoRestaurant._id, name: 'Margherita Burrata Pizza', category: 'Mains', price: 650, isVegetarian: true, isAvailable: true, description: 'San Marzano tomatoes, artisanal burrata, and fresh basil.' },
+      { restaurantId: demoRestaurant._id, name: 'Fettuccine Alfredo Con Pollo', category: 'Mains', price: 580, isVegetarian: false, isAvailable: true, description: 'Handmade pasta, creamy parmesan sauce, and grilled chicken.' },
+      { restaurantId: demoRestaurant._id, name: 'Classic Tiramisu', category: 'Desserts', price: 380, isVegetarian: true, isAvailable: true, description: 'Espresso-soaked ladyfingers with mascarpone cream.' },
+      { restaurantId: demoRestaurant._id, name: 'San Pellegrino Sparkling', category: 'Beverages', price: 220, isVegetarian: true, isAvailable: true, description: 'Chilled natural sparkling mineral water.' },
+    ]);
+
+    // Seed Demo Customers
+    await Customer.insertMany([
+      { restaurantId: demoRestaurant._id, name: 'Aarav Sharma', phone: '9820011223', email: 'aarav@example.com', visitCount: 5, totalSpent: 4200 },
+      { restaurantId: demoRestaurant._id, name: 'Pooja Hegde', phone: '9811223344', email: 'pooja@example.com', visitCount: 3, totalSpent: 2850 },
+    ]);
+
+    // Seed Demo Waiting Queue
+    await QueueEntry.insertMany([
+      { restaurantId: demoRestaurant._id, customerName: 'Rohan Mehra', customerPhone: '9876543210', guestCount: 2, position: 1, status: 'WAITING' },
+      { restaurantId: demoRestaurant._id, customerName: 'Simran Kaur', customerPhone: '9899887766', guestCount: 4, position: 2, status: 'WAITING' },
+    ]);
+
+    // Seed Demo Reservations
+    const todayStr = new Date().toISOString().split('T')[0];
+    await Reservation.insertMany([
+      { restaurantId: demoRestaurant._id, customerName: 'Vikram Malhotra', customerPhone: '9988776655', guestCount: 4, date: todayStr, startTime: '19:30', endTime: '21:00', status: 'CONFIRMED' },
+      { restaurantId: demoRestaurant._id, customerName: 'Ananya Roy', customerPhone: '9871122334', guestCount: 2, date: todayStr, startTime: '20:00', endTime: '21:30', status: 'CONFIRMED' },
+    ]);
 
     return {
       seeded: true,
