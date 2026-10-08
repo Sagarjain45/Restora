@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: null,
     },
+    designation: {
+      type: String,
+      trim: true,
+      default: 'Floor Staff',
+    },
     status: {
       type: String,
       enum: ['ACTIVE', 'INACTIVE', 'SUSPENDED'],

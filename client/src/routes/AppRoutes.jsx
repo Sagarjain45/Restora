@@ -12,6 +12,7 @@ import BillingManagementPage from '../pages/restaurant/BillingManagementPage';
 import QueueManagementPage from '../pages/restaurant/QueueManagementPage';
 import ReservationManagementPage from '../pages/restaurant/ReservationManagementPage';
 import CustomerManagementPage from '../pages/restaurant/CustomerManagementPage';
+import StaffManagementPage from '../pages/restaurant/StaffManagementPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from '../components/common/ProtectedRoute';
 
@@ -95,6 +96,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
               <CustomerManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="restaurant/staff"
+          element={
+            <ProtectedRoute allowedRoles={['RESTAURANT_OWNER']}>
+              <StaffManagementPage />
             </ProtectedRoute>
           }
         />

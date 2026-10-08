@@ -159,6 +159,14 @@ const Navbar = () => {
                   >
                     Customers
                   </Link>
+                  {role === 'RESTAURANT_OWNER' && (
+                    <Link
+                      to="/restaurant/staff"
+                      style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
+                    >
+                      Staff
+                    </Link>
+                  )}
                 </>
               )}
               <Link

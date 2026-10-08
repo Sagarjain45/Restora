@@ -15,6 +15,7 @@ import {
   LayoutGrid,
   BookOpen,
   Users,
+  UserCheck,
 } from 'lucide-react';
 import TableManagementPage from './TableManagementPage';
 import MenuManagementPage from './MenuManagementPage';
@@ -23,6 +24,7 @@ import BillingManagementPage from './BillingManagementPage';
 import QueueManagementPage from './QueueManagementPage';
 import ReservationManagementPage from './ReservationManagementPage';
 import CustomerManagementPage from './CustomerManagementPage';
+import StaffManagementPage from './StaffManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -350,6 +352,15 @@ const RestaurantDashboardPage = () => {
         >
           <Users size={15} /> Customers
         </button>
+        {isOwner && (
+          <button
+            onClick={() => setActiveTab('staff')}
+            className={activeTab === 'staff' ? 'btn-primary' : 'btn-secondary'}
+            style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+          >
+            <UserCheck size={15} /> Staff Management
+          </button>
+        )}
         <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
@@ -557,7 +568,12 @@ const RestaurantDashboardPage = () => {
         <CustomerManagementPage />
       )}
 
-      {/* TAB 9: RESTAURANT PROFILE */}
+      {/* TAB 9: STAFF ROSTER & MANAGEMENT (PHASE 14) */}
+      {activeTab === 'staff' && isOwner && (
+        <StaffManagementPage />
+      )}
+
+      {/* TAB 10: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
