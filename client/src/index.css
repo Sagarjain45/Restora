@@ -183,6 +183,24 @@ button {
   border: 1px solid rgba(6, 182, 212, 0.3);
 }
 
+.badge-indigo {
+  background: rgba(99, 102, 241, 0.18);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+.badge-purple {
+  background: rgba(168, 85, 247, 0.18);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.badge-gray {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
 /* Animations */
 @keyframes pulseSubtle {
   0%, 100% { opacity: 1; transform: scale(1); }

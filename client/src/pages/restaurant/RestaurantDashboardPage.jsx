@@ -11,8 +11,10 @@ import {
   Save,
   Power,
   X,
-  Layers
+  Layers,
+  LayoutGrid,
 } from 'lucide-react';
+import TableManagementPage from './TableManagementPage';
 import {
   getRestaurantProfileApi,
   updateRestaurantProfileApi,
@@ -292,6 +294,13 @@ const RestaurantDashboardPage = () => {
           <Store size={15} /> Live Dashboard
         </button>
         <button
+          onClick={() => setActiveTab('tables')}
+          className={activeTab === 'tables' ? 'btn-primary' : 'btn-secondary'}
+          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
+        >
+          <LayoutGrid size={15} /> Tables & Floor
+        </button>
+        <button
           onClick={() => setActiveTab('profile')}
           className={activeTab === 'profile' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
@@ -381,9 +390,19 @@ const RestaurantDashboardPage = () => {
                   Live table occupancy scoped strictly to your restaurant tenant
                 </p>
               </div>
-              <span className="badge badge-success">
-                {metrics?.tables?.total ?? 0} Total Tables Configured
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span className="badge badge-success">
+                  {metrics?.tables?.total ?? 0} Tables Configured
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tables')}
+                  className="btn-secondary"
+                  style={{ fontSize: '0.8rem', padding: '0.35rem 0.75rem' }}
+                >
+                  Manage Floor &rarr;
+                </button>
+              </div>
             </div>
 
             {metrics?.tables?.matrix && metrics.tables.matrix.length > 0 ? (
@@ -395,7 +414,15 @@ const RestaurantDashboardPage = () => {
                       background: 'rgba(15, 23, 42, 0.7)',
                       padding: '1.25rem',
                       borderRadius: 'var(--radius-md)',
-                      border: `1px solid ${t.status === 'AVAILABLE' ? 'rgba(16, 185, 129, 0.3)' : t.status === 'OCCUPIED' ? 'rgba(99, 102, 241, 0.3)' : 'var(--border-subtle)'}`,
+                      border: `1px solid ${
+                        t.status === 'AVAILABLE'
+                          ? 'rgba(16, 185, 129, 0.3)'
+                          : t.status === 'OCCUPIED'
+                          ? 'rgba(99, 102, 241, 0.3)'
+                          : t.status === 'BILLING'
+                          ? 'rgba(168, 85, 247, 0.3)'
+                          : 'var(--border-subtle)'
+                      }`,
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '0.5rem',
@@ -403,7 +430,19 @@ const RestaurantDashboardPage = () => {
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <strong style={{ fontSize: '1.1rem', color: 'var(--text-main)' }}>{t.tableNumber}</strong>
-                      <span className={`badge ${t.status === 'AVAILABLE' ? 'badge-success' : t.status === 'OCCUPIED' ? 'badge-cyan' : 'badge-warning'}`}>
+                      <span
+                        className={`badge ${
+                          t.status === 'AVAILABLE'
+                            ? 'badge-success'
+                            : t.status === 'OCCUPIED'
+                            ? 'badge-indigo'
+                            : t.status === 'BILLING'
+                            ? 'badge-purple'
+                            : t.status === 'RESERVED'
+                            ? 'badge-warning'
+                            : 'badge-gray'
+                        }`}
+                      >
                         {t.status}
                       </span>
                     </div>
@@ -418,11 +457,24 @@ const RestaurantDashboardPage = () => {
               </div>
             ) : (
               <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                No tables initialized for this restaurant yet. Table management will be fully unlocked in Phase 7!
+                <p>No tables configured on your floor yet.</p>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tables')}
+                  className="btn-primary"
+                  style={{ marginTop: '0.75rem', padding: '0.5rem 1rem', fontSize: '0.85rem' }}
+                >
+                  Setup Tables Now &rarr;
+                </button>
               </div>
             )}
           </div>
         </div>
+      )}
+
+      {/* TAB 2: TABLE MANAGEMENT (PHASE 7) */}
+      {activeTab === 'tables' && (
+        <TableManagementPage />
       )}
 
       {/* TAB 2: RESTAURANT PROFILE */}

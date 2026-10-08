@@ -21,7 +21,15 @@ const tableSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: {
-        values: ['AVAILABLE', 'OCCUPIED', 'RESERVED', 'CLEANING', 'UNAVAILABLE'],
+        values: [
+          'AVAILABLE',
+          'OCCUPIED',
+          'RESERVED',
+          'BILLING',
+          'OUT_OF_SERVICE',
+          'CLEANING',
+          'UNAVAILABLE',
+        ],
         message: '{VALUE} is not a valid table status',
       },
       default: 'AVAILABLE',
@@ -30,6 +38,11 @@ const tableSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: 'Main Dining',
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+      index: true,
     },
     currentOrderId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -46,6 +59,7 @@ const tableSchema = new mongoose.Schema(
 tableSchema.index({ restaurantId: 1, tableNumber: 1 }, { unique: true });
 // Compound index for fast status filtering by tenant
 tableSchema.index({ restaurantId: 1, status: 1 });
+tableSchema.index({ restaurantId: 1, isActive: 1 });
 
 const Table = mongoose.model('Table', tableSchema);
 

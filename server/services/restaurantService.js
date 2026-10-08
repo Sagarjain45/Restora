@@ -181,6 +181,8 @@ export const getRestaurantDashboardMetrics = async (restaurantId) => {
   const availableTables = tables.filter((t) => t.status === 'AVAILABLE').length;
   const occupiedTables = tables.filter((t) => t.status === 'OCCUPIED').length;
   const reservedTables = tables.filter((t) => t.status === 'RESERVED').length;
+  const billingTables = tables.filter((t) => t.status === 'BILLING').length;
+  const outOfServiceTables = tables.filter((t) => t.status === 'OUT_OF_SERVICE' || t.status === 'UNAVAILABLE').length;
   const cleaningTables = tables.filter((t) => t.status === 'CLEANING').length;
 
   const todaySales = todaysSalesAgg.length > 0 ? todaysSalesAgg[0].totalSales : 0;
@@ -198,6 +200,8 @@ export const getRestaurantDashboardMetrics = async (restaurantId) => {
       available: availableTables,
       occupied: occupiedTables,
       reserved: reservedTables,
+      billing: billingTables,
+      outOfService: outOfServiceTables,
       cleaning: cleaningTables,
       matrix: tables.map((t) => ({
         id: t._id,
@@ -205,6 +209,7 @@ export const getRestaurantDashboardMetrics = async (restaurantId) => {
         capacity: t.capacity,
         status: t.status,
         section: t.section,
+        isActive: t.isActive !== false,
       })),
     },
     orders: {
