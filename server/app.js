@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { env } from './config/env.js';
 import healthRoutes from './routes/healthRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import tenantRoutes from './routes/tenantRoutes.js';
 import { notFoundHandler, errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/tenant', tenantRoutes);
 
 // Catch-all 404 & Global Error Handler
 app.use(notFoundHandler);
