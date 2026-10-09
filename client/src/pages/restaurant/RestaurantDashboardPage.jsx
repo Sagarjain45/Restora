@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import {
   Store,
@@ -13,23 +14,11 @@ import {
   X,
   Layers,
   LayoutGrid,
-  BookOpen,
-  Users,
-  UserCheck,
-  History,
-  BarChart3,
+  CalendarDays,
   Zap,
+  ArrowRight,
+  MapPin,
 } from 'lucide-react';
-import TableManagementPage from './TableManagementPage';
-import MenuManagementPage from './MenuManagementPage';
-import OrderManagementPage from './OrderManagementPage';
-import BillingManagementPage from './BillingManagementPage';
-import QueueManagementPage from './QueueManagementPage';
-import ReservationManagementPage from './ReservationManagementPage';
-import CustomerManagementPage from './CustomerManagementPage';
-import StaffManagementPage from './StaffManagementPage';
-import OrderHistoryPage from './OrderHistoryPage';
-import ReportsPage from './ReportsPage';
 import ServiceOrchestratorModal from '../../components/restaurant/ServiceOrchestratorModal';
 import useToast from '../../hooks/useToast';
 import {
@@ -123,7 +112,6 @@ const RestaurantDashboardPage = () => {
         });
 
         if (profileRes.openingHours && profileRes.openingHours.length > 0) {
-          // Merge with all days
           const merged = DAYS_OF_WEEK.map((d) => {
             const found = profileRes.openingHours.find((h) => h.day === d);
             return found || { day: d, openTime: '10:00', closeTime: '23:00', isClosed: false };
@@ -163,9 +151,11 @@ const RestaurantDashboardPage = () => {
     try {
       const updated = await updateRestaurantProfileApi(token, profileForm);
       setRestaurantProfile(updated);
+      toast.success('Restaurant profile updated successfully!');
       setNotice({ type: 'success', text: 'Restaurant profile saved successfully!' });
       await loadData();
     } catch (err) {
+      toast.error(err.message || 'Failed to update profile');
       setNotice({ type: 'error', text: err.message || 'Failed to update profile' });
     } finally {
       setSaving(false);
@@ -177,9 +167,11 @@ const RestaurantDashboardPage = () => {
     setSaving(true);
     try {
       await updateOpeningHoursApi(token, hours);
+      toast.success('Operating hours schedule saved!');
       setNotice({ type: 'success', text: 'Opening hours schedule updated!' });
       await loadData();
     } catch (err) {
+      toast.error(err.message || 'Failed to update hours');
       setNotice({ type: 'error', text: err.message || 'Failed to update hours' });
     } finally {
       setSaving(false);
@@ -192,9 +184,11 @@ const RestaurantDashboardPage = () => {
     setSaving(true);
     try {
       await updateRestaurantSettingsApi(token, settingsForm);
+      toast.success('Operational settings saved!');
       setNotice({ type: 'success', text: 'Operational settings updated!' });
       await loadData();
     } catch (err) {
+      toast.error(err.message || 'Failed to update settings');
       setNotice({ type: 'error', text: err.message || 'Failed to update settings' });
     } finally {
       setSaving(false);
@@ -222,28 +216,42 @@ const RestaurantDashboardPage = () => {
     }
   };
 
-  const isOwner = user?.role === 'RESTAURANT_OWNER';
+  const isOwner = user?.role === 'RESTAURANT_OWNER' || user?.role === 'PLATFORM_ADMIN';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      {/* Top Banner */}
-      <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
+      {/* Top Banner - Clean Restaurant Command Bar */}
+      <div className="glass-panel" style={{
+        padding: '1.75rem 2rem',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '1.5rem',
+      }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-            <span className="badge badge-success">Tenant Workspace</span>
-            <span className="badge badge-cyan">
-              {restaurantProfile?.status || 'ACTIVE'} Tenant
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
+            <span className="badge badge-indigo">
+              <Store size={13} /> {restaurantProfile?.cuisine ? (Array.isArray(restaurantProfile.cuisine) ? restaurantProfile.cuisine.join(', ') : restaurantProfile.cuisine) : 'Dining'}
+            </span>
+            <span className={`badge ${restaurantProfile?.isOpenNow ? 'badge-success' : 'badge-danger'}`}>
+              <span className="pulse-dot" /> {restaurantProfile?.isOpenNow ? 'OPEN FOR DINING' : 'CLOSED'}
             </span>
           </div>
-          <h1 style={{ fontSize: '1.8rem', margin: 0 }}>
-            {restaurantProfile?.name || 'Restaurant Operations Hub'}
+          <h1 style={{ fontSize: '1.85rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
+            {restaurantProfile?.name || 'Restaurant Dashboard'}
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            Authorized User: <code>{user?.email}</code> • Role: <strong>{user?.role}</strong> • Scoped: <code>{user?.restaurantId}</code>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginTop: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+            {restaurantProfile?.city && (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                <MapPin size={13} /> {restaurantProfile.city}{restaurantProfile?.state ? `, ${restaurantProfile.state}` : ''} •
+              </span>
+            )}
+            <span>Logged in as <strong>{user?.name || user?.email}</strong> ({isOwner ? 'Owner' : 'Staff'})</span>
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {/* Operational Status Toggle */}
           {isOwner && (
             <button
@@ -257,7 +265,7 @@ const RestaurantDashboardPage = () => {
                 borderColor: restaurantProfile?.isOpenNow ? 'var(--accent-success)' : 'var(--accent-danger)',
                 color: restaurantProfile?.isOpenNow ? 'var(--accent-success)' : 'var(--accent-danger)',
                 background: restaurantProfile?.isOpenNow ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                padding: '0.65rem 1.25rem',
+                padding: '0.65rem 1.15rem',
                 fontSize: '0.85rem',
                 fontWeight: 600,
               }}
@@ -275,7 +283,7 @@ const RestaurantDashboardPage = () => {
               fontSize: '0.85rem',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.4rem',
+              gap: '0.45rem',
               background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
               border: 'none',
               fontWeight: 700,
@@ -290,7 +298,7 @@ const RestaurantDashboardPage = () => {
             onClick={loadData}
             disabled={loading}
             className="btn-secondary"
-            style={{ padding: '0.65rem 1rem', fontSize: '0.85rem' }}
+            style={{ padding: '0.65rem 0.95rem', fontSize: '0.85rem' }}
           >
             <RefreshCw size={14} className={loading ? 'spin-anim' : ''} />
             Refresh
@@ -318,92 +326,20 @@ const RestaurantDashboardPage = () => {
         </div>
       )}
 
-      {/* Navigation Tabs */}
+      {/* Clean Dashboard Navigation Tabs */}
       <div style={{
         display: 'flex',
         gap: '0.5rem',
         borderBottom: '1px solid var(--border-subtle)',
         paddingBottom: '0.5rem',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
       }}>
         <button
           onClick={() => setActiveTab('dashboard')}
           className={activeTab === 'dashboard' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
         >
-          <Store size={15} /> Live Dashboard
-        </button>
-        <button
-          onClick={() => setActiveTab('tables')}
-          className={activeTab === 'tables' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <LayoutGrid size={15} /> Tables & Floor
-        </button>
-        <button
-          onClick={() => setActiveTab('menu')}
-          className={activeTab === 'menu' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <BookOpen size={15} /> Menu Catalog
-        </button>
-        <button
-          onClick={() => setActiveTab('orders')}
-          className={activeTab === 'orders' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <Utensils size={15} /> Orders & Kitchen
-        </button>
-        <button
-          onClick={() => setActiveTab('billing')}
-          className={activeTab === 'billing' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <Receipt size={15} /> Billing & Invoices
-        </button>
-        <button
-          onClick={() => setActiveTab('queue')}
-          className={activeTab === 'queue' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <Clock size={15} /> Waiting Queue
-        </button>
-        <button
-          onClick={() => setActiveTab('reservations')}
-          className={activeTab === 'reservations' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <Calendar size={15} /> Reservations
-        </button>
-        <button
-          onClick={() => setActiveTab('customers')}
-          className={activeTab === 'customers' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <Users size={15} /> Customers
-        </button>
-        {isOwner && (
-          <button
-            onClick={() => setActiveTab('staff')}
-            className={activeTab === 'staff' ? 'btn-primary' : 'btn-secondary'}
-            style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-          >
-            <UserCheck size={15} /> Staff Management
-          </button>
-        )}
-        <button
-          onClick={() => setActiveTab('history')}
-          className={activeTab === 'history' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <History size={15} /> Order History
-        </button>
-        <button
-          onClick={() => setActiveTab('reports')}
-          className={activeTab === 'reports' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
-        >
-          <BarChart3 size={15} /> Reports & Analytics
+          <Store size={15} /> Live Operations
         </button>
         <button
           onClick={() => setActiveTab('profile')}
@@ -424,89 +360,158 @@ const RestaurantDashboardPage = () => {
           className={activeTab === 'settings' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.85rem', padding: '0.5rem 1.25rem' }}
         >
-          <Sliders size={15} /> Settings
+          <Sliders size={15} /> POS & Tax Settings
         </button>
       </div>
 
-      {/* TAB 1: LIVE DASHBOARD */}
+      {/* TAB 1: LIVE OPERATIONS (EXECUTIVE COMMAND CENTER) */}
       {activeTab === 'dashboard' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          {/* Operational Metrics Cards */}
+          {/* 4 Core Operational KPI Metric Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
-            <div className="glass-panel" style={{ padding: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>AVAILABLE TABLES</span>
-                <Store size={18} color="var(--accent-success)" />
+            <Link to="/restaurant/tables" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-panel" style={{ padding: '1.5rem', transition: 'transform 0.15s ease' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>AVAILABLE TABLES</span>
+                  <Store size={18} color="var(--accent-success)" />
+                </div>
+                <div style={{ fontSize: '1.8rem', fontWeight: 800 }}>
+                  {metrics?.tables?.available ?? 0} <span style={{ fontSize: '1.1rem', color: 'var(--text-dim)', fontWeight: 500 }}>/ {metrics?.tables?.total ?? 0}</span>
+                </div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--accent-success)', marginTop: '0.35rem' }}>
+                  {metrics?.tables?.occupied ?? 0} occupied • {metrics?.tables?.reserved ?? 0} reserved
+                </div>
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800 }}>
-                {metrics?.tables?.available ?? 0} / {metrics?.tables?.total ?? 0}
-              </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--accent-success)', marginTop: '0.25rem' }}>
-                {metrics?.tables?.occupied ?? 0} occupied • {metrics?.tables?.reserved ?? 0} reserved
-              </div>
-            </div>
+            </Link>
 
-            <div className="glass-panel" style={{ padding: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>ACTIVE ORDERS</span>
-                <Utensils size={18} color="var(--accent-primary)" />
+            <Link to="/restaurant/orders" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-panel" style={{ padding: '1.5rem', transition: 'transform 0.15s ease' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>ACTIVE KITCHEN ORDERS</span>
+                  <Utensils size={18} color="var(--accent-primary)" />
+                </div>
+                <div style={{ fontSize: '1.8rem', fontWeight: 800 }}>
+                  {metrics?.orders?.active ?? 0}
+                </div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.35rem' }}>
+                  {metrics?.orders?.today ?? 0} total orders taken today
+                </div>
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800 }}>
-                {metrics?.orders?.active ?? 0}
-              </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.25rem' }}>
-                {metrics?.orders?.today ?? 0} orders today
-              </div>
-            </div>
+            </Link>
 
-            <div className="glass-panel" style={{ padding: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>WAITING QUEUE</span>
-                <Clock size={18} color="var(--accent-warning)" />
+            <Link to="/restaurant/queue" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-panel" style={{ padding: '1.5rem', transition: 'transform 0.15s ease' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>WAITING QUEUE</span>
+                  <Clock size={18} color="var(--accent-warning)" />
+                </div>
+                <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent-warning)' }}>
+                  {metrics?.queue?.waiting ?? 0} <span style={{ fontSize: '1rem', color: 'var(--text-dim)', fontWeight: 500 }}>parties</span>
+                </div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--accent-warning)', marginTop: '0.35rem' }}>
+                  Live guest waitlist
+                </div>
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent-warning)' }}>
-                {metrics?.queue?.waiting ?? 0}
-              </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--accent-warning)', marginTop: '0.25rem' }}>
-                FIFO waiting party count
-              </div>
-            </div>
+            </Link>
 
-            <div className="glass-panel" style={{ padding: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>TODAY'S SALES</span>
-                <Receipt size={18} color="var(--accent-cyan)" />
+            <Link to="/restaurant/billing" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div className="glass-panel" style={{ padding: '1.5rem', transition: 'transform 0.15s ease' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>TODAY'S REVENUE</span>
+                  <Receipt size={18} color="var(--accent-cyan)" />
+                </div>
+                <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent-success)' }}>
+                  ₹{(metrics?.sales?.todayRevenue ?? 0).toLocaleString('en-IN')}
+                </div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--accent-success)', marginTop: '0.35rem' }}>
+                  {metrics?.sales?.billsPaidToday ?? 0} bills settled
+                </div>
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--accent-success)' }}>
-                ₹{(metrics?.sales?.todayRevenue ?? 0).toLocaleString('en-IN')}
-              </div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--accent-success)', marginTop: '0.25rem' }}>
-                {metrics?.sales?.billsPaidToday ?? 0} bills settled
-              </div>
+            </Link>
+          </div>
+
+          {/* Quick Shortcuts Bar */}
+          <div className="glass-panel" style={{ padding: '1.5rem 1.75rem' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '1rem' }}>
+              Quick Operational Shortcuts
+            </div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+              gap: '0.75rem',
+            }}>
+              <button
+                type="button"
+                onClick={() => setIsOrchestratorOpen(true)}
+                className="btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem', fontSize: '0.85rem' }}
+              >
+                <Zap size={15} color="var(--accent-warning)" />
+                <span>Walk-in Service</span>
+              </button>
+              <Link
+                to="/restaurant/tables"
+                className="btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem', fontSize: '0.85rem', textDecoration: 'none' }}
+              >
+                <LayoutGrid size={15} color="var(--accent-primary)" />
+                <span>Floor Seating</span>
+              </Link>
+              <Link
+                to="/restaurant/orders"
+                className="btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem', fontSize: '0.85rem', textDecoration: 'none' }}
+              >
+                <Utensils size={15} color="var(--accent-success)" />
+                <span>Live Orders</span>
+              </Link>
+              <Link
+                to="/restaurant/billing"
+                className="btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem', fontSize: '0.85rem', textDecoration: 'none' }}
+              >
+                <Receipt size={15} color="var(--accent-cyan)" />
+                <span>Settle Billing</span>
+              </Link>
+              <Link
+                to="/restaurant/reservations"
+                className="btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem', fontSize: '0.85rem', textDecoration: 'none' }}
+              >
+                <CalendarDays size={15} color="#ec4899" />
+                <span>Reservations</span>
+              </Link>
+              <Link
+                to="/restaurant/reports"
+                className="btn-secondary"
+                style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem', fontSize: '0.85rem', textDecoration: 'none' }}
+              >
+                <BarChart3 size={15} color="#a855f7" />
+                <span>Daily Sales</span>
+              </Link>
             </div>
           </div>
 
           {/* Floor Layout Matrix Preview */}
           <div className="glass-panel" style={{ padding: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
               <div>
-                <h2 style={{ fontSize: '1.25rem', margin: 0 }}>Restaurant Floor Layout</h2>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>Restaurant Floor Layout Matrix</h2>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
-                  Live table occupancy scoped strictly to your restaurant tenant
+                  Live table occupancy and dining status across all sections
                 </p>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <span className="badge badge-success">
-                  {metrics?.tables?.total ?? 0} Tables Configured
+                  {metrics?.tables?.total ?? 0} Tables Total
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('tables')}
-                  className="btn-secondary"
-                  style={{ fontSize: '0.8rem', padding: '0.35rem 0.75rem' }}
+                <Link
+                  to="/restaurant/tables"
+                  className="btn-primary"
+                  style={{ fontSize: '0.82rem', padding: '0.45rem 0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none' }}
                 >
-                  Manage Floor &rarr;
-                </button>
+                  Manage Floor & Seating <ArrowRight size={14} />
+                </Link>
               </div>
             </div>
 
@@ -561,73 +566,22 @@ const RestaurantDashboardPage = () => {
                 ))}
               </div>
             ) : (
-              <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                <p>No tables configured on your floor yet.</p>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('tables')}
+              <div style={{ padding: '2.5rem 1.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                <p style={{ margin: 0 }}>No tables configured on your floor yet.</p>
+                <Link
+                  to="/restaurant/tables"
                   className="btn-primary"
-                  style={{ marginTop: '0.75rem', padding: '0.5rem 1rem', fontSize: '0.85rem' }}
+                  style={{ marginTop: '1rem', padding: '0.55rem 1.25rem', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none' }}
                 >
-                  Setup Tables Now &rarr;
-                </button>
+                  Setup Floor Tables Now &rarr;
+                </Link>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* TAB 2: TABLE MANAGEMENT (PHASE 7) */}
-      {activeTab === 'tables' && (
-        <TableManagementPage />
-      )}
-
-      {/* TAB 3: MENU MANAGEMENT (PHASE 8) */}
-      {activeTab === 'menu' && (
-        <MenuManagementPage />
-      )}
-
-      {/* TAB 4: ORDER MANAGEMENT (PHASE 9) */}
-      {activeTab === 'orders' && (
-        <OrderManagementPage />
-      )}
-
-      {/* TAB 5: BILLING & PAYMENTS (PHASE 10) */}
-      {activeTab === 'billing' && (
-        <BillingManagementPage />
-      )}
-
-      {/* TAB 6: WAITING QUEUE (PHASE 11) */}
-      {activeTab === 'queue' && (
-        <QueueManagementPage />
-      )}
-
-      {/* TAB 7: TABLE RESERVATIONS (PHASE 12) */}
-      {activeTab === 'reservations' && (
-        <ReservationManagementPage />
-      )}
-
-      {/* TAB 8: CUSTOMER DIRECTORY & CRM (PHASE 13) */}
-      {activeTab === 'customers' && (
-        <CustomerManagementPage />
-      )}
-
-      {/* TAB 9: STAFF ROSTER & MANAGEMENT (PHASE 14) */}
-      {activeTab === 'staff' && isOwner && (
-        <StaffManagementPage />
-      )}
-
-      {/* TAB 10: ORDER HISTORY (PHASE 15) */}
-      {activeTab === 'history' && (
-        <OrderHistoryPage />
-      )}
-
-      {/* TAB 11: REPORTS & ANALYTICS (PHASE 15) */}
-      {activeTab === 'reports' && (
-        <ReportsPage />
-      )}
-
-      {/* TAB 12: RESTAURANT PROFILE */}
+      {/* TAB 2: RESTAURANT PROFILE */}
       {activeTab === 'profile' && (
         <div className="glass-panel" style={{ padding: '2.5rem', maxWidth: '780px', margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
@@ -1004,7 +958,7 @@ const RestaurantDashboardPage = () => {
         </div>
       )}
 
-      {/* End-to-End Quick Service Flow Orchestrator (Phase 16) */}
+      {/* End-to-End Quick Service Flow Orchestrator */}
       <ServiceOrchestratorModal
         isOpen={isOrchestratorOpen}
         onClose={() => setIsOrchestratorOpen(false)}

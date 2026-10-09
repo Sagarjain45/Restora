@@ -367,7 +367,7 @@ const BillingManagementPage = () => {
             Invoices & Settlements ({filteredBills.length})
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-            Strict tenant isolation enforced
+            Real-time payment records
           </div>
         </div>
 

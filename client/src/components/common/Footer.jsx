@@ -1,5 +1,4 @@
 import React from 'react';
-import { Shield, Layers, Database } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -20,26 +19,15 @@ const Footer = () => {
       }}>
         <div>
           <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
-            Restora Restaurant Management System
+            Restora Restaurant Management
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.25rem' }}>
-            Multi-Tenant SaaS Architecture • Built on the MERN Stack
+            All-in-one operations platform for table seating, kitchen order flow, billing, and analytics.
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '2rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Layers size={14} color="var(--accent-primary)" />
-            <span>React + Vite</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Database size={14} color="var(--accent-success)" />
-            <span>Node + Express + MongoDB</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Shield size={14} color="var(--accent-cyan)" />
-            <span>Tenant Isolation</span>
-          </div>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
+          © {new Date().getFullYear()} Restora POS. All rights reserved.
         </div>
       </div>
     </footer>

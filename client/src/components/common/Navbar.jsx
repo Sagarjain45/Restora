@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, ShieldCheck, Activity, Server, LogIn, LogOut, LayoutDashboard, User } from 'lucide-react';
-import { checkSystemHealth } from '../../services/api';
+import { UtensilsCrossed, LogIn, LogOut, LayoutDashboard, User, ShieldCheck } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
-  const [serverOnline, setServerOnline] = useState(null);
   const { user, isAuthenticated, role, logout } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let mounted = true;
-    checkSystemHealth().then((res) => {
-      if (mounted) {
-        setServerOnline(res.success);
-      }
-    });
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/auth/login');
   };
 
   const getDashboardPath = () => {
@@ -43,7 +29,7 @@ const Navbar = () => {
       <div style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        padding: '1rem 1.5rem',
+        padding: '0.85rem 1.5rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -51,143 +37,75 @@ const Navbar = () => {
         gap: '1rem',
       }}>
         {/* Brand Logo */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <Link to={isAuthenticated ? getDashboardPath() : '/'} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
           <div style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '12px',
+            width: '38px',
+            height: '38px',
+            borderRadius: '10px',
             background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: '0 4px 14px rgba(99, 102, 241, 0.35)',
           }}>
-            <UtensilsCrossed size={22} color="#ffffff" />
+            <UtensilsCrossed size={20} color="#ffffff" />
           </div>
           <div>
             <div style={{
-              fontSize: '1.25rem',
+              fontSize: '1.2rem',
               fontWeight: 800,
               fontFamily: 'var(--font-display)',
-              letterSpacing: '-0.03em',
+              letterSpacing: '-0.02em',
               background: 'linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
+              lineHeight: 1.1,
             }}>
               RESTORA
             </div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '-2px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              Multi-Tenant SaaS
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Restaurant Operations
             </div>
           </div>
         </Link>
 
-        {/* Status, Navigation & Auth Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          {/* Live Backend Connection Indicator */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.35rem 0.85rem',
-            borderRadius: '9999px',
-            background: 'rgba(255, 255, 255, 0.04)',
-            border: '1px solid var(--border-subtle)',
-            fontSize: '0.8rem',
-            fontWeight: 500,
-          }}>
-            <Server size={14} color="var(--text-muted)" />
-            <span>API:</span>
-            {serverOnline === null ? (
-              <span style={{ color: 'var(--text-dim)' }}>Checking...</span>
-            ) : serverOnline ? (
-              <span style={{ color: 'var(--accent-success)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span className="pulse-dot" /> Online
-              </span>
-            ) : (
-              <span style={{ color: 'var(--accent-danger)' }}>Offline</span>
-            )}
-          </div>
-
-          <Link to="/" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>
-            Home
-          </Link>
-
+        {/* Auth & Navigation Actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {isAuthenticated ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              {(role === 'RESTAURANT_OWNER' || role === 'RESTAURANT_STAFF') && (
-                <>
-                  <Link
-                    to="/restaurant/tables"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Floor Tables
-                  </Link>
-                  <Link
-                    to="/restaurant/menu"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Menu
-                  </Link>
-                  <Link
-                    to="/restaurant/orders"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Orders
-                  </Link>
-                  <Link
-                    to="/restaurant/billing"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Billing
-                  </Link>
-                  <Link
-                    to="/restaurant/queue"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Queue
-                  </Link>
-                  <Link
-                    to="/restaurant/reservations"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Reservations
-                  </Link>
-                  <Link
-                    to="/restaurant/customers"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Customers
-                  </Link>
-                  {role === 'RESTAURANT_OWNER' && (
-                    <Link
-                      to="/restaurant/staff"
-                      style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                    >
-                      Staff
-                    </Link>
-                  )}
-                  <Link
-                    to="/restaurant/order-history"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    History
-                  </Link>
-                  <Link
-                    to="/restaurant/reports"
-                    style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}
-                  >
-                    Reports
-                  </Link>
-                </>
+            <>
+              {role === 'PLATFORM_ADMIN' && (
+                <Link
+                  to="/admin/dashboard"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    color: 'var(--text-muted)',
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    padding: '0.4rem 0.75rem',
+                    borderRadius: 'var(--radius-sm)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <ShieldCheck size={15} color="var(--accent-primary)" />
+                  Platform Admin
+                </Link>
               )}
+
               <Link
                 to={getDashboardPath()}
-                className="btn-primary"
-                style={{ padding: '0.45rem 1rem', fontSize: '0.85rem' }}
+                className="btn-secondary"
+                style={{
+                  padding: '0.45rem 0.9rem',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                }}
               >
                 <LayoutDashboard size={15} />
-                My Dashboard
+                Dashboard
               </Link>
 
               {/* User badge */}
@@ -196,14 +114,19 @@ const Navbar = () => {
                 alignItems: 'center',
                 gap: '0.5rem',
                 background: 'rgba(255, 255, 255, 0.05)',
-                padding: '0.35rem 0.75rem',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '0.8rem',
-                border: '1px solid var(--border-subtle)'
+                padding: '0.4rem 0.75rem',
+                borderRadius: 'var(--radius-sm)',
+                fontSize: '0.82rem',
+                border: '1px solid var(--border-subtle)',
               }}>
                 <User size={13} color="var(--accent-primary)" />
-                <span style={{ fontWeight: 600 }}>{user?.name?.split(' ')[0]}</span>
-                <span className={role === 'PLATFORM_ADMIN' ? 'badge badge-cyan' : 'badge badge-success'} style={{ padding: '0.1rem 0.5rem', fontSize: '0.65rem' }}>
+                <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>
+                  {user?.name?.split(' ')[0] || user?.email?.split('@')[0]}
+                </span>
+                <span
+                  className={role === 'PLATFORM_ADMIN' ? 'badge badge-cyan' : role === 'RESTAURANT_OWNER' ? 'badge badge-success' : 'badge badge-warning'}
+                  style={{ padding: '0.1rem 0.45rem', fontSize: '0.65rem', fontWeight: 700 }}
+                >
                   {role === 'PLATFORM_ADMIN' ? 'ADMIN' : role === 'RESTAURANT_OWNER' ? 'OWNER' : 'STAFF'}
                 </span>
               </div>
@@ -211,13 +134,13 @@ const Navbar = () => {
               <button
                 onClick={handleLogout}
                 className="btn-secondary"
-                style={{ padding: '0.45rem 0.85rem', fontSize: '0.85rem' }}
+                style={{ padding: '0.45rem 0.75rem', fontSize: '0.85rem' }}
                 title="Sign Out"
               >
                 <LogOut size={14} />
                 Logout
               </button>
-            </div>
+            </>
           ) : (
             <Link
               to="/auth/login"

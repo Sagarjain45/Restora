@@ -74,7 +74,7 @@ const LoginPage = () => {
           </div>
           <h1 style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Welcome to Restora</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Sign in to access your tenant or platform dashboard
+            Sign in to access your restaurant operations dashboard
           </p>
         </div>
 
@@ -168,7 +168,7 @@ const LoginPage = () => {
         {/* Quick Demo Logins Section */}
         <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', textAlign: 'center', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            ⚡ Instant Role Login (Phase 3 Demo)
+            Quick Demo Sign-In
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <button

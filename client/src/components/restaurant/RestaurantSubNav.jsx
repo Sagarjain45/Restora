@@ -41,7 +41,7 @@ const RestaurantSubNav = () => {
         WebkitBackdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--border-subtle)',
         position: 'sticky',
-        top: '69px',
+        top: '58px',
         zIndex: 40,
         overflowX: 'auto',
         scrollbarWidth: 'none',

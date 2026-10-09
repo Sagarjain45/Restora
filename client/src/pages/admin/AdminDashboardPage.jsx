@@ -17,7 +17,6 @@ import {
   Send,
   Sliders,
   BarChart3,
-  TrendingUp,
 } from 'lucide-react';
 import {
   getDashboardStatsApi,
@@ -257,7 +256,7 @@ const AdminDashboardPage = () => {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
             <span className="badge badge-cyan">Platform Admin Space</span>
-            <span className="badge badge-success">Phase 5 Operational</span>
+            <span className="badge badge-success">Active Operations</span>
           </div>
           <h1 style={{ fontSize: '1.8rem', margin: 0 }}>
             Platform Administration Hub
@@ -425,7 +424,7 @@ const AdminDashboardPage = () => {
           <div className="glass-panel" style={{ padding: '2rem' }}>
             <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Sliders size={20} color="var(--accent-primary)" />
-              Platform Admin Workflow (Phase 5)
+              Platform Admin Workflow
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
               <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
@@ -441,10 +440,10 @@ const AdminDashboardPage = () => {
               <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <span className="badge badge-success">Step 2</span>
-                  <strong>Automated Tenant Creation</strong>
+                  <strong>Automated Restaurant Creation</strong>
                 </div>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
-                  Approving automatically provisions the Restaurant document and links a <code>RESTAURANT_OWNER</code> user account.
+                  Approving automatically provisions the Restaurant and links a <code>RESTAURANT_OWNER</code> user account.
                 </p>
               </div>
 
@@ -454,22 +453,22 @@ const AdminDashboardPage = () => {
                   <strong>Status Governance</strong>
                 </div>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
-                  Suspend violating restaurants on demand. Phase 4 middleware blocks suspended restaurants from operational access.
+                  Suspend violating restaurants on demand. Access control middleware blocks suspended restaurants from operational access.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Platform Reports & Restaurant Activity (Phase 15) */}
+          {/* Platform Reports & Restaurant Activity */}
           <div className="glass-panel" style={{ padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
               <div>
                 <h2 style={{ fontSize: '1.25rem', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <BarChart3 size={20} color="var(--accent-primary)" />
-                  Restaurant Activity & Performance Roster (Phase 15 Reports)
+                  Restaurant Activity & Performance Roster
                 </h2>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.25rem 0 0 0' }}>
-                  Real database activity metrics: orders processed, gross revenue collected, and operational status per tenant.
+                  Live business activity metrics: orders processed, gross revenue collected, and operational status.
                 </p>
               </div>
             </div>

@@ -15,7 +15,7 @@ const MainLayout = () => {
       <main className="main-content">
         <Outlet />
       </main>
-      <Footer />
+      {!isRestaurantRoute && <Footer />}
     </div>
   );
 };

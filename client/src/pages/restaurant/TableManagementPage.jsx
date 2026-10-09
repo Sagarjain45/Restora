@@ -195,7 +195,9 @@ const TableManagementPage = () => {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
             <span className="badge badge-indigo">Floor Management</span>
-            <span className="badge badge-success">Phase 7</span>
+            {summary && (
+              <span className="badge badge-success">{summary.totalTables || tables.length} Tables Active</span>
+            )}
           </div>
           <h1 style={{ fontSize: '1.8rem', margin: 0 }}>Restaurant Table Layout</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>

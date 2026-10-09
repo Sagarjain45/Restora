@@ -217,7 +217,7 @@ const OrderManagementPage = () => {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
             <span className="badge badge-cyan">Kitchen & Floor</span>
-            <span className="badge badge-indigo">Phase 9</span>
+            <span className="badge badge-indigo">Live Orders</span>
           </div>
           <h1 style={{ fontSize: '1.8rem', margin: 0 }}>Table-Based Order Management</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
