@@ -26,6 +26,13 @@ const restaurantApplicationSchema = new mongoose.Schema(
       required: [true, 'Applicant phone is required'],
       trim: true,
     },
+    fssaiNumber: {
+      type: String,
+      required: [true, 'FSSAI license number is required'],
+      trim: true,
+      maxlength: [30, 'FSSAI license number cannot exceed 30 characters'],
+      index: true,
+    },
     address: {
       type: String,
       required: [true, 'Address is required'],
@@ -41,9 +48,38 @@ const restaurantApplicationSchema = new mongoose.Schema(
       required: [true, 'State is required'],
       trim: true,
     },
+    postalCode: {
+      type: String,
+      default: '',
+      trim: true,
+    },
     cuisine: {
       type: [String],
       default: [],
+    },
+    businessType: {
+      type: String,
+      default: 'Dine-In Restaurant',
+      trim: true,
+    },
+    seatingCapacity: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    gstNumber: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    website: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    ownerPasswordHash: {
+      type: String,
+      default: null,
     },
     notes: {
       type: String,

@@ -60,6 +60,20 @@ export const submitApplication = async (req, res, next) => {
   }
 };
 
+export const getApplicationStatus = async (req, res, next) => {
+  try {
+    const { email, id } = req.query;
+    const statusData = await adminService.getApplicationStatus({ email, applicationId: id });
+    res.status(200).json({
+      success: true,
+      message: 'Application status retrieved successfully',
+      data: statusData,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const approveApplication = async (req, res, next) => {
   try {
     const reviewerId = req.user.id;

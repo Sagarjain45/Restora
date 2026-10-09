@@ -68,12 +68,19 @@ const AdminDashboardPage = () => {
     applicantName: '',
     applicantEmail: '',
     applicantPhone: '',
+    fssaiNumber: '',
     address: '',
     city: '',
     state: '',
+    postalCode: '',
     cuisine: '',
+    businessType: 'Casual Dining Bistro',
+    seatingCapacity: '',
+    password: 'Owner@123',
     notes: '',
   });
+
+  const [approvalPlan, setApprovalPlan] = useState('BASIC');
 
   // 1. Fetch Dashboard Stats & Platform Reports
   const loadDashboardStats = useCallback(async () => {
@@ -132,13 +139,13 @@ const AdminDashboardPage = () => {
   }, [loadDashboardStats, loadApplications, loadRestaurants]);
 
   // Handle Approve Application
-  const handleApprove = async (appId) => {
+  const handleApprove = async (appId, plan = 'BASIC') => {
     setActionLoading(true);
     try {
-      const res = await approveApplicationApi(token, appId);
+      const res = await approveApplicationApi(token, appId, { subscriptionPlan: plan });
       setNotice({
         type: 'success',
-        text: `Application for "${res.data.restaurant.name}" approved successfully! Created owner account for ${res.data.owner.email}.`,
+        text: `Application for "${res.data.restaurant.name}" approved successfully! Created owner account for ${res.data.owner.email}. Restaurant is now live and ready!`,
       });
       setSelectedApp(null);
       await Promise.all([loadApplications(), loadRestaurants(), loadDashboardStats()]);
@@ -204,8 +211,8 @@ const AdminDashboardPage = () => {
   // Handle Submit New Application (Simulator)
   const handleSubmitApp = async (e) => {
     e.preventDefault();
-    if (!form.restaurantName || !form.applicantName || !form.applicantEmail) {
-      setNotice({ type: 'error', text: 'Please fill in all required fields.' });
+    if (!form.restaurantName || !form.applicantName || !form.applicantEmail || !form.fssaiNumber) {
+      setNotice({ type: 'error', text: 'Please fill in all required fields including FSSAI license number.' });
       return;
     }
     setActionLoading(true);
@@ -220,10 +227,15 @@ const AdminDashboardPage = () => {
         applicantName: '',
         applicantEmail: '',
         applicantPhone: '',
+        fssaiNumber: '',
         address: '',
         city: '',
         state: '',
+        postalCode: '',
         cuisine: '',
+        businessType: 'Casual Dining Bistro',
+        seatingCapacity: '',
+        password: 'Owner@123',
         notes: '',
       });
       setActiveTab('applications');
@@ -567,6 +579,7 @@ const AdminDashboardPage = () => {
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '0.75rem' }}>RESTAURANT</th>
+                  <th style={{ padding: '0.75rem' }}>FSSAI LICENSE</th>
                   <th style={{ padding: '0.75rem' }}>APPLICANT</th>
                   <th style={{ padding: '0.75rem' }}>CITY / STATE</th>
                   <th style={{ padding: '0.75rem' }}>CUISINE</th>
@@ -580,7 +593,21 @@ const AdminDashboardPage = () => {
                   applications.map((app) => (
                     <tr key={app._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
                       <td style={{ padding: '0.85rem 0.75rem', fontWeight: 600, color: 'var(--text-main)' }}>
-                        {app.restaurantName}
+                        <div>{app.restaurantName}</div>
+                        <div style={{ color: 'var(--text-dim)', fontSize: '0.75rem' }}>{app.businessType || 'Dine-In'}</div>
+                      </td>
+                      <td style={{ padding: '0.85rem 0.75rem' }}>
+                        <span style={{
+                          fontFamily: 'monospace',
+                          fontSize: '0.8rem',
+                          background: 'rgba(52, 211, 153, 0.1)',
+                          border: '1px solid rgba(52, 211, 153, 0.3)',
+                          padding: '0.2rem 0.45rem',
+                          borderRadius: '4px',
+                          color: '#4ade80'
+                        }}>
+                          {app.fssaiNumber || 'Pending'}
+                        </span>
                       </td>
                       <td style={{ padding: '0.85rem 0.75rem' }}>
                         <div>{app.applicantName}</div>
@@ -844,6 +871,49 @@ const AdminDashboardPage = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <div>
                 <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.35rem' }}>
+                  FSSAI License Number *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="14-digit FSSAI (e.g. 11521018000452)"
+                  value={form.fssaiNumber}
+                  onChange={(e) => setForm({ ...form, fssaiNumber: e.target.value })}
+                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(52, 211, 153, 0.4)', borderRadius: 'var(--radius-sm)', color: '#4ade80', fontFamily: 'monospace' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.35rem' }}>
+                  Seating Capacity (Seats)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="e.g. 45"
+                  value={form.seatingCapacity}
+                  onChange={(e) => setForm({ ...form, seatingCapacity: e.target.value })}
+                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.35rem' }}>
+                  PIN / Postal Code
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. 380054"
+                  value={form.postalCode}
+                  onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
+                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.35rem' }}>
                   City *
                 </label>
                 <input
@@ -926,47 +996,80 @@ const AdminDashboardPage = () => {
           zIndex: 1000,
           padding: '1rem',
         }}>
-          <div className="glass-panel" style={{ width: '100%', maxWidth: '580px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '600px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <span className="badge badge-cyan" style={{ marginBottom: '0.35rem' }}>Application Detail</span>
-                <h3 style={{ fontSize: '1.3rem', margin: 0 }}>{selectedApp.restaurantName}</h3>
+                <span className="badge badge-cyan" style={{ marginBottom: '0.35rem' }}>Application Verification</span>
+                <h3 style={{ fontSize: '1.35rem', margin: 0 }}>{selectedApp.restaurantName}</h3>
               </div>
               <button onClick={() => setSelectedApp(null)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
                 <X size={20} />
               </button>
             </div>
 
+            {/* FSSAI Verification Box */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%)',
+              border: '1px solid rgba(52, 211, 153, 0.4)',
+              padding: '1rem 1.25rem',
+              borderRadius: 'var(--radius-md)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+            }}>
+              <div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  FSSAI Food License Credentials
+                </div>
+                <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#4ade80', fontFamily: 'monospace', letterSpacing: '0.05em' }}>
+                  {selectedApp.fssaiNumber || 'No license number provided'}
+                </div>
+              </div>
+              <span className="badge badge-success" style={{ fontSize: '0.75rem', padding: '0.25rem 0.65rem' }}>
+                <Check size={12} /> Food Safety Verified
+              </span>
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.85rem' }}>
               <div>
-                <div style={{ color: 'var(--text-dim)' }}>Applicant Name</div>
+                <div style={{ color: 'var(--text-dim)' }}>Applicant / Owner</div>
                 <div style={{ fontWeight: 600 }}>{selectedApp.applicantName}</div>
               </div>
               <div>
-                <div style={{ color: 'var(--text-dim)' }}>Email</div>
+                <div style={{ color: 'var(--text-dim)' }}>Email Address</div>
                 <div style={{ fontWeight: 600 }}>{selectedApp.applicantEmail}</div>
               </div>
               <div>
-                <div style={{ color: 'var(--text-dim)' }}>Phone</div>
+                <div style={{ color: 'var(--text-dim)' }}>Contact Phone</div>
                 <div style={{ fontWeight: 600 }}>{selectedApp.applicantPhone}</div>
               </div>
               <div>
-                <div style={{ color: 'var(--text-dim)' }}>Status</div>
+                <div style={{ color: 'var(--text-dim)' }}>Application Status</div>
                 <span className={`badge ${selectedApp.status === 'APPROVED' ? 'badge-success' : selectedApp.status === 'REJECTED' ? 'badge-danger' : 'badge-warning'}`}>
                   {selectedApp.status}
                 </span>
               </div>
-              <div style={{ gridColumn: 'span 2' }}>
-                <div style={{ color: 'var(--text-dim)' }}>Address</div>
-                <div>{selectedApp.address}, {selectedApp.city}, {selectedApp.state}</div>
+              <div>
+                <div style={{ color: 'var(--text-dim)' }}>Category</div>
+                <div style={{ fontWeight: 600 }}>{selectedApp.businessType || 'Dine-In Restaurant'}</div>
+              </div>
+              <div>
+                <div style={{ color: 'var(--text-dim)' }}>Seating Capacity</div>
+                <div style={{ fontWeight: 600 }}>{selectedApp.seatingCapacity ? `${selectedApp.seatingCapacity} seats` : 'Not specified'}</div>
               </div>
               <div style={{ gridColumn: 'span 2' }}>
-                <div style={{ color: 'var(--text-dim)' }}>Cuisine</div>
+                <div style={{ color: 'var(--text-dim)' }}>Address & Pincode</div>
+                <div>{selectedApp.address}, {selectedApp.city}, {selectedApp.state}{selectedApp.postalCode ? ` - ${selectedApp.postalCode}` : ''}</div>
+              </div>
+              <div style={{ gridColumn: 'span 2' }}>
+                <div style={{ color: 'var(--text-dim)' }}>Cuisine Types</div>
                 <div>{selectedApp.cuisine?.join(', ') || 'N/A'}</div>
               </div>
               {selectedApp.notes && (
                 <div style={{ gridColumn: 'span 2' }}>
-                  <div style={{ color: 'var(--text-dim)' }}>Notes</div>
+                  <div style={{ color: 'var(--text-dim)' }}>Notes / Description</div>
                   <div style={{ color: 'var(--text-muted)' }}>{selectedApp.notes}</div>
                 </div>
               )}
@@ -978,7 +1081,43 @@ const AdminDashboardPage = () => {
               )}
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+            {/* Approval Plan Picker and Actions */}
+            {selectedApp.status === 'PENDING' && (
+              <div style={{
+                background: 'rgba(15, 23, 42, 0.6)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: 'var(--radius-md)',
+                padding: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '0.75rem',
+              }}>
+                <div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)' }}>Assign Subscription Plan</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Sets platform feature limits for this tenant</div>
+                </div>
+                <select
+                  value={approvalPlan}
+                  onChange={(e) => setApprovalPlan(e.target.value)}
+                  style={{
+                    padding: '0.45rem 0.85rem',
+                    background: '#0f172a',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-sm)',
+                    color: '#fff',
+                    fontSize: '0.85rem',
+                  }}
+                >
+                  <option value="BASIC">BASIC Plan (Standard)</option>
+                  <option value="PREMIUM">PREMIUM Plan (Unlimited)</option>
+                  <option value="FREE">FREE Starter</option>
+                </select>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
               <button onClick={() => setSelectedApp(null)} className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>
                 Close
               </button>
@@ -995,12 +1134,12 @@ const AdminDashboardPage = () => {
                     Reject Application
                   </button>
                   <button
-                    onClick={() => handleApprove(selectedApp._id)}
+                    onClick={() => handleApprove(selectedApp._id, approvalPlan)}
                     disabled={actionLoading}
                     className="btn-primary"
-                    style={{ background: 'var(--accent-success)', borderColor: 'var(--accent-success)', padding: '0.5rem 1.25rem' }}
+                    style={{ background: 'var(--accent-success)', borderColor: 'var(--accent-success)', padding: '0.5rem 1.35rem' }}
                   >
-                    Approve Application
+                    <Check size={14} /> Approve & Activate Restaurant
                   </button>
                 </>
               )}

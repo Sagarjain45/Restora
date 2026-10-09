@@ -107,11 +107,11 @@ const HomePage = () => {
           and guest analytics in one seamless cloud workspace built for owners and floor teams.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <Link to="/auth/login" className="btn-primary" style={{ padding: '0.85rem 2rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            Sign In to Your Restaurant <ArrowRight size={18} />
+          <Link to="/auth/register" className="btn-primary" style={{ padding: '0.85rem 2rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            Register Your Restaurant <ArrowRight size={18} />
           </Link>
           <Link to="/auth/login" className="btn-secondary" style={{ padding: '0.85rem 1.75rem', fontSize: '1rem' }}>
-            Demo Restaurant Access
+            Sign In to Existing Account
           </Link>
         </div>
       </section>
@@ -223,15 +223,24 @@ const HomePage = () => {
           }}>
             <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Ready to Get Started?</h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1.5rem' }}>
-              Sign in with your restaurant account to begin managing floor operations today.
+              Register your restaurant today with your FSSAI license, or sign in to your existing operational dashboard.
             </p>
-            <Link
-              to="/auth/login"
-              className="btn-primary"
-              style={{ width: '100%', justifyContent: 'center', padding: '0.8rem 1.5rem' }}
-            >
-              Access Restaurant Portal <ArrowRight size={16} />
-            </Link>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <Link
+                to="/auth/register"
+                className="btn-primary"
+                style={{ width: '100%', justifyContent: 'center', padding: '0.8rem 1.5rem' }}
+              >
+                Register Your Restaurant <ArrowRight size={16} />
+              </Link>
+              <Link
+                to="/auth/login"
+                className="btn-secondary"
+                style={{ width: '100%', justifyContent: 'center', padding: '0.7rem 1.5rem', fontSize: '0.88rem' }}
+              >
+                Sign In to Portal
+              </Link>
+            </div>
           </div>
         </div>
       </section>

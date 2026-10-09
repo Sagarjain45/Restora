@@ -65,6 +65,27 @@ const restaurantSchema = new mongoose.Schema(
       default: '',
       trim: true,
     },
+    fssaiNumber: {
+      type: String,
+      default: '',
+      trim: true,
+      maxlength: [30, 'FSSAI license number cannot exceed 30 characters'],
+    },
+    seatingCapacity: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    gstNumber: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    businessType: {
+      type: String,
+      default: 'Dine-In Restaurant',
+      trim: true,
+    },
     isOpenNow: {
       type: Boolean,
       default: true,

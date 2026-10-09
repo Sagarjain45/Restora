@@ -116,40 +116,132 @@ export const submitApplication = async (data) => {
     address,
     city,
     state,
+    postalCode,
+    fssaiNumber,
     cuisine,
+    businessType,
+    seatingCapacity,
+    gstNumber,
+    website,
+    password,
     notes,
   } = data;
 
+  if (!restaurantName || !applicantName || !applicantEmail || !applicantPhone || !address || !city || !state) {
+    const error = new Error('All required restaurant and owner contact fields must be provided.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  // Validate FSSAI license number
+  const trimmedFssai = (fssaiNumber || '').trim();
+  if (!trimmedFssai) {
+    const error = new Error('FSSAI license number is required for food business verification in India.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  // Check if an existing user already exists with this email
+  const existingUser = await User.findOne({ email: applicantEmail.toLowerCase() });
+  if (existingUser) {
+    const error = new Error('An active user account is already registered with this email address. Please sign in or use a different email.');
+    error.statusCode = 409;
+    throw error;
+  }
+
+  // Check if an application is already pending for this email
   const existingPending = await RestaurantApplication.findOne({
     applicantEmail: applicantEmail.toLowerCase(),
     status: 'PENDING',
   });
 
   if (existingPending) {
-    const error = new Error('An active onboarding application is already pending review for this email.');
+    const error = new Error('An active onboarding application is already pending review for this email address.');
     error.statusCode = 409;
     throw error;
   }
 
+  // Pre-hash owner password if provided so owner can login immediately upon admin approval
+  let ownerPasswordHash = null;
+  if (password && password.trim().length >= 6) {
+    ownerPasswordHash = await hashPassword(password.trim());
+  }
+
+  // Parse cuisine array
+  let parsedCuisine = [];
+  if (Array.isArray(cuisine)) {
+    parsedCuisine = cuisine.map((c) => c.trim()).filter(Boolean);
+  } else if (typeof cuisine === 'string' && cuisine.trim()) {
+    parsedCuisine = cuisine.split(',').map((c) => c.trim()).filter(Boolean);
+  }
+
   return await RestaurantApplication.create({
-    restaurantName,
-    applicantName,
-    applicantEmail: applicantEmail.toLowerCase(),
-    applicantPhone,
-    address,
-    city,
-    state,
-    cuisine: Array.isArray(cuisine) ? cuisine : (cuisine ? [cuisine] : []),
-    notes: notes || '',
+    restaurantName: restaurantName.trim(),
+    applicantName: applicantName.trim(),
+    applicantEmail: applicantEmail.toLowerCase().trim(),
+    applicantPhone: applicantPhone.trim(),
+    address: address.trim(),
+    city: city.trim(),
+    state: state.trim(),
+    postalCode: (postalCode || '').trim(),
+    fssaiNumber: trimmedFssai,
+    cuisine: parsedCuisine,
+    businessType: businessType || 'Dine-In Restaurant',
+    seatingCapacity: Number(seatingCapacity) || 0,
+    gstNumber: (gstNumber || '').trim(),
+    website: (website || '').trim(),
+    ownerPasswordHash,
+    notes: (notes || '').trim(),
     status: 'PENDING',
   });
 };
 
 /**
+ * Checks the status of an application by email or application ID (public lookup)
+ */
+export const getApplicationStatus = async ({ email, applicationId } = {}) => {
+  let application = null;
+
+  if (applicationId) {
+    application = await RestaurantApplication.findById(applicationId).populate('reviewedBy', 'name email');
+  } else if (email) {
+    // Find the latest application for this applicant email
+    application = await RestaurantApplication.findOne({ applicantEmail: email.toLowerCase().trim() })
+      .sort({ createdAt: -1 })
+      .populate('reviewedBy', 'name email');
+  } else {
+    const error = new Error('Please provide either an application email or application ID.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  if (!application) {
+    const error = new Error('No registration application found matching the provided criteria.');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return {
+    id: application._id,
+    restaurantName: application.restaurantName,
+    applicantName: application.applicantName,
+    applicantEmail: application.applicantEmail,
+    city: application.city,
+    state: application.state,
+    fssaiNumber: application.fssaiNumber,
+    status: application.status,
+    rejectionReason: application.rejectionReason,
+    createdAt: application.createdAt,
+    reviewedAt: application.reviewedAt,
+  };
+};
+
+/**
  * Approves a restaurant application:
- * 1. Creates/links the Owner user account.
- * 2. Creates the new Restaurant document with ACTIVE status.
- * 3. Updates application status to APPROVED.
+ * 1. Creates/links the Owner user account (using applicant's password if provided).
+ * 2. Creates the new Restaurant document with ACTIVE status and FSSAI details.
+ * 3. Pre-provisions default starter dining tables so floor is ready immediately.
+ * 4. Updates application status to APPROVED.
  */
 export const approveApplication = async (applicationId, reviewerId, options = {}) => {
   const application = await RestaurantApplication.findById(applicationId);
@@ -169,8 +261,9 @@ export const approveApplication = async (applicationId, reviewerId, options = {}
   let owner = await User.findOne({ email: application.applicantEmail.toLowerCase() });
 
   if (!owner) {
-    const initialPassword = options.temporaryPassword || 'Welcome@123';
-    const passwordHash = await hashPassword(initialPassword);
+    const passwordHash =
+      application.ownerPasswordHash ||
+      (await hashPassword(options.temporaryPassword || 'Welcome@123'));
 
     owner = await User.create({
       name: application.applicantName,
@@ -183,6 +276,9 @@ export const approveApplication = async (applicationId, reviewerId, options = {}
   } else {
     owner.role = 'RESTAURANT_OWNER';
     owner.status = 'ACTIVE';
+    if (application.ownerPasswordHash) {
+      owner.passwordHash = application.ownerPasswordHash;
+    }
   }
 
   // 2. Create the Restaurant
@@ -194,6 +290,12 @@ export const approveApplication = async (applicationId, reviewerId, options = {}
     address: application.address,
     city: application.city,
     state: application.state,
+    postalCode: application.postalCode || '',
+    fssaiNumber: application.fssaiNumber || '',
+    seatingCapacity: application.seatingCapacity || 0,
+    gstNumber: application.gstNumber || '',
+    website: application.website || '',
+    businessType: application.businessType || 'Dine-In Restaurant',
     cuisine: application.cuisine,
     status: 'ACTIVE',
     subscriptionPlan: options.subscriptionPlan || 'BASIC',
@@ -203,7 +305,16 @@ export const approveApplication = async (applicationId, reviewerId, options = {}
   owner.restaurantId = restaurant._id;
   await owner.save();
 
-  // 3. Mark Application as APPROVED
+  // 3. Auto-seed standard starter tables so restaurant floor is instantly operational
+  const starterTables = [
+    { restaurantId: restaurant._id, tableNumber: 'T-01', capacity: 2, section: 'Main Dining', status: 'AVAILABLE' },
+    { restaurantId: restaurant._id, tableNumber: 'T-02', capacity: 4, section: 'Main Dining', status: 'AVAILABLE' },
+    { restaurantId: restaurant._id, tableNumber: 'T-03', capacity: 4, section: 'Window Side', status: 'AVAILABLE' },
+    { restaurantId: restaurant._id, tableNumber: 'T-04', capacity: 6, section: 'Patio', status: 'AVAILABLE' },
+  ];
+  await Table.insertMany(starterTables);
+
+  // 4. Mark Application as APPROVED
   application.status = 'APPROVED';
   application.reviewedBy = reviewerId;
   application.reviewedAt = new Date();
@@ -364,10 +475,14 @@ export const seedSampleApplications = async () => {
       applicantName: 'Vikram Mehra',
       applicantEmail: 'vikram@goldenspoon.com',
       applicantPhone: '+91 98200 12345',
+      fssaiNumber: '11521018000452',
       address: 'Plot 14, Bandra Kurla Complex',
       city: 'Mumbai',
       state: 'Maharashtra',
+      postalCode: '400051',
       cuisine: ['Continental', 'Mediterranean'],
+      businessType: 'Fine Dining Bistro',
+      seatingCapacity: 60,
       notes: 'Fine dining establishment with 60 seats capacity.',
       status: 'PENDING',
     },
@@ -376,10 +491,14 @@ export const seedSampleApplications = async () => {
       applicantName: 'Aarti Sharma',
       applicantEmail: 'aarti@kyotoexpress.com',
       applicantPhone: '+91 98111 67890',
+      fssaiNumber: '12822003000789',
       address: '22 Park Street',
       city: 'Kolkata',
       state: 'West Bengal',
+      postalCode: '700016',
       cuisine: ['Japanese', 'Asian Fusion'],
+      businessType: 'Quick Service / Sushi Bar',
+      seatingCapacity: 35,
       notes: 'Fast-casual sushi and bento dining.',
       status: 'PENDING',
     },
@@ -388,10 +507,14 @@ export const seedSampleApplications = async () => {
       applicantName: 'Harpreet Singh',
       applicantEmail: 'harpreet@pinddhaba.com',
       applicantPhone: '+91 98450 33445',
+      fssaiNumber: '10320005001234',
       address: 'Sector 17 Market',
       city: 'Chandigarh',
       state: 'Punjab',
+      postalCode: '160017',
       cuisine: ['North Indian', 'Punjabi'],
+      businessType: 'Traditional Family Diner',
+      seatingCapacity: 80,
       notes: 'Traditional Punjabi family diner.',
       status: 'PENDING',
     },

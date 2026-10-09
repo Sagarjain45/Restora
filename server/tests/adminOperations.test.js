@@ -83,6 +83,28 @@ describe('Phase 5: Platform Admin Operations & Restaurant Lifecycle Tests', () =
       assert.equal(app.rejectionReason, 'Insufficient documentation provided');
     });
 
+    it('should require FSSAI license number during registration', async () => {
+      await assert.rejects(
+        async () => {
+          await submitApplication({
+            restaurantName: 'Test Diner',
+            applicantName: 'Test Owner',
+            applicantEmail: 'unique_owner@test.com',
+            applicantPhone: '+91 99999 88888',
+            address: '123 Test St',
+            city: 'Delhi',
+            state: 'Delhi',
+            fssaiNumber: '', // Missing FSSAI
+          });
+        },
+        (err) => {
+          assert.equal(err.statusCode, 400);
+          assert.match(err.message, /FSSAI/i);
+          return true;
+        }
+      );
+    });
+
     it('should validate status transition constraints', () => {
       const app = { status: 'APPROVED' };
       // Cannot reject already approved

@@ -5,8 +5,9 @@ import { requireRole } from '../middleware/roleMiddleware.js';
 
 const router = express.Router();
 
-// Public Application Onboarding & Demo Seeding
+// Public Application Onboarding, Status Tracking & Demo Seeding
 router.post('/applications/apply', adminController.submitApplication);
+router.get('/applications/status', adminController.getApplicationStatus);
 router.post('/seed-applications', adminController.seedApplications);
 
 // Protected Platform Admin Routes

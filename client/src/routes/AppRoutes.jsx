@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/auth/LoginPage';
+import RegisterRestaurantPage from '../pages/auth/RegisterRestaurantPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import RestaurantDashboardPage from '../pages/restaurant/RestaurantDashboardPage';
 import TableManagementPage from '../pages/restaurant/TableManagementPage';
@@ -25,6 +26,8 @@ const AppRoutes = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="auth/login" element={<LoginPage />} />
+        <Route path="auth/register" element={<RegisterRestaurantPage />} />
+        <Route path="register" element={<RegisterRestaurantPage />} />
 
         {/* Platform Admin Portal (Role-Guarded) */}
         <Route

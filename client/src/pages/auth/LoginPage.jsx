@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import { Lock, Mail, ArrowRight, ShieldCheck, Store, Users, AlertCircle } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, Store, Users, AlertCircle, UtensilsCrossed } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -164,6 +164,39 @@ const LoginPage = () => {
             )}
           </button>
         </form>
+
+        {/* Restaurant Owner Registration Link */}
+        <div style={{
+          marginTop: '1.25rem',
+          padding: '0.9rem',
+          borderRadius: 'var(--radius-sm)',
+          background: 'rgba(99, 102, 241, 0.08)',
+          border: '1px solid rgba(99, 102, 241, 0.25)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '0.75rem',
+          flexWrap: 'wrap',
+          fontSize: '0.85rem'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
+            <UtensilsCrossed size={16} color="var(--accent-primary)" />
+            <span>Own a restaurant?</span>
+          </div>
+          <Link
+            to="/auth/register"
+            style={{
+              color: 'var(--accent-primary)',
+              fontWeight: 600,
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem',
+            }}
+          >
+            Register on Restora <ArrowRight size={13} />
+          </Link>
+        </div>
 
         {/* Quick Demo Logins Section */}
         <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>

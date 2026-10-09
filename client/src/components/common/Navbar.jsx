@@ -142,14 +142,32 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <Link
-              to="/auth/login"
-              className="btn-primary"
-              style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
-            >
-              <LogIn size={15} />
-              Sign In
-            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <Link
+                to="/auth/register"
+                className="btn-secondary"
+                style={{
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  borderColor: 'rgba(99, 102, 241, 0.4)',
+                  color: '#e0e7ff',
+                }}
+              >
+                <UtensilsCrossed size={14} color="var(--accent-primary)" />
+                Register Restaurant
+              </Link>
+              <Link
+                to="/auth/login"
+                className="btn-primary"
+                style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+              >
+                <LogIn size={15} />
+                Sign In
+              </Link>
+            </div>
           )}
         </div>
       </div>

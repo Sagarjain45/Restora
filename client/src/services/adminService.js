@@ -161,6 +161,24 @@ export const submitApplicationApi = async (formData) => {
   return data;
 };
 
+export const checkApplicationStatusApi = async ({ email = '', id = '' } = {}) => {
+  const query = new URLSearchParams();
+  if (email) query.set('email', email);
+  if (id) query.set('id', id);
+
+  const response = await fetch(`${ADMIN_BASE}/applications/status?${query.toString()}`, {
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Failed to retrieve application status.');
+  }
+  return data.data;
+};
+
 export const seedSampleApplicationsApi = async () => {
   const response = await fetch(`${ADMIN_BASE}/seed-applications`, {
     method: 'POST',
