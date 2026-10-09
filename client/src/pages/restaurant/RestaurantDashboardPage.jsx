@@ -15,6 +15,7 @@ import {
   Layers,
   LayoutGrid,
   CalendarDays,
+  BarChart3,
   Zap,
   ArrowRight,
   MapPin,
