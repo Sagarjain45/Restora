@@ -1,0 +1,41 @@
+services:
+  # ==========================================
+  # RESTORA BACKEND API SERVICE
+  # ==========================================
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: restora_backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - CLIENT_URL=http://localhost
+    networks:
+      - restora_net
+
+  # ==========================================
+  # RESTORA FRONTEND SPA (NGINX)
+  # ==========================================
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: restora_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - restora_net
+
+networks:
+  restora_net:
+    driver: bridge

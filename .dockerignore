@@ -1,0 +1,9 @@
+.git
+.gitignore
+README.md
+DOCS
+client/node_modules
+client/dist
+server/node_modules
+server/tests
+*.log
