@@ -257,7 +257,7 @@ const RegisterRestaurantPage = () => {
         <div
           style={{
             display: 'inline-flex',
-            background: 'rgba(15, 23, 42, 0.7)',
+            background: '#f1f5f9',
             padding: '0.35rem',
             borderRadius: '999px',
             border: '1px solid var(--border-subtle)',
@@ -370,10 +370,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -391,16 +391,16 @@ const RegisterRestaurantPage = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem 1rem',
-                    background: 'rgba(15, 23, 42, 0.8)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
-                    color: '#ffffff',
+                    color: 'var(--text-main)',
                     fontSize: '0.95rem',
                     outline: 'none',
                   }}
                 >
                   {BUSINESS_TYPES.map((bt) => (
-                    <option key={bt} value={bt} style={{ background: '#0f172a' }}>
+                    <option key={bt} value={bt} style={{ background: '#ffffff', color: 'var(--text-main)' }}>
                       {bt}
                     </option>
                   ))}
@@ -420,10 +420,10 @@ const RegisterRestaurantPage = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem 1rem',
-                    background: 'rgba(15, 23, 42, 0.8)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
-                    color: '#ffffff',
+                    color: 'var(--text-main)',
                     fontSize: '0.95rem',
                     outline: 'none',
                   }}
@@ -442,10 +442,10 @@ const RegisterRestaurantPage = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem 1rem',
-                    background: 'rgba(15, 23, 42, 0.8)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
-                    color: '#ffffff',
+                    color: 'var(--text-main)',
                     fontSize: '0.95rem',
                     outline: 'none',
                   }}
@@ -472,8 +472,8 @@ const RegisterRestaurantPage = () => {
                         fontSize: '0.82rem',
                         fontWeight: 500,
                         border: isSelected ? '1px solid var(--accent-primary)' : '1px solid var(--border-subtle)',
-                        background: isSelected ? 'rgba(99, 102, 241, 0.25)' : 'rgba(15, 23, 42, 0.6)',
-                        color: isSelected ? '#ffffff' : 'var(--text-muted)',
+                        background: isSelected ? 'rgba(79, 70, 229, 0.1)' : '#f8fafc',
+                        color: isSelected ? 'var(--accent-primary)' : 'var(--text-main)',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
@@ -528,10 +528,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                       resize: 'none',
@@ -554,10 +554,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -577,10 +577,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -600,10 +600,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -618,8 +618,8 @@ const RegisterRestaurantPage = () => {
             className="glass-panel"
             style={{
               padding: '2rem',
-              border: '1px solid rgba(52, 211, 153, 0.3)',
-              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(15, 23, 42, 0.8) 100%)',
+              border: '1px solid #a7f3d0',
+              background: '#ffffff',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.25rem' }}>
@@ -629,7 +629,7 @@ const RegisterRestaurantPage = () => {
                     width: '32px',
                     height: '32px',
                     borderRadius: '8px',
-                    background: 'rgba(52, 211, 153, 0.2)',
+                    background: 'rgba(16, 185, 129, 0.1)',
                     color: 'var(--accent-success)',
                     display: 'flex',
                     alignItems: 'center',
@@ -640,7 +640,7 @@ const RegisterRestaurantPage = () => {
                 >
                   3
                 </div>
-                <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700 }}>Food Safety & Government License</h2>
+                <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700, color: 'var(--text-main)' }}>Food Safety & Government License</h2>
               </div>
               <span className="badge badge-success" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
                 <ShieldCheck size={13} /> Mandatory Verification
@@ -651,7 +651,7 @@ const RegisterRestaurantPage = () => {
               <div>
                 <label style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem' }}>
                   <span>FSSAI License / Registration Number *</span>
-                  <span style={{ color: 'var(--accent-success)', fontSize: '0.75rem' }}>14-digit India Standard</span>
+                  <span style={{ color: '#16a34a', fontSize: '0.75rem', fontWeight: 600 }}>14-digit India Standard</span>
                 </label>
                 <div style={{ position: 'relative' }}>
                   <FileCheck2 size={16} color="var(--accent-success)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
@@ -665,10 +665,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
-                      border: '1px solid rgba(52, 211, 153, 0.4)',
+                      background: '#ffffff',
+                      border: '1px solid rgba(16, 185, 129, 0.4)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '1rem',
                       fontFamily: 'monospace',
                       letterSpacing: '0.05em',
@@ -693,10 +693,10 @@ const RegisterRestaurantPage = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem 1rem',
-                    background: 'rgba(15, 23, 42, 0.8)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
-                    color: '#ffffff',
+                    color: 'var(--text-main)',
                     fontSize: '0.95rem',
                     fontFamily: 'monospace',
                     outline: 'none',
@@ -728,7 +728,7 @@ const RegisterRestaurantPage = () => {
               >
                 4
               </div>
-              <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700 }}>Restaurant Owner Account & Sign-In Details</h2>
+              <h2 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700, color: 'var(--text-main)' }}>Restaurant Owner Account & Sign-In Details</h2>
             </div>
 
             <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: '0 0 1.25rem', lineHeight: 1.5 }}>
@@ -751,10 +751,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -777,10 +777,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -803,10 +803,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -829,10 +829,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -855,10 +855,10 @@ const RegisterRestaurantPage = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem 1rem 0.75rem 2.4rem',
-                      background: 'rgba(15, 23, 42, 0.8)',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
-                      color: '#ffffff',
+                      color: 'var(--text-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
                     }}
@@ -973,8 +973,9 @@ const RegisterRestaurantPage = () => {
             style={{
               width: '100%',
               maxWidth: '540px',
-              background: 'rgba(15, 23, 42, 0.8)',
+              background: '#ffffff',
               border: '1px solid var(--border-subtle)',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
               borderRadius: 'var(--radius-md)',
               padding: '1.5rem',
               textAlign: 'left',
@@ -1099,10 +1100,10 @@ const RegisterRestaurantPage = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem 1rem 0.75rem 2.4rem',
-                    background: 'rgba(15, 23, 42, 0.8)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-md)',
-                    color: '#ffffff',
+                    color: 'var(--text-main)',
                     fontSize: '0.95rem',
                     outline: 'none',
                   }}

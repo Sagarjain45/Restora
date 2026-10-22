@@ -76,8 +76,8 @@ const SeatCustomerModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.8)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(4px)',
         zIndex: 65,
         display: 'flex',
         alignItems: 'center',
@@ -92,7 +92,10 @@ const SeatCustomerModal = ({
           maxWidth: '560px',
           maxHeight: '92vh',
           overflowY: 'auto',
-          border: '1px solid var(--border-glow)',
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
           padding: 0,
         }}
       >
@@ -104,6 +107,7 @@ const SeatCustomerModal = ({
             justifyContent: 'space-between',
             padding: '1.25rem 1.5rem',
             borderBottom: '1px solid var(--border-subtle)',
+            background: '#ffffff',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -112,7 +116,7 @@ const SeatCustomerModal = ({
                 width: '38px',
                 height: '38px',
                 borderRadius: '10px',
-                background: 'rgba(16, 185, 129, 0.15)',
+                background: 'rgba(16, 185, 129, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -122,7 +126,7 @@ const SeatCustomerModal = ({
               <Users size={20} />
             </div>
             <div>
-              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>Seat Customer Party</h3>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)' }}>Seat Customer Party</h3>
               <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
                 Matching tables for party of {entry.guestCount} guests
               </div>
@@ -132,14 +136,16 @@ const SeatCustomerModal = ({
             type="button"
             onClick={onClose}
             style={{
-              background: 'transparent',
+              background: '#f1f5f9',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
-              padding: '0.3rem',
+              borderRadius: '8px',
+              padding: '0.4rem',
+              display: 'flex',
             }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
@@ -152,10 +158,10 @@ const SeatCustomerModal = ({
                 alignItems: 'center',
                 gap: '0.6rem',
                 padding: '0.75rem',
-                background: 'rgba(239, 68, 68, 0.12)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-sm)',
-                color: 'var(--accent-danger)',
+                color: '#dc2626',
                 fontSize: '0.85rem',
               }}
             >
@@ -168,7 +174,7 @@ const SeatCustomerModal = ({
           <div
             style={{
               padding: '1rem',
-              background: 'rgba(0, 0, 0, 0.25)',
+              background: '#f8fafc',
               border: '1px solid var(--border-subtle)',
               borderRadius: 'var(--radius-sm)',
               display: 'flex',
@@ -204,7 +210,7 @@ const SeatCustomerModal = ({
                 Select Table (Capacity &ge; {entry.guestCount}):
               </span>
               {availableTables.length > 0 && (
-                <span style={{ fontSize: '0.75rem', color: 'var(--accent-success)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ fontSize: '0.75rem', color: '#16a34a', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <Sparkles size={13} /> {availableTables.length} Available Suitable Table(s)
                 </span>
               )}
@@ -218,13 +224,13 @@ const SeatCustomerModal = ({
               <div
                 style={{
                   padding: '1.25rem',
-                  background: 'rgba(239, 68, 68, 0.08)',
-                  border: '1px solid rgba(239, 68, 68, 0.25)',
+                  background: '#fef2f2',
+                  border: '1px solid #fecaca',
                   borderRadius: 'var(--radius-sm)',
                   textAlign: 'center',
                 }}
               >
-                <div style={{ fontWeight: 600, color: 'var(--accent-danger)', fontSize: '0.9rem', marginBottom: '0.3rem' }}>
+                <div style={{ fontWeight: 600, color: '#dc2626', fontSize: '0.9rem', marginBottom: '0.3rem' }}>
                   No Available Tables Fit This Party Size Right Now
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -249,8 +255,9 @@ const SeatCustomerModal = ({
                         gap: '0.35rem',
                         padding: '0.85rem 1rem',
                         borderRadius: 'var(--radius-sm)',
-                        border: isSelected ? '2px solid var(--accent-success)' : '1px solid var(--border-subtle)',
-                        background: isSelected ? 'rgba(16, 185, 129, 0.15)' : 'rgba(15, 23, 42, 0.6)',
+                        border: isSelected ? '2px solid #10b981' : '1px solid var(--border-subtle)',
+                        background: isSelected ? '#ecfdf5' : '#ffffff',
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
                         cursor: 'pointer',
                         textAlign: 'left',
                         transition: 'all 0.15s ease',
@@ -258,7 +265,7 @@ const SeatCustomerModal = ({
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                         <strong style={{ fontSize: '1rem', color: 'var(--text-main)' }}>
-                          {tbl.tableNumber}
+                          Table {tbl.tableNumber}
                         </strong>
                         <span className="badge badge-success" style={{ fontSize: '0.65rem', padding: '0.15rem 0.4rem' }}>
                           Ready
@@ -267,7 +274,7 @@ const SeatCustomerModal = ({
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                         {tbl.capacity} Seats {tbl.section ? `• ${tbl.section}` : ''}
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: excessSeats === 0 ? 'var(--accent-success)' : 'var(--text-dim)' }}>
+                      <div style={{ fontSize: '0.72rem', color: excessSeats === 0 ? '#16a34a' : 'var(--text-dim)', fontWeight: excessSeats === 0 ? 600 : 400 }}>
                         {excessSeats === 0 ? '★ Exact Capacity Fit' : `+${excessSeats} extra seats`}
                       </div>
                     </button>
@@ -290,7 +297,7 @@ const SeatCustomerModal = ({
                     className="badge badge-indigo"
                     style={{ fontSize: '0.7rem', padding: '0.2rem 0.5rem', opacity: 0.8 }}
                   >
-                    {t.tableNumber} ({t.capacity}s - {t.status})
+                    Table {t.tableNumber} ({t.capacity}s - {t.status})
                   </span>
                 ))}
               </div>
@@ -304,16 +311,16 @@ const SeatCustomerModal = ({
               alignItems: 'flex-start',
               gap: '0.5rem',
               padding: '0.65rem 0.85rem',
-              background: 'rgba(16, 185, 129, 0.08)',
-              border: '1px solid rgba(16, 185, 129, 0.25)',
+              background: '#f0fdf4',
+              border: '1px solid #bbf7d0',
               borderRadius: 'var(--radius-sm)',
               fontSize: '0.78rem',
               color: 'var(--text-muted)',
             }}
           >
-            <ShieldCheck size={16} color="var(--accent-success)" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <ShieldCheck size={16} color="#16a34a" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>
-              <strong>Seating Integration:</strong> Confirming seating will mark this queue entry as <strong>SEATED</strong>, assign the table, update Table to <strong>OCCUPIED</strong>, and advance remaining queue positions.
+              <strong style={{ color: '#16a34a' }}>Seating Integration:</strong> Confirming seating will mark this queue entry as <strong>SEATED</strong>, assign the table, update Table to <strong>OCCUPIED</strong>, and advance remaining queue positions.
             </span>
           </div>
 

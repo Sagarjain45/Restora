@@ -76,8 +76,8 @@ const TableModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.75)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(6px)',
         zIndex: 50,
         display: 'flex',
         alignItems: 'center',
@@ -92,17 +92,18 @@ const TableModal = ({
           maxWidth: '500px',
           padding: '2rem',
           position: 'relative',
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-highlight)',
+          background: '#ffffff',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: 'var(--shadow-xl)',
         }}
       >
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.4rem', margin: 0 }}>
+            <h2 style={{ fontSize: '1.4rem', margin: 0, color: 'var(--text-main)' }}>
               {table ? 'Edit Restaurant Table' : 'Add New Table'}
             </h2>
-            <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem', marginTop: '0.2rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.2rem' }}>
               Configure seating capacity and floor location for this table
             </p>
           </div>
@@ -122,15 +123,15 @@ const TableModal = ({
               alignItems: 'center',
               gap: '0.5rem',
               padding: '0.75rem 1rem',
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: '#fef2f2',
+              border: '1px solid #fecaca',
               borderRadius: 'var(--radius-sm)',
-              color: '#fca5a5',
+              color: '#dc2626',
               fontSize: '0.85rem',
               marginBottom: '1.25rem',
             }}
           >
-            <AlertCircle size={16} />
+            <AlertCircle size={16} color="var(--accent-danger)" />
             <span>{error}</span>
           </div>
         )}
@@ -138,7 +139,7 @@ const TableModal = ({
         {/* Form */}
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-muted)' }}>
               Table Number or Label <span style={{ color: 'var(--accent-danger)' }}>*</span>
             </label>
             <input
@@ -152,7 +153,7 @@ const TableModal = ({
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.3)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.9rem',
               }}
@@ -161,7 +162,7 @@ const TableModal = ({
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-muted)' }}>
                 Capacity (Seats) <span style={{ color: 'var(--accent-danger)' }}>*</span>
               </label>
               <input
@@ -176,7 +177,7 @@ const TableModal = ({
                   padding: '0.65rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--border-subtle)',
-                  background: 'rgba(0, 0, 0, 0.3)',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.9rem',
                 }}
@@ -184,7 +185,7 @@ const TableModal = ({
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-muted)' }}>
                 Initial Status
               </label>
               <select
@@ -195,7 +196,7 @@ const TableModal = ({
                   padding: '0.65rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--border-subtle)',
-                  background: '#0f172a',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.9rem',
                 }}
@@ -210,7 +211,7 @@ const TableModal = ({
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-muted)' }}>
               Floor Section / Area
             </label>
             <input
@@ -224,7 +225,7 @@ const TableModal = ({
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.3)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.9rem',
               }}

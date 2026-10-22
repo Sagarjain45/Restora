@@ -68,8 +68,8 @@ const CustomerModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.75)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(4px)',
         zIndex: 60,
         display: 'flex',
         alignItems: 'center',
@@ -84,7 +84,10 @@ const CustomerModal = ({
           maxWidth: '500px',
           maxHeight: '90vh',
           overflowY: 'auto',
-          border: '1px solid var(--border-glow)',
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
           padding: 0,
         }}
       >
@@ -96,6 +99,7 @@ const CustomerModal = ({
             justifyContent: 'space-between',
             padding: '1.25rem 1.5rem',
             borderBottom: '1px solid var(--border-subtle)',
+            background: '#ffffff',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -104,7 +108,7 @@ const CustomerModal = ({
                 width: '38px',
                 height: '38px',
                 borderRadius: '10px',
-                background: 'rgba(16, 185, 129, 0.15)',
+                background: 'rgba(16, 185, 129, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -114,7 +118,7 @@ const CustomerModal = ({
               <User size={20} />
             </div>
             <div>
-              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-main)' }}>
                 {isEditing ? 'Edit Customer Profile' : 'Add New Customer Profile'}
               </h3>
               <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
@@ -126,14 +130,16 @@ const CustomerModal = ({
             type="button"
             onClick={onClose}
             style={{
-              background: 'transparent',
+              background: '#f1f5f9',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
-              padding: '0.3rem',
+              borderRadius: '8px',
+              padding: '0.4rem',
+              display: 'flex',
             }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
@@ -146,10 +152,10 @@ const CustomerModal = ({
                 alignItems: 'center',
                 gap: '0.6rem',
                 padding: '0.75rem',
-                background: 'rgba(239, 68, 68, 0.12)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-sm)',
-                color: 'var(--accent-danger)',
+                color: '#dc2626',
                 fontSize: '0.85rem',
               }}
             >
@@ -223,7 +229,7 @@ const CustomerModal = ({
 
           {/* Edit Stats if editing */}
           {isEditing && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: 'rgba(0, 0, 0, 0.25)', padding: '0.85rem', borderRadius: 'var(--radius-sm)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', background: '#f8fafc', border: '1px solid var(--border-subtle)', padding: '0.85rem', borderRadius: 'var(--radius-sm)' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '0.25rem' }}>
                   Total Visits

@@ -62,14 +62,15 @@ const StaffCard = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: 'rgba(15, 23, 42, 0.75)',
+        background: '#ffffff',
         border: isActive
           ? '1px solid var(--border-subtle)'
-          : '1px solid rgba(239, 68, 68, 0.3)',
+          : '1px solid #fecaca',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
         borderRadius: '14px',
         position: 'relative',
         transition: 'all 0.2s ease',
-        opacity: isActive ? 1 : 0.75,
+        opacity: isActive ? 1 : 0.8,
       }}
     >
       <div>
@@ -167,11 +168,11 @@ const StaffCard = ({
           <button
             onClick={() => onEdit(staff)}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: '#f8fafc',
               border: '1px solid var(--border-subtle)',
               borderRadius: '8px',
               padding: '0.45rem',
-              color: 'var(--text-muted)',
+              color: 'var(--text-main)',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -217,7 +218,7 @@ const StaffCard = ({
             <span
               style={{
                 fontSize: '0.75rem',
-                color: '#4ade80',
+                color: '#16a34a',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.3rem',
@@ -231,7 +232,7 @@ const StaffCard = ({
             <span
               style={{
                 fontSize: '0.75rem',
-                color: '#f87171',
+                color: '#dc2626',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.3rem',
@@ -248,9 +249,9 @@ const StaffCard = ({
           onClick={() => onToggleStatus(staff)}
           disabled={isSelf || isProcessing}
           style={{
-            background: isActive ? 'rgba(239, 68, 68, 0.1)' : 'rgba(34, 197, 94, 0.1)',
-            border: isActive ? '1px solid rgba(239, 68, 68, 0.25)' : '1px solid rgba(34, 197, 94, 0.25)',
-            color: isActive ? '#f87171' : '#4ade80',
+            background: isActive ? '#fef2f2' : '#f0fdf4',
+            border: isActive ? '1px solid #fecaca' : '1px solid #bbf7d0',
+            color: isActive ? '#dc2626' : '#16a34a',
             borderRadius: '6px',
             padding: '0.35rem 0.65rem',
             fontSize: '0.75rem',

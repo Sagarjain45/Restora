@@ -226,12 +226,12 @@ const BillingManagementPage = () => {
           style={{
             padding: '0.85rem 1.25rem',
             borderRadius: 'var(--radius-md)',
-            background: notice.type === 'error' ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)',
-            border: `1px solid ${notice.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
+            background: notice.type === 'error' ? '#fef2f2' : '#ecfdf5',
+            border: `1px solid ${notice.type === 'error' ? '#fecaca' : '#a7f3d0'}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            color: notice.type === 'error' ? 'var(--accent-danger)' : 'var(--accent-success)',
+            color: notice.type === 'error' ? '#b91c1c' : '#047857',
             fontSize: '0.9rem',
           }}
         >
@@ -391,7 +391,7 @@ const BillingManagementPage = () => {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
               <thead>
-                <tr style={{ background: 'rgba(255, 255, 255, 0.02)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)' }}>
+                <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>BILL # / TIME</th>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>TABLE</th>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>ORDER INFO</th>
@@ -423,7 +423,7 @@ const BillingManagementPage = () => {
                         borderBottom: '1px solid var(--border-subtle)',
                         transition: 'background 0.15s ease',
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.02)')}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f8fafc')}
                       onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                     >
                       {/* Bill # */}

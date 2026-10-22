@@ -109,9 +109,10 @@ const TableCard = ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         position: 'relative',
-        background: statusInfo.bgColor,
+        background: '#ffffff',
         borderColor: statusInfo.borderColor,
         opacity: table.isActive ? 1 : 0.6,
+        boxShadow: 'var(--shadow-xs)',
         transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
       }}
     >
@@ -120,7 +121,7 @@ const TableCard = ({
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h3 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700, color: 'var(--text-main)' }}>
                 {table.tableNumber}
               </h3>
               {!table.isActive && (
@@ -129,7 +130,7 @@ const TableCard = ({
                 </span>
               )}
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
               {table.section || 'Main Dining'}
             </div>
           </div>
@@ -154,7 +155,7 @@ const TableCard = ({
                     padding: '0.3rem',
                     color: 'var(--text-muted)',
                     borderRadius: 'var(--radius-sm)',
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: '#f1f5f9',
                   }}
                   title="Table actions"
                 >
@@ -167,12 +168,12 @@ const TableCard = ({
                       position: 'absolute',
                       right: 0,
                       top: '110%',
-                      background: '#131b2e',
+                      background: '#ffffff',
                       border: '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-sm)',
                       padding: '0.35rem',
                       zIndex: 30,
-                      boxShadow: 'var(--shadow-md)',
+                      boxShadow: 'var(--shadow-lg)',
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '0.25rem',
@@ -231,7 +232,8 @@ const TableCard = ({
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.6rem 0.75rem',
-            background: 'rgba(0, 0, 0, 0.2)',
+            background: '#f8fafc',
+            border: '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-sm)',
             marginBottom: '1rem',
             fontSize: '0.85rem',
@@ -249,7 +251,7 @@ const TableCard = ({
 
       {/* Operational State Transition Buttons */}
       <div>
-        <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
           Action / Next State:
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
@@ -267,18 +269,18 @@ const TableCard = ({
                 fontSize: '0.8rem',
                 fontWeight: 600,
                 color: action.color,
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#ffffff',
+                border: '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-sm)',
                 transition: 'all 0.15s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.09)';
+                e.currentTarget.style.background = '#f8fafc';
                 e.currentTarget.style.borderColor = action.color;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.background = '#ffffff';
+                e.currentTarget.style.borderColor = 'var(--border-subtle)';
               }}
             >
               <span>{action.label}</span>

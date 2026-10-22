@@ -388,7 +388,7 @@ const ReservationManagementPage = () => {
 
         {/* View Mode & Search */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', background: 'rgba(0, 0, 0, 0.3)', borderRadius: 'var(--radius-sm)', padding: '2px', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: 'var(--radius-sm)', padding: '2px', border: '1px solid var(--border-subtle)' }}>
             <button
               type="button"
               onClick={() => setViewMode('grid')}
@@ -501,7 +501,7 @@ const ReservationManagementPage = () => {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
               <thead>
-                <tr style={{ background: 'rgba(255, 255, 255, 0.02)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)' }}>
+                <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>DATE / TIME</th>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>CUSTOMER</th>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>PARTY</th>

@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer style={{
       borderTop: '1px solid var(--border-subtle)',
-      backgroundColor: 'rgba(9, 13, 22, 0.9)',
+      backgroundColor: '#ffffff',
       padding: '2.5rem 1.5rem',
       marginTop: 'auto',
     }}>

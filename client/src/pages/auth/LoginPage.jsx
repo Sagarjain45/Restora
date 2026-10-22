@@ -77,11 +77,11 @@ const LoginPage = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.75rem',
-            background: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
+            background: '#fef2f2',
+            border: '1px solid #fecaca',
             borderRadius: 'var(--radius-sm)',
             padding: '0.75rem 1rem',
-            color: '#fca5a5',
+            color: '#dc2626',
             fontSize: '0.85rem',
             marginBottom: '1.25rem'
           }}>
@@ -106,7 +106,7 @@ const LoginPage = () => {
                 style={{
                   width: '100%',
                   padding: '0.75rem 1rem 0.75rem 2.4rem',
-                  background: 'rgba(15, 23, 42, 0.8)',
+                  background: '#ffffff',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-md)',
                   color: 'var(--text-main)',
@@ -133,7 +133,7 @@ const LoginPage = () => {
                 style={{
                   width: '100%',
                   padding: '0.75rem 1rem 0.75rem 2.4rem',
-                  background: 'rgba(15, 23, 42, 0.8)',
+                  background: '#ffffff',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-md)',
                   color: 'var(--text-main)',

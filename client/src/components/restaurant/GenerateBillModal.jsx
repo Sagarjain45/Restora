@@ -61,8 +61,8 @@ const GenerateBillModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.75)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(4px)',
         zIndex: 55,
         display: 'flex',
         alignItems: 'center',
@@ -77,7 +77,10 @@ const GenerateBillModal = ({
           maxWidth: '520px',
           maxHeight: '90vh',
           overflowY: 'auto',
-          border: '1px solid var(--border-glow)',
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
           padding: 0,
         }}
       >
@@ -89,6 +92,7 @@ const GenerateBillModal = ({
             justifyContent: 'space-between',
             padding: '1.25rem 1.5rem',
             borderBottom: '1px solid var(--border-subtle)',
+            background: '#ffffff',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -97,7 +101,7 @@ const GenerateBillModal = ({
                 width: '36px',
                 height: '36px',
                 borderRadius: '8px',
-                background: 'rgba(99, 102, 241, 0.15)',
+                background: 'rgba(79, 70, 229, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -107,7 +111,7 @@ const GenerateBillModal = ({
               <Receipt size={18} />
             </div>
             <div>
-              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Generate Table Bill</h3>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Generate Table Bill</h3>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
                 Locks table into BILLING state and creates invoice
               </div>
@@ -117,13 +121,16 @@ const GenerateBillModal = ({
             type="button"
             onClick={onClose}
             style={{
-              background: 'transparent',
+              background: '#f1f5f9',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
+              borderRadius: '8px',
+              padding: '0.4rem',
+              display: 'flex',
             }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
@@ -136,10 +143,10 @@ const GenerateBillModal = ({
                 alignItems: 'center',
                 gap: '0.5rem',
                 padding: '0.75rem',
-                background: 'rgba(239, 68, 68, 0.12)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
+                background: '#fef2f2',
+                border: '1px solid #fecaca',
                 borderRadius: 'var(--radius-sm)',
-                color: 'var(--accent-danger)',
+                color: '#dc2626',
                 fontSize: '0.85rem',
               }}
             >
@@ -151,11 +158,11 @@ const GenerateBillModal = ({
           {/* Select Active Order if not passed directly */}
           {!initialOrder && (
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
                 Select Active Order:
               </label>
               {activeOrders.length === 0 ? (
-                <div style={{ padding: '0.75rem', background: 'rgba(0, 0, 0, 0.3)', borderRadius: 'var(--radius-sm)', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                <div style={{ padding: '0.75rem', background: '#f8fafc', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                   No active orders available to bill.
                 </div>
               ) : (
@@ -163,7 +170,7 @@ const GenerateBillModal = ({
                   value={selectedOrderId}
                   onChange={(e) => setSelectedOrderId(e.target.value)}
                   className="input-field"
-                  style={{ width: '100%', fontSize: '0.9rem' }}
+                  style={{ width: '100%', fontSize: '0.9rem', background: '#ffffff' }}
                 >
                   {activeOrders.map((ord) => (
                     <option key={ord._id} value={ord._id}>
@@ -178,14 +185,14 @@ const GenerateBillModal = ({
           {currentOrder && (
             <div
               style={{
-                background: 'rgba(0, 0, 0, 0.25)',
+                background: '#f8fafc',
                 padding: '1rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)' }}>
                   Order: {currentOrder.orderNumber || currentOrder._id.slice(-6)}
                 </span>
                 <span className="badge badge-indigo" style={{ fontSize: '0.7rem' }}>
@@ -211,7 +218,7 @@ const GenerateBillModal = ({
                 value={discountAmount}
                 onChange={(e) => setDiscountAmount(e.target.value)}
                 className="input-field"
-                style={{ width: '100%', fontSize: '0.9rem' }}
+                style={{ width: '100%', fontSize: '0.9rem', background: '#ffffff' }}
               />
             </div>
 
@@ -227,7 +234,7 @@ const GenerateBillModal = ({
                 value={taxRatePercent}
                 onChange={(e) => setTaxRatePercent(e.target.value)}
                 className="input-field"
-                style={{ width: '100%', fontSize: '0.9rem' }}
+                style={{ width: '100%', fontSize: '0.9rem', background: '#ffffff' }}
               />
             </div>
           </div>
@@ -243,7 +250,7 @@ const GenerateBillModal = ({
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. 10% anniversary discount applied"
               className="input-field"
-              style={{ width: '100%', fontSize: '0.85rem' }}
+              style={{ width: '100%', fontSize: '0.85rem', background: '#ffffff' }}
             />
           </div>
 
@@ -251,9 +258,9 @@ const GenerateBillModal = ({
           <div
             style={{
               padding: '1rem',
-              background: 'rgba(15, 23, 42, 0.7)',
+              background: '#f8fafc',
               borderRadius: 'var(--radius-sm)',
-              border: '1px solid var(--border-glow)',
+              border: '1px solid var(--border-subtle)',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.35rem',
@@ -282,7 +289,7 @@ const GenerateBillModal = ({
                 color: 'var(--text-main)',
                 marginTop: '0.3rem',
                 paddingTop: '0.4rem',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                borderTop: '1px solid var(--border-subtle)',
               }}
             >
               <span>Estimated Bill Total</span>

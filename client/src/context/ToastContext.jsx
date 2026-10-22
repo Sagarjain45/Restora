@@ -52,27 +52,27 @@ export const ToastProvider = ({ children }) => {
       case 'success':
         return {
           borderColor: 'rgba(16, 185, 129, 0.4)',
-          background: 'rgba(15, 23, 42, 0.95)',
-          boxShadow: '0 8px 30px rgba(16, 185, 129, 0.2)',
+          background: '#ffffff',
+          boxShadow: '0 8px 24px rgba(16, 185, 129, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05)',
         };
       case 'error':
         return {
           borderColor: 'rgba(239, 68, 68, 0.4)',
-          background: 'rgba(15, 23, 42, 0.95)',
-          boxShadow: '0 8px 30px rgba(239, 68, 68, 0.2)',
+          background: '#ffffff',
+          boxShadow: '0 8px 24px rgba(239, 68, 68, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05)',
         };
       case 'warning':
         return {
           borderColor: 'rgba(245, 158, 11, 0.4)',
-          background: 'rgba(15, 23, 42, 0.95)',
-          boxShadow: '0 8px 30px rgba(245, 158, 11, 0.2)',
+          background: '#ffffff',
+          boxShadow: '0 8px 24px rgba(245, 158, 11, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05)',
         };
       case 'info':
       default:
         return {
           borderColor: 'rgba(99, 102, 241, 0.4)',
-          background: 'rgba(15, 23, 42, 0.95)',
-          boxShadow: '0 8px 30px rgba(99, 102, 241, 0.2)',
+          background: '#ffffff',
+          boxShadow: '0 8px 24px rgba(99, 102, 241, 0.12), 0 2px 6px rgba(0, 0, 0, 0.05)',
         };
     }
   };
@@ -109,9 +109,7 @@ export const ToastProvider = ({ children }) => {
                 padding: '0.875rem 1.125rem',
                 borderRadius: '12px',
                 border: '1px solid',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                color: '#f8fafc',
+                color: 'var(--text-main)',
                 fontSize: '0.875rem',
                 fontWeight: 500,
                 lineHeight: 1.4,

@@ -171,7 +171,7 @@ const ReportsPage = () => {
 
         {/* Date Filter & Refresh */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', background: 'rgba(0, 0, 0, 0.3)', borderRadius: '8px', padding: '0.25rem' }}>
+          <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '8px', padding: '0.25rem', border: '1px solid var(--border-subtle)' }}>
             {[
               { id: 'today', label: 'Today' },
               { id: '7days', label: 'Last 7 Days' },
@@ -185,7 +185,7 @@ const ReportsPage = () => {
                   padding: '0.4rem 0.85rem',
                   borderRadius: '6px',
                   border: 'none',
-                  background: datePreset === p.id ? 'var(--primary)' : 'transparent',
+                  background: datePreset === p.id ? 'var(--accent-primary)' : 'transparent',
                   color: datePreset === p.id ? '#fff' : 'var(--text-muted)',
                   fontSize: '0.8rem',
                   fontWeight: '600',
@@ -241,6 +241,7 @@ const ReportsPage = () => {
             alignItems: 'center',
             gap: '1rem',
             flexWrap: 'wrap',
+            background: '#ffffff',
           }}
         >
           <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -252,7 +253,7 @@ const ReportsPage = () => {
             onChange={(e) => setStartDate(e.target.value)}
             style={{
               padding: '0.45rem 0.75rem',
-              background: 'rgba(15, 23, 42, 0.8)',
+              background: '#ffffff',
               border: '1px solid var(--border-subtle)',
               borderRadius: '6px',
               color: 'var(--text-main)',
@@ -266,7 +267,7 @@ const ReportsPage = () => {
             onChange={(e) => setEndDate(e.target.value)}
             style={{
               padding: '0.45rem 0.75rem',
-              background: 'rgba(15, 23, 42, 0.8)',
+              background: '#ffffff',
               border: '1px solid var(--border-subtle)',
               borderRadius: '6px',
               color: 'var(--text-main)',
@@ -293,9 +294,9 @@ const ReportsPage = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            background: 'rgba(239, 68, 68, 0.15)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            color: '#f87171',
+            background: '#fef2f2',
+            border: '1px solid #fecaca',
+            color: '#dc2626',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -310,7 +311,7 @@ const ReportsPage = () => {
 
       {loading && !reports ? (
         <div style={{ textAlign: 'center', padding: '5rem 0' }}>
-          <RefreshCw size={36} className="animate-spin" style={{ color: 'var(--primary)', margin: '0 auto 1rem auto' }} />
+          <RefreshCw size={36} className="animate-spin" style={{ color: 'var(--accent-primary)', margin: '0 auto 1rem auto' }} />
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>Calculating database aggregations...</p>
         </div>
       ) : (
@@ -324,17 +325,17 @@ const ReportsPage = () => {
               marginBottom: '2rem',
             }}
           >
-            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: 'rgba(15, 23, 42, 0.7)' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-xs)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Gross Sales Revenue
                   </p>
-                  <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: '#4ade80', margin: '0.35rem 0 0 0' }}>
+                  <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: '#10b981', margin: '0.35rem 0 0 0' }}>
                     {currencySymbol}{(reports?.kpis?.totalRevenue || 0).toLocaleString()}
                   </h3>
                 </div>
-                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(34, 197, 94, 0.15)', color: '#4ade80' }}>
+                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.12)', color: '#10b981' }}>
                   <DollarSign size={22} />
                 </div>
               </div>
@@ -343,7 +344,7 @@ const ReportsPage = () => {
               </p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: 'rgba(15, 23, 42, 0.7)' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-xs)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -353,7 +354,7 @@ const ReportsPage = () => {
                     {(reports?.kpis?.totalOrders || 0).toLocaleString()}
                   </h3>
                 </div>
-                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(99, 102, 241, 0.15)', color: '#818cf8' }}>
+                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(79, 70, 229, 0.1)', color: '#4f46e5' }}>
                   <ShoppingBag size={22} />
                 </div>
               </div>
@@ -362,17 +363,17 @@ const ReportsPage = () => {
               </p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: 'rgba(15, 23, 42, 0.7)' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-xs)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Average Order Value (AOV)
                   </p>
-                  <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: '#fbbf24', margin: '0.35rem 0 0 0' }}>
+                  <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: '#d97706', margin: '0.35rem 0 0 0' }}>
                     {currencySymbol}{(reports?.kpis?.aov || 0).toLocaleString()}
                   </h3>
                 </div>
-                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
+                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.12)', color: '#d97706' }}>
                   <TrendingUp size={22} />
                 </div>
               </div>
@@ -381,17 +382,17 @@ const ReportsPage = () => {
               </p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: 'rgba(15, 23, 42, 0.7)' }}>
+            <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '14px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-xs)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     Settled Bills
                   </p>
-                  <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: '#38bdf8', margin: '0.35rem 0 0 0' }}>
+                  <h3 style={{ fontSize: '1.85rem', fontWeight: '800', color: '#0284c7', margin: '0.35rem 0 0 0' }}>
                     {(reports?.kpis?.paidOrders || 0).toLocaleString()}
                   </h3>
                 </div>
-                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8' }}>
+                <div style={{ padding: '0.6rem', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.12)', color: '#0284c7' }}>
                   <CreditCard size={22} />
                 </div>
               </div>
@@ -408,7 +409,9 @@ const ReportsPage = () => {
               padding: '1.75rem',
               borderRadius: '16px',
               marginBottom: '2rem',
-              background: 'rgba(15, 23, 42, 0.75)',
+              background: '#ffffff',
+              border: '1px solid var(--border-subtle)',
+              boxShadow: 'var(--shadow-xs)',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -422,7 +425,7 @@ const ReportsPage = () => {
               </div>
 
               {/* View Selector: Daily, Weekly, Monthly */}
-              <div style={{ display: 'flex', background: 'rgba(0, 0, 0, 0.3)', borderRadius: '8px', padding: '0.2rem' }}>
+              <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '8px', padding: '0.2rem', border: '1px solid var(--border-subtle)' }}>
                 {['daily', 'weekly', 'monthly'].map((view) => (
                   <button
                     key={view}
@@ -431,8 +434,8 @@ const ReportsPage = () => {
                       padding: '0.35rem 0.75rem',
                       borderRadius: '6px',
                       border: 'none',
-                      background: activeTrendView === view ? 'rgba(99, 102, 241, 0.3)' : 'transparent',
-                      color: activeTrendView === view ? '#818cf8' : 'var(--text-muted)',
+                      background: activeTrendView === view ? 'var(--accent-primary)' : 'transparent',
+                      color: activeTrendView === view ? '#ffffff' : 'var(--text-muted)',
                       fontSize: '0.8rem',
                       fontWeight: '600',
                       cursor: 'pointer',
@@ -507,11 +510,11 @@ const ReportsPage = () => {
           {/* Grid: Top Selling Dishes & Payment Method Breakdown */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
             {/* Top-Selling Dishes */}
-            <div className="glass-panel" style={{ padding: '1.75rem', borderRadius: '16px', background: 'rgba(15, 23, 42, 0.75)' }}>
+            <div className="glass-panel" style={{ padding: '1.75rem', borderRadius: '16px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                 <div>
                   <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Award size={18} color="#fbbf24" /> Top-Selling Menu Items
+                    <Award size={18} color="#d97706" /> Top-Selling Menu Items
                   </h3>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.2rem 0 0 0' }}>
                     Ranked by total quantity ordered & revenue generated
@@ -532,13 +535,13 @@ const ReportsPage = () => {
                             <span style={{ color: 'var(--text-muted)', marginRight: '0.4rem' }}>#{idx + 1}</span>
                             {item.name}
                           </span>
-                          <span style={{ fontWeight: '700', color: '#4ade80' }}>
+                          <span style={{ fontWeight: '700', color: '#16a34a' }}>
                             {currencySymbol}{(item.totalRevenue || 0).toLocaleString()}
                           </span>
                         </div>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                          <div style={{ flex: 1, height: '6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '3px', overflow: 'hidden' }}>
+                          <div style={{ flex: 1, height: '6px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
                             <div style={{ width: `${percent}%`, height: '100%', background: 'linear-gradient(90deg, #f59e0b, #ef4444)', borderRadius: '3px' }} />
                           </div>
                           <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', minWidth: '70px', textAlign: 'right' }}>
@@ -557,11 +560,11 @@ const ReportsPage = () => {
             </div>
 
             {/* Payment Method Breakdown */}
-            <div className="glass-panel" style={{ padding: '1.75rem', borderRadius: '16px', background: 'rgba(15, 23, 42, 0.75)' }}>
+            <div className="glass-panel" style={{ padding: '1.75rem', borderRadius: '16px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                 <div>
                   <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <PieChart size={18} color="#818cf8" /> Payment Method Breakdown
+                    <PieChart size={18} color="#4f46e5" /> Payment Method Breakdown
                   </h3>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.2rem 0 0 0' }}>
                     Settled distribution across UPI, Cards, and Cash
@@ -572,14 +575,14 @@ const ReportsPage = () => {
               {reports?.paymentBreakdown && reports.paymentBreakdown.length > 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                   {reports.paymentBreakdown.map((pm, idx) => (
-                    <div key={idx} style={{ padding: '1rem', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
+                    <div key={idx} style={{ padding: '1rem', background: '#f8fafc', borderRadius: '10px', border: '1px solid var(--border-subtle)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                           <span
                             style={{
                               fontSize: '0.85rem',
                               fontWeight: '700',
-                              color: pm.method === 'UPI' ? '#38bdf8' : pm.method === 'CARD' ? '#c084fc' : '#4ade80',
+                              color: pm.method === 'UPI' ? '#0284c7' : pm.method === 'CARD' ? '#7c3aed' : '#16a34a',
                             }}
                           >
                             {pm.method}
@@ -599,7 +602,7 @@ const ReportsPage = () => {
                         </div>
                       </div>
 
-                      <div style={{ height: '8px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px', overflow: 'hidden' }}>
+                      <div style={{ height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
                         <div
                           style={{
                             width: `${pm.percentage}%`,
@@ -608,7 +611,7 @@ const ReportsPage = () => {
                               pm.method === 'UPI'
                                 ? 'linear-gradient(90deg, #0284c7, #38bdf8)'
                                 : pm.method === 'CARD'
-                                ? 'linear-gradient(90deg, #9333ea, #c084fc)'
+                                ? 'linear-gradient(90deg, #7c3aed, #a855f7)'
                                 : 'linear-gradient(90deg, #16a34a, #4ade80)',
                             borderRadius: '4px',
                           }}
@@ -626,11 +629,11 @@ const ReportsPage = () => {
           </div>
 
           {/* Table Utilization Matrix */}
-          <div className="glass-panel" style={{ padding: '1.75rem', borderRadius: '16px', background: 'rgba(15, 23, 42, 0.75)' }}>
+          <div className="glass-panel" style={{ padding: '1.75rem', borderRadius: '16px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <div>
                 <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <LayoutGrid size={18} color="#38bdf8" /> Dining Table Utilization
+                  <LayoutGrid size={18} color="#0284c7" /> Dining Table Utilization
                 </h3>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0.2rem 0 0 0' }}>
                   Orders handled and revenue produced by individual floor tables
@@ -642,7 +645,7 @@ const ReportsPage = () => {
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
                   <thead>
-                    <tr style={{ background: 'rgba(0, 0, 0, 0.3)', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--border-subtle)' }}>
                       <th style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)', fontWeight: '600' }}>Table</th>
                       <th style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)', fontWeight: '600' }}>Section</th>
                       <th style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)', fontWeight: '600' }}>Capacity</th>
@@ -653,7 +656,7 @@ const ReportsPage = () => {
                   </thead>
                   <tbody>
                     {reports.tableUtilization.map((tu) => (
-                      <tr key={tu.tableId} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                      <tr key={tu.tableId} style={{ borderBottom: '1px solid #f1f5f9' }}>
                         <td style={{ padding: '0.75rem 1rem', fontWeight: '700', color: 'var(--text-main)' }}>
                           Table {tu.tableNumber}
                         </td>
@@ -669,7 +672,7 @@ const ReportsPage = () => {
                         <td style={{ padding: '0.75rem 1rem', textAlign: 'right', color: 'var(--text-muted)' }}>
                           {currencySymbol}{(tu.aov || 0).toLocaleString()}
                         </td>
-                        <td style={{ padding: '0.75rem 1rem', textAlign: 'right', fontWeight: '700', color: '#4ade80' }}>
+                        <td style={{ padding: '0.75rem 1rem', textAlign: 'right', fontWeight: '700', color: '#16a34a' }}>
                           {currencySymbol}{(tu.totalRevenue || 0).toLocaleString()}
                         </td>
                       </tr>

@@ -22,9 +22,11 @@ const Navbar = () => {
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      backgroundColor: 'rgba(9, 13, 22, 0.85)',
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
       backdropFilter: 'blur(12px)',
+      WebkitBackdropFilter: 'blur(12px)',
       borderBottom: '1px solid var(--border-subtle)',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
     }}>
       <div style={{
         maxWidth: '1280px',
@@ -42,28 +44,26 @@ const Navbar = () => {
             width: '38px',
             height: '38px',
             borderRadius: '10px',
-            background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 100%)',
+            background: 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 14px rgba(99, 102, 241, 0.35)',
+            boxShadow: '0 3px 10px rgba(79, 70, 229, 0.25)',
           }}>
             <UtensilsCrossed size={20} color="#ffffff" />
           </div>
           <div>
             <div style={{
-              fontSize: '1.2rem',
+              fontSize: '1.25rem',
               fontWeight: 800,
               fontFamily: 'var(--font-display)',
               letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: 'var(--text-main)',
               lineHeight: 1.1,
             }}>
               RESTORA
             </div>
-            <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
               Restaurant Operations
             </div>
           </div>
@@ -131,7 +131,7 @@ const Navbar = () => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: '#f1f5f9',
                 padding: '0.4rem 0.75rem',
                 borderRadius: 'var(--radius-sm)',
                 fontSize: '0.82rem',
@@ -170,8 +170,9 @@ const Navbar = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.4rem',
-                  borderColor: 'rgba(99, 102, 241, 0.4)',
-                  color: '#e0e7ff',
+                  borderColor: 'var(--border-subtle)',
+                  color: 'var(--accent-primary)',
+                  fontWeight: 600,
                 }}
               >
                 <UtensilsCrossed size={14} color="var(--accent-primary)" />

@@ -38,7 +38,7 @@ const RestaurantSubNav = () => {
   return (
     <nav
       style={{
-        backgroundColor: 'rgba(11, 17, 33, 0.75)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--border-subtle)',
@@ -75,9 +75,9 @@ const RestaurantSubNav = () => {
                 padding: '0.85rem 0.95rem',
                 fontSize: '0.82rem',
                 fontWeight: isActive ? 600 : 500,
-                color: isActive ? '#f8fafc' : 'var(--text-muted)',
+                color: isActive ? 'var(--accent-primary)' : 'var(--text-muted)',
                 borderBottom: isActive ? '2px solid var(--accent-primary)' : '2px solid transparent',
-                background: isActive ? 'rgba(99, 102, 241, 0.08)' : 'transparent',
+                background: isActive ? 'rgba(79, 70, 229, 0.06)' : 'transparent',
                 transition: 'all 0.15s ease',
                 whiteSpace: 'nowrap',
                 textDecoration: 'none',

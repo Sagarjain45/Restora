@@ -242,7 +242,7 @@ const OrderManagementPage = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '0.45rem',
-              background: 'rgba(255, 255, 255, 0.04)',
+              background: '#f8fafc',
               padding: '0.4rem 0.75rem',
               borderRadius: 'var(--radius-sm)',
               border: '1px solid var(--border-subtle)',
@@ -257,18 +257,18 @@ const OrderManagementPage = () => {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#f1f5f9',
+                color: 'var(--text-main)',
                 fontSize: '0.82rem',
                 cursor: 'pointer',
                 outline: 'none',
                 fontWeight: 600,
               }}
             >
-              <option value={0} style={{ background: '#0f172a' }}>Manual</option>
-              <option value={10} style={{ background: '#0f172a' }}>10s</option>
-              <option value={15} style={{ background: '#0f172a' }}>15s (Live)</option>
-              <option value={30} style={{ background: '#0f172a' }}>30s</option>
-              <option value={60} style={{ background: '#0f172a' }}>60s</option>
+              <option value={0} style={{ background: '#ffffff', color: '#0f172a' }}>Manual</option>
+              <option value={10} style={{ background: '#ffffff', color: '#0f172a' }}>10s</option>
+              <option value={15} style={{ background: '#ffffff', color: '#0f172a' }}>15s (Live)</option>
+              <option value={30} style={{ background: '#ffffff', color: '#0f172a' }}>30s</option>
+              <option value={60} style={{ background: '#ffffff', color: '#0f172a' }}>60s</option>
             </select>
           </div>
 
@@ -300,12 +300,12 @@ const OrderManagementPage = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            background: notice.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-            border: `1px solid ${notice.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
+            background: notice.type === 'error' ? '#fef2f2' : '#ecfdf5',
+            border: `1px solid ${notice.type === 'error' ? '#fecaca' : '#a7f3d0'}`,
             borderRadius: 'var(--radius-sm)',
             padding: '0.85rem 1.25rem',
             fontSize: '0.9rem',
-            color: notice.type === 'error' ? '#fca5a5' : '#a7f3d0',
+            color: notice.type === 'error' ? '#b91c1c' : '#047857',
           }}
         >
           <span>{notice.text}</span>
@@ -393,9 +393,10 @@ const OrderManagementPage = () => {
                   fontWeight: 600,
                   padding: '0.35rem 0.85rem',
                   borderRadius: '9999px',
-                  background: isActive ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.05)',
-                  color: isActive ? '#ffffff' : 'var(--text-muted)',
+                  background: isActive ? 'var(--accent-primary)' : '#ffffff',
+                  color: isActive ? '#ffffff' : 'var(--text-main)',
                   border: `1px solid ${isActive ? 'var(--accent-primary)' : 'var(--border-subtle)'}`,
+                  boxShadow: isActive ? '0 1px 3px rgba(79, 70, 229, 0.2)' : 'var(--shadow-xs)',
                   transition: 'all 0.15s ease',
                   cursor: 'pointer',
                 }}
@@ -422,7 +423,7 @@ const OrderManagementPage = () => {
               padding: '0.55rem 0.75rem 0.55rem 2.2rem',
               borderRadius: 'var(--radius-sm)',
               border: '1px solid var(--border-subtle)',
-              background: 'rgba(0, 0, 0, 0.25)',
+              background: '#ffffff',
               color: 'var(--text-main)',
               fontSize: '0.85rem',
             }}

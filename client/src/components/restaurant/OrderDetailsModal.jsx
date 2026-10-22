@@ -44,8 +44,8 @@ const OrderDetailsModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(4px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -60,10 +60,10 @@ const OrderDetailsModal = ({
           width: '100%',
           maxWidth: '600px',
           padding: '2rem',
-          background: 'rgba(15, 23, 42, 0.95)',
+          background: '#ffffff',
           borderRadius: '16px',
           border: '1px solid var(--border-subtle)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
           position: 'relative',
           maxHeight: '90vh',
           overflowY: 'auto',
@@ -97,7 +97,7 @@ const OrderDetailsModal = ({
           <button
             onClick={onClose}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: '#f1f5f9',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
@@ -117,7 +117,7 @@ const OrderDetailsModal = ({
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
             gap: '1rem',
             padding: '1rem',
-            background: 'rgba(0, 0, 0, 0.3)',
+            background: '#f8fafc',
             borderRadius: '10px',
             marginBottom: '1.5rem',
             border: '1px solid var(--border-subtle)',
@@ -161,7 +161,7 @@ const OrderDetailsModal = ({
 
           <div
             style={{
-              background: 'rgba(15, 23, 42, 0.6)',
+              background: '#ffffff',
               borderRadius: '10px',
               border: '1px solid var(--border-subtle)',
               overflow: 'hidden',
@@ -169,7 +169,7 @@ const OrderDetailsModal = ({
           >
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
               <thead>
-                <tr style={{ background: 'rgba(0, 0, 0, 0.3)', borderBottom: '1px solid var(--border-subtle)' }}>
+                <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--border-subtle)' }}>
                   <th style={{ padding: '0.65rem 0.85rem', color: 'var(--text-muted)', fontWeight: '600' }}>Item</th>
                   <th style={{ padding: '0.65rem 0.85rem', color: 'var(--text-muted)', fontWeight: '600', textAlign: 'center' }}>Qty</th>
                   <th style={{ padding: '0.65rem 0.85rem', color: 'var(--text-muted)', fontWeight: '600', textAlign: 'right' }}>Price</th>
@@ -179,7 +179,7 @@ const OrderDetailsModal = ({
               <tbody>
                 {order.items && order.items.length > 0 ? (
                   order.items.map((item, idx) => (
-                    <tr key={item._id || idx} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                    <tr key={item._id || idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
                       <td style={{ padding: '0.75rem 0.85rem' }}>
                         <div style={{ fontWeight: '500', color: 'var(--text-main)' }}>{item.name}</div>
                         {item.notes && (
@@ -218,7 +218,7 @@ const OrderDetailsModal = ({
             gridTemplateColumns: '1fr 1fr',
             gap: '1.25rem',
             padding: '1.25rem',
-            background: 'rgba(0, 0, 0, 0.25)',
+            background: '#f8fafc',
             borderRadius: '10px',
             border: '1px solid var(--border-subtle)',
             marginBottom: '1.5rem',
@@ -234,11 +234,11 @@ const OrderDetailsModal = ({
                   style={{
                     fontSize: '0.85rem',
                     fontWeight: '600',
-                    color: '#4ade80',
+                    color: '#16a34a',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.35rem',
-                    background: 'rgba(34, 197, 94, 0.15)',
+                    background: 'rgba(22, 163, 74, 0.1)',
                     padding: '0.25rem 0.65rem',
                     borderRadius: '6px',
                   }}
@@ -250,8 +250,8 @@ const OrderDetailsModal = ({
                   style={{
                     fontSize: '0.85rem',
                     fontWeight: '600',
-                    color: '#f87171',
-                    background: 'rgba(239, 68, 68, 0.15)',
+                    color: '#dc2626',
+                    background: 'rgba(220, 38, 38, 0.1)',
                     padding: '0.25rem 0.65rem',
                     borderRadius: '6px',
                   }}
@@ -263,8 +263,8 @@ const OrderDetailsModal = ({
                   style={{
                     fontSize: '0.85rem',
                     fontWeight: '600',
-                    color: '#fbbf24',
-                    background: 'rgba(245, 158, 11, 0.15)',
+                    color: '#d97706',
+                    background: 'rgba(217, 119, 6, 0.1)',
                     padding: '0.25rem 0.65rem',
                     borderRadius: '6px',
                   }}
@@ -278,7 +278,7 @@ const OrderDetailsModal = ({
               <div style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                 <div>Bill Ref: <strong style={{ color: 'var(--text-main)' }}>{order.bill.billNumber || 'Generated'}</strong></div>
                 {order.bill.paymentMethod && (
-                  <div>Method: <strong style={{ color: '#818cf8' }}>{order.bill.paymentMethod}</strong></div>
+                  <div>Method: <strong style={{ color: 'var(--accent-primary)' }}>{order.bill.paymentMethod}</strong></div>
                 )}
                 {paidTimeFormatted && <div>Paid At: {paidTimeFormatted}</div>}
               </div>
@@ -292,7 +292,7 @@ const OrderDetailsModal = ({
             </div>
 
             {order.discount > 0 && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: '#4ade80' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: '#16a34a' }}>
                 <span>Discount:</span>
                 <span>-{currencySymbol}{(order.discount || 0).toLocaleString()}</span>
               </div>
@@ -316,7 +316,7 @@ const OrderDetailsModal = ({
               }}
             >
               <span>Total:</span>
-              <span style={{ color: 'var(--primary)' }}>
+              <span style={{ color: 'var(--accent-primary)' }}>
                 {currencySymbol}{(order.total || 0).toLocaleString()}
               </span>
             </div>

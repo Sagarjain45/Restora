@@ -25,9 +25,10 @@ const MenuItemCard = ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         position: 'relative',
-        background: item.isAvailable ? 'rgba(15, 23, 42, 0.7)' : 'rgba(15, 23, 42, 0.4)',
-        borderColor: item.isAvailable ? 'var(--border-subtle)' : 'rgba(239, 68, 68, 0.2)',
-        opacity: item.isActive ? (item.isAvailable ? 1 : 0.75) : 0.5,
+        background: item.isAvailable ? '#ffffff' : '#f8fafc',
+        border: `1px solid ${item.isAvailable ? 'var(--border-subtle)' : '#fecaca'}`,
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+        opacity: item.isActive ? (item.isAvailable ? 1 : 0.8) : 0.5,
         transition: 'all 0.2s ease',
       }}
     >
@@ -148,9 +149,9 @@ const MenuItemCard = ({
               fontSize: '0.75rem',
               fontWeight: 600,
               borderRadius: 'var(--radius-sm)',
-              background: item.isAvailable ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
-              border: `1px solid ${item.isAvailable ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
-              color: item.isAvailable ? '#f87171' : '#34d399',
+              background: item.isAvailable ? '#fef2f2' : '#f0fdf4',
+              border: `1px solid ${item.isAvailable ? '#fecaca' : '#bbf7d0'}`,
+              color: item.isAvailable ? '#dc2626' : '#16a34a',
               cursor: 'pointer',
               transition: 'all 0.15s ease',
             }}
@@ -169,8 +170,8 @@ const MenuItemCard = ({
                 style={{
                   padding: '0.4rem',
                   borderRadius: 'var(--radius-sm)',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'var(--text-muted)',
+                  background: '#f8fafc',
+                  color: 'var(--text-main)',
                   border: '1px solid var(--border-subtle)',
                 }}
                 title="Edit Item"
@@ -183,9 +184,9 @@ const MenuItemCard = ({
                 style={{
                   padding: '0.4rem',
                   borderRadius: 'var(--radius-sm)',
-                  background: 'rgba(239, 68, 68, 0.08)',
-                  color: 'var(--accent-danger)',
-                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  background: '#fef2f2',
+                  color: '#dc2626',
+                  border: '1px solid #fecaca',
                 }}
                 title="Deactivate / Delete Item"
               >

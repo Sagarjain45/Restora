@@ -44,8 +44,9 @@ const OrderCard = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: 'rgba(15, 23, 42, 0.75)',
-        border: `1px solid ${statusInfo.color ? `${statusInfo.color}33` : 'var(--border-subtle)'}`,
+        background: '#ffffff',
+        border: `1px solid ${statusInfo.color ? `${statusInfo.color}40` : 'var(--border-subtle)'}`,
+        boxShadow: 'var(--shadow-xs)',
         position: 'relative',
         transition: 'all 0.2s ease',
       }}
@@ -85,7 +86,8 @@ const OrderCard = ({
         {/* Items List */}
         <div
           style={{
-            background: 'rgba(0, 0, 0, 0.25)',
+            background: '#f8fafc',
+            border: '1px solid var(--border-subtle)',
             borderRadius: 'var(--radius-sm)',
             padding: '0.75rem',
             marginBottom: '0.85rem',
@@ -106,7 +108,7 @@ const OrderCard = ({
                   alignItems: 'center',
                   fontSize: '0.85rem',
                   paddingBottom: '0.35rem',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                  borderBottom: '1px solid var(--border-subtle)',
                 }}
               >
                 <div style={{ flex: 1, paddingRight: '0.5rem' }}>

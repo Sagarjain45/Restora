@@ -211,8 +211,8 @@ const ServiceOrchestratorModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(6px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -227,10 +227,10 @@ const ServiceOrchestratorModal = ({
           width: '100%',
           maxWidth: '780px',
           padding: '2rem',
-          background: 'rgba(15, 23, 42, 0.96)',
+          background: '#ffffff',
           borderRadius: '16px',
           border: '1px solid var(--border-subtle)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+          boxShadow: 'var(--shadow-xl)',
           maxHeight: '90vh',
           overflowY: 'auto',
           position: 'relative',
@@ -267,7 +267,7 @@ const ServiceOrchestratorModal = ({
             onClick={onClose}
             disabled={processing}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: '#f1f5f9',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
@@ -287,25 +287,25 @@ const ServiceOrchestratorModal = ({
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.75rem 1rem',
-            background: 'rgba(0, 0, 0, 0.3)',
+            background: '#f8fafc',
             borderRadius: '10px',
             marginBottom: '1.5rem',
             border: '1px solid var(--border-subtle)',
             fontSize: '0.85rem',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: activeStep >= 1 ? '#fbbf24' : 'var(--text-muted)', fontWeight: activeStep === 1 ? '700' : '500' }}>
-            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: activeStep >= 1 ? '#fbbf24' : 'rgba(255, 255, 255, 0.1)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700' }}>1</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: activeStep >= 1 ? '#d97706' : 'var(--text-muted)', fontWeight: activeStep === 1 ? '700' : '500' }}>
+            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: activeStep >= 1 ? '#fbbf24' : '#e2e8f0', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700' }}>1</span>
             Arrival & Table
           </div>
           <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: activeStep >= 2 ? '#818cf8' : 'var(--text-muted)', fontWeight: activeStep === 2 ? '700' : '500' }}>
-            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: activeStep >= 2 ? '#818cf8' : 'rgba(255, 255, 255, 0.1)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700' }}>2</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: activeStep >= 2 ? '#4f46e5' : 'var(--text-muted)', fontWeight: activeStep === 2 ? '700' : '500' }}>
+            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: activeStep >= 2 ? '#818cf8' : '#e2e8f0', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700' }}>2</span>
             Kitchen Order
           </div>
           <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: activeStep >= 3 ? '#4ade80' : 'var(--text-muted)', fontWeight: activeStep === 3 ? '700' : '500' }}>
-            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: activeStep >= 3 ? '#4ade80' : 'rgba(255, 255, 255, 0.1)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700' }}>3</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: activeStep >= 3 ? '#059669' : 'var(--text-muted)', fontWeight: activeStep === 3 ? '700' : '500' }}>
+            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: activeStep >= 3 ? '#10b981' : '#e2e8f0', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700' }}>3</span>
             Billing & Release
           </div>
         </div>
@@ -320,9 +320,9 @@ const ServiceOrchestratorModal = ({
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              background: feedback.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)',
-              border: `1px solid ${feedback.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(34, 197, 94, 0.3)'}`,
-              color: feedback.type === 'error' ? '#f87171' : '#4ade80',
+              background: feedback.type === 'error' ? '#fef2f2' : '#ecfdf5',
+              border: `1px solid ${feedback.type === 'error' ? '#fecaca' : '#a7f3d0'}`,
+              color: feedback.type === 'error' ? '#dc2626' : '#059669',
               fontSize: '0.85rem',
             }}
           >
@@ -342,7 +342,7 @@ const ServiceOrchestratorModal = ({
                   placeholder="e.g. Rahul Verma"
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
-                  style={{ width: '100%', padding: '0.6rem 0.75rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-subtle)', borderRadius: '8px', color: '#fff', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.6rem 0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: '8px', color: 'var(--text-main)', fontSize: '0.85rem' }}
                 />
               </div>
               <div>
@@ -352,7 +352,7 @@ const ServiceOrchestratorModal = ({
                   placeholder="e.g. 9876543210"
                   value={guestPhone}
                   onChange={(e) => setGuestPhone(e.target.value)}
-                  style={{ width: '100%', padding: '0.6rem 0.75rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-subtle)', borderRadius: '8px', color: '#fff', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.6rem 0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: '8px', color: 'var(--text-main)', fontSize: '0.85rem' }}
                 />
               </div>
               <div>
@@ -363,7 +363,7 @@ const ServiceOrchestratorModal = ({
                   max="20"
                   value={guestCount}
                   onChange={(e) => setGuestCount(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                  style={{ width: '100%', padding: '0.6rem 0.75rem', background: 'rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-subtle)', borderRadius: '8px', color: '#fff', fontSize: '0.85rem' }}
+                  style={{ width: '100%', padding: '0.6rem 0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: '8px', color: 'var(--text-main)', fontSize: '0.85rem' }}
                 />
               </div>
             </div>
@@ -429,12 +429,12 @@ const ServiceOrchestratorModal = ({
         {/* STEP 2: BUILD KITCHEN ORDER */}
         {activeStep === 2 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.25)', padding: '0.75rem 1rem', borderRadius: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-main)' }}>
                 Seated at: <strong>Table {tables.find((t) => t._id === selectedTableId)?.tableNumber || 'Selected'}</strong>
                 {guestName && ` • Guest: ${guestName}`}
               </span>
-              <button onClick={() => setActiveStep(1)} style={{ background: 'none', border: 'none', color: '#818cf8', fontSize: '0.8rem', cursor: 'pointer' }}>
+              <button onClick={() => setActiveStep(1)} style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}>
                 Change Table
               </button>
             </div>
@@ -452,28 +452,28 @@ const ServiceOrchestratorModal = ({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: '0.65rem 0.85rem',
-                        background: 'rgba(0, 0, 0, 0.25)',
+                        background: '#ffffff',
                         borderRadius: '8px',
                         border: '1px solid var(--border-subtle)',
                       }}
                     >
                       <div>
                         <div style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-main)' }}>{item.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#4ade80' }}>{currencySymbol}{item.price}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--accent-success)', fontWeight: 600 }}>{currencySymbol}{item.price}</div>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                         <button
                           onClick={() => updateItemQty(item, -1)}
-                          style={{ width: '24px', height: '24px', borderRadius: '4px', border: '1px solid var(--border-subtle)', background: 'transparent', color: '#fff', cursor: 'pointer' }}
+                          style={{ width: '26px', height: '26px', borderRadius: '4px', border: '1px solid var(--border-subtle)', background: '#f1f5f9', color: 'var(--text-main)', cursor: 'pointer', fontWeight: 600 }}
                         >
                           -
                         </button>
-                        <span style={{ fontSize: '0.85rem', minWidth: '18px', textAlign: 'center' }}>
+                        <span style={{ fontSize: '0.85rem', minWidth: '18px', textAlign: 'center', fontWeight: 600, color: 'var(--text-main)' }}>
                           {cartItems[item._id]?.quantity || 0}
                         </span>
                         <button
                           onClick={() => updateItemQty(item, 1)}
-                          style={{ width: '24px', height: '24px', borderRadius: '4px', border: 'none', background: 'var(--primary)', color: '#fff', cursor: 'pointer' }}
+                          style={{ width: '26px', height: '26px', borderRadius: '4px', border: 'none', background: 'var(--accent-primary)', color: '#fff', cursor: 'pointer', fontWeight: 600 }}
                         >
                           +
                         </button>
@@ -484,12 +484,12 @@ const ServiceOrchestratorModal = ({
               </div>
 
               {/* Live Order Summary */}
-              <div style={{ background: 'rgba(0, 0, 0, 0.35)', padding: '1rem', borderRadius: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-subtle)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
                   <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', margin: '0 0 0.75rem 0' }}>Order Summary</h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', maxHeight: '180px', overflowY: 'auto' }}>
                     {cartList.map((i) => (
-                      <div key={i.menuItemId} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                      <div key={i.menuItemId} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-main)' }}>
                         <span>{i.quantity}x {i.name}</span>
                         <span style={{ fontWeight: '600' }}>{currencySymbol}{i.price * i.quantity}</span>
                       </div>
@@ -509,9 +509,9 @@ const ServiceOrchestratorModal = ({
                     <span>Tax (5%):</span>
                     <span>{currencySymbol}{estimatedTax}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1rem', fontWeight: '700', color: '#4ade80', marginTop: '0.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.05rem', fontWeight: '800', color: 'var(--text-main)', marginTop: '0.25rem' }}>
                     <span>Total:</span>
-                    <span>{currencySymbol}{estimatedTotal}</span>
+                    <span style={{ color: 'var(--accent-primary)' }}>{currencySymbol}{estimatedTotal}</span>
                   </div>
 
                   <button
@@ -532,8 +532,8 @@ const ServiceOrchestratorModal = ({
         {activeStep === 3 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {paymentResult ? (
-              <div style={{ padding: '2rem', background: 'rgba(34, 197, 94, 0.1)', borderRadius: '12px', border: '1px solid rgba(34, 197, 94, 0.3)', textAlign: 'center' }}>
-                <CheckCircle2 size={42} style={{ color: '#4ade80', margin: '0 auto 0.75rem auto' }} />
+              <div style={{ padding: '2rem', background: '#ecfdf5', borderRadius: '12px', border: '1px solid #a7f3d0', textAlign: 'center' }}>
+                <CheckCircle2 size={42} style={{ color: 'var(--accent-success)', margin: '0 auto 0.75rem auto' }} />
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 0.5rem 0' }}>
                   Service Cycle Completed!
                 </h3>
@@ -542,8 +542,8 @@ const ServiceOrchestratorModal = ({
                 </p>
 
                 {paymentResult.suggestedQueueParty && (
-                  <div style={{ padding: '1rem', background: 'rgba(99, 102, 241, 0.15)', borderRadius: '8px', border: '1px solid rgba(99, 102, 241, 0.3)', marginBottom: '1.25rem' }}>
-                    <p style={{ fontSize: '0.85rem', color: '#818cf8', margin: 0, fontWeight: '600' }}>
+                  <div style={{ padding: '1rem', background: 'rgba(79, 70, 229, 0.08)', borderRadius: '8px', border: '1px solid rgba(79, 70, 229, 0.25)', marginBottom: '1.25rem' }}>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', margin: 0, fontWeight: '600' }}>
                       ⚡ Next in Queue: {paymentResult.suggestedQueueParty.customerName} (Party of {paymentResult.suggestedQueueParty.guestCount}) fits this table!
                     </p>
                   </div>
@@ -555,12 +555,12 @@ const ServiceOrchestratorModal = ({
               </div>
             ) : (
               <div>
-                <div style={{ padding: '1.25rem', background: 'rgba(0, 0, 0, 0.25)', borderRadius: '10px', border: '1px solid var(--border-subtle)', marginBottom: '1.25rem' }}>
+                <div style={{ padding: '1.25rem', background: '#f8fafc', borderRadius: '10px', border: '1px solid var(--border-subtle)', marginBottom: '1.25rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                     <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                       Active Order: <strong>#{createdOrder?.orderNumber}</strong>
                     </span>
-                    <span style={{ fontSize: '1.1rem', fontWeight: '700', color: '#4ade80' }}>
+                    <span style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--accent-primary)' }}>
                       Amount Due: {currencySymbol}{(createdOrder?.total || 0).toLocaleString()}
                     </span>
                   </div>
@@ -574,9 +574,9 @@ const ServiceOrchestratorModal = ({
                           flex: 1,
                           padding: '0.65rem',
                           borderRadius: '8px',
-                          border: paymentMethod === m ? '1px solid var(--primary)' : '1px solid var(--border-subtle)',
-                          background: paymentMethod === m ? 'rgba(99, 102, 241, 0.2)' : 'rgba(0, 0, 0, 0.2)',
-                          color: paymentMethod === m ? 'var(--primary)' : 'var(--text-muted)',
+                          border: paymentMethod === m ? '2px solid var(--accent-primary)' : '1px solid var(--border-subtle)',
+                          background: paymentMethod === m ? 'rgba(79, 70, 229, 0.08)' : '#ffffff',
+                          color: paymentMethod === m ? 'var(--accent-primary)' : 'var(--text-muted)',
                           fontSize: '0.85rem',
                           fontWeight: '600',
                           cursor: 'pointer',

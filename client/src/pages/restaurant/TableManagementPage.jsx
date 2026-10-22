@@ -263,12 +263,12 @@ const TableManagementPage = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            background: notice.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-            border: `1px solid ${notice.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
+            background: notice.type === 'error' ? '#fef2f2' : '#ecfdf5',
+            border: `1px solid ${notice.type === 'error' ? '#fecaca' : '#a7f3d0'}`,
             borderRadius: 'var(--radius-sm)',
             padding: '0.85rem 1.25rem',
             fontSize: '0.9rem',
-            color: notice.type === 'error' ? '#fca5a5' : '#a7f3d0',
+            color: notice.type === 'error' ? '#b91c1c' : '#047857',
           }}
         >
           <span>{notice.text}</span>
@@ -387,11 +387,12 @@ const TableManagementPage = () => {
                   fontWeight: 600,
                   padding: '0.35rem 0.85rem',
                   borderRadius: '9999px',
-                  background: isActive ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.05)',
-                  color: isActive ? '#ffffff' : 'var(--text-muted)',
+                  background: isActive ? 'var(--accent-primary)' : '#ffffff',
+                  color: isActive ? '#ffffff' : 'var(--text-main)',
                   border: `1px solid ${isActive ? 'var(--accent-primary)' : 'var(--border-subtle)'}`,
                   transition: 'all 0.15s ease',
                   cursor: 'pointer',
+                  boxShadow: isActive ? '0 1px 3px rgba(79, 70, 229, 0.2)' : 'var(--shadow-xs)',
                 }}
               >
                 {filter.label}
@@ -418,7 +419,7 @@ const TableManagementPage = () => {
                 padding: '0.55rem 0.75rem 0.55rem 2.2rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.25)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.85rem',
               }}
@@ -435,7 +436,7 @@ const TableManagementPage = () => {
                 padding: '0.55rem 0.75rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: '#0f172a',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.85rem',
               }}
@@ -462,7 +463,7 @@ const TableManagementPage = () => {
                 padding: '0.55rem 0.75rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.25)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.85rem',
               }}

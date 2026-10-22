@@ -108,10 +108,10 @@ const StaffModal = ({
           width: '100%',
           maxWidth: '540px',
           padding: '2rem',
-          background: 'rgba(15, 23, 42, 0.95)',
+          background: '#ffffff',
           borderRadius: '16px',
           border: '1px solid var(--border-subtle)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
           position: 'relative',
           maxHeight: '90vh',
           overflowY: 'auto',
@@ -133,7 +133,7 @@ const StaffModal = ({
             onClick={onClose}
             disabled={isProcessing}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: '#f1f5f9',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
@@ -151,10 +151,10 @@ const StaffModal = ({
             style={{
               padding: '0.75rem 1rem',
               marginBottom: '1.25rem',
-              background: 'rgba(239, 68, 68, 0.1)',
-              border: '1px solid rgba(239, 68, 68, 0.25)',
+              background: '#fef2f2',
+              border: '1px solid #fecaca',
               borderRadius: '8px',
-              color: '#f87171',
+              color: '#dc2626',
               fontSize: '0.875rem',
               display: 'flex',
               alignItems: 'center',
@@ -183,7 +183,7 @@ const StaffModal = ({
                 style={{
                   width: '100%',
                   padding: '0.65rem 0.75rem 0.65rem 2.5rem',
-                  background: 'rgba(0, 0, 0, 0.25)',
+                  background: '#ffffff',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: '8px',
                   color: 'var(--text-main)',
@@ -210,7 +210,7 @@ const StaffModal = ({
                 style={{
                   width: '100%',
                   padding: '0.65rem 0.75rem 0.65rem 2.5rem',
-                  background: isEditing ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.25)',
+                  background: isEditing ? '#f8fafc' : '#ffffff',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: '8px',
                   color: isEditing ? 'var(--text-muted)' : 'var(--text-main)',
@@ -241,7 +241,7 @@ const StaffModal = ({
                 style={{
                   width: '100%',
                   padding: '0.65rem 0.75rem 0.65rem 2.5rem',
-                  background: 'rgba(0, 0, 0, 0.25)',
+                  background: '#ffffff',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: '8px',
                   color: 'var(--text-main)',
@@ -265,7 +265,7 @@ const StaffModal = ({
                   style={{
                     width: '100%',
                     padding: '0.65rem 0.75rem 0.65rem 2.5rem',
-                    background: 'rgba(15, 23, 42, 0.9)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: '8px',
                     color: 'var(--text-main)',
@@ -294,7 +294,7 @@ const StaffModal = ({
                   style={{
                     width: '100%',
                     padding: '0.65rem 0.75rem 0.65rem 2.5rem',
-                    background: isEditing ? 'rgba(255, 255, 255, 0.04)' : 'rgba(15, 23, 42, 0.9)',
+                    background: isEditing ? '#f8fafc' : '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: '8px',
                     color: isEditing ? 'var(--text-muted)' : 'var(--text-main)',
@@ -324,7 +324,7 @@ const StaffModal = ({
                 style={{
                   width: '100%',
                   padding: '0.65rem 0.75rem 0.65rem 2.5rem',
-                  background: 'rgba(0, 0, 0, 0.25)',
+                  background: '#ffffff',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: '8px',
                   color: 'var(--text-main)',
@@ -348,12 +348,13 @@ const StaffModal = ({
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.65rem 1rem',
-                    background: status === 'ACTIVE' ? 'rgba(34, 197, 94, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                    border: status === 'ACTIVE' ? '1px solid rgba(34, 197, 94, 0.4)' : '1px solid var(--border-subtle)',
+                    background: status === 'ACTIVE' ? '#f0fdf4' : '#f8fafc',
+                    border: status === 'ACTIVE' ? '1px solid #bbf7d0' : '1px solid var(--border-subtle)',
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontSize: '0.85rem',
-                    color: status === 'ACTIVE' ? '#4ade80' : 'var(--text-muted)',
+                    color: status === 'ACTIVE' ? '#16a34a' : 'var(--text-muted)',
+                    fontWeight: '600',
                   }}
                 >
                   <input
@@ -362,7 +363,7 @@ const StaffModal = ({
                     value="ACTIVE"
                     checked={status === 'ACTIVE'}
                     onChange={() => setStatus('ACTIVE')}
-                    style={{ accentColor: '#22c55e' }}
+                    style={{ accentColor: '#16a34a' }}
                   />
                   Active (Can login)
                 </label>
@@ -373,12 +374,13 @@ const StaffModal = ({
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.65rem 1rem',
-                    background: status === 'INACTIVE' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                    border: status === 'INACTIVE' ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid var(--border-subtle)',
+                    background: status === 'INACTIVE' ? '#fef2f2' : '#f8fafc',
+                    border: status === 'INACTIVE' ? '1px solid #fecaca' : '1px solid var(--border-subtle)',
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontSize: '0.85rem',
-                    color: status === 'INACTIVE' ? '#f87171' : 'var(--text-muted)',
+                    color: status === 'INACTIVE' ? '#dc2626' : 'var(--text-muted)',
+                    fontWeight: '600',
                   }}
                 >
                   <input
@@ -387,9 +389,9 @@ const StaffModal = ({
                     value="INACTIVE"
                     checked={status === 'INACTIVE'}
                     onChange={() => setStatus('INACTIVE')}
-                    style={{ accentColor: '#ef4444' }}
+                    style={{ accentColor: '#dc2626' }}
                   />
-                  Inactive (Suspended)
+                  Suspended
                 </label>
               </div>
             </div>
@@ -403,7 +405,7 @@ const StaffModal = ({
               disabled={isProcessing}
               style={{
                 padding: '0.65rem 1.25rem',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: '#f8fafc',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 color: 'var(--text-main)',

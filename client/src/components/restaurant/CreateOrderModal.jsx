@@ -119,8 +119,8 @@ const CreateOrderModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.78)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(6px)',
         zIndex: 50,
         display: 'flex',
         alignItems: 'center',
@@ -135,8 +135,9 @@ const CreateOrderModal = ({
           maxWidth: '920px',
           padding: '2rem',
           position: 'relative',
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-highlight)',
+          background: '#ffffff',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: 'var(--shadow-xl)',
           maxHeight: '90vh',
           display: 'flex',
           flexDirection: 'column',
@@ -147,8 +148,8 @@ const CreateOrderModal = ({
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontSize: '1.4rem', margin: 0 }}>Create Table Order</h2>
-            <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem', marginTop: '0.2rem' }}>
+            <h2 style={{ fontSize: '1.4rem', margin: 0, color: 'var(--text-main)' }}>Create Table Order</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.2rem' }}>
               Select dining table, add available menu items, and send order to kitchen
             </p>
           </div>
@@ -164,14 +165,14 @@ const CreateOrderModal = ({
               alignItems: 'center',
               gap: '0.5rem',
               padding: '0.75rem 1rem',
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: '#fef2f2',
+              border: '1px solid #fecaca',
               borderRadius: 'var(--radius-sm)',
-              color: '#fca5a5',
+              color: '#dc2626',
               fontSize: '0.85rem',
             }}
           >
-            <AlertCircle size={16} />
+            <AlertCircle size={16} color="var(--accent-danger)" />
             <span>{error}</span>
           </div>
         )}
@@ -179,7 +180,7 @@ const CreateOrderModal = ({
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {/* Table Selection */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-muted)' }}>
               Select Table <span style={{ color: 'var(--accent-danger)' }}>*</span>
             </label>
             <select
@@ -191,7 +192,7 @@ const CreateOrderModal = ({
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: '#0f172a',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.9rem',
               }}
@@ -210,7 +211,7 @@ const CreateOrderModal = ({
             {/* Left: Available Menu Items Catalog */}
             <div
               style={{
-                background: 'rgba(0, 0, 0, 0.25)',
+                background: '#f8fafc',
                 padding: '1rem',
                 borderRadius: 'var(--radius-md)',
                 border: '1px solid var(--border-subtle)',
@@ -240,8 +241,8 @@ const CreateOrderModal = ({
                     padding: '0.45rem 0.65rem',
                     borderRadius: 'var(--radius-sm)',
                     border: '1px solid var(--border-subtle)',
-                    background: 'rgba(15, 23, 42, 0.8)',
-                    color: '#fff',
+                    background: '#ffffff',
+                    color: 'var(--text-main)',
                     fontSize: '0.8rem',
                   }}
                 />
@@ -257,8 +258,11 @@ const CreateOrderModal = ({
                         fontSize: '0.7rem',
                         fontWeight: 600,
                         borderRadius: '9999px',
-                        background: itemCategory === cat ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.05)',
-                        color: itemCategory === cat ? '#fff' : 'var(--text-muted)',
+                        background: itemCategory === cat ? 'var(--accent-primary)' : '#ffffff',
+                        color: itemCategory === cat ? '#ffffff' : 'var(--text-main)',
+                        border: `1px solid ${itemCategory === cat ? 'var(--accent-primary)' : 'var(--border-subtle)'}`,
+                        boxShadow: 'var(--shadow-xs)',
+                        cursor: 'pointer',
                         whiteSpace: 'nowrap',
                       }}
                     >
@@ -313,7 +317,7 @@ const CreateOrderModal = ({
             {/* Right: Selected Order Items Ticket */}
             <div
               style={{
-                background: 'rgba(0, 0, 0, 0.25)',
+                background: '#f8fafc',
                 padding: '1rem',
                 borderRadius: 'var(--radius-md)',
                 border: '1px solid var(--border-subtle)',
@@ -336,7 +340,8 @@ const CreateOrderModal = ({
                       key={item.menuItemId}
                       style={{
                         padding: '0.5rem',
-                        background: 'rgba(255, 255, 255, 0.03)',
+                        background: '#ffffff',
+                        border: '1px solid var(--border-subtle)',
                         borderRadius: 'var(--radius-sm)',
                         fontSize: '0.8rem',
                       }}
@@ -353,7 +358,7 @@ const CreateOrderModal = ({
                           <button
                             type="button"
                             onClick={() => handleUpdateQty(idx, -1)}
-                            style={{ padding: '0.2rem', color: 'var(--text-dim)' }}
+                            style={{ padding: '0.2rem', color: 'var(--text-dim)', cursor: 'pointer' }}
                           >
                             <Minus size={12} />
                           </button>
@@ -361,7 +366,7 @@ const CreateOrderModal = ({
                           <button
                             type="button"
                             onClick={() => handleUpdateQty(idx, 1)}
-                            style={{ padding: '0.2rem', color: 'var(--text-dim)' }}
+                            style={{ padding: '0.2rem', color: 'var(--text-dim)', cursor: 'pointer' }}
                           >
                             <Plus size={12} />
                           </button>
@@ -375,9 +380,9 @@ const CreateOrderModal = ({
                           style={{
                             padding: '0.2rem 0.4rem',
                             fontSize: '0.7rem',
-                            background: 'rgba(0, 0, 0, 0.3)',
+                            background: '#ffffff',
                             border: '1px solid var(--border-subtle)',
-                            color: '#fff',
+                            color: 'var(--text-main)',
                             borderRadius: '3px',
                             width: '160px',
                           }}
@@ -414,7 +419,7 @@ const CreateOrderModal = ({
 
           {/* Special Instructions */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-muted)' }}>
               Table & Order Special Instructions
             </label>
             <input
@@ -427,7 +432,7 @@ const CreateOrderModal = ({
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.3)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.85rem',
               }}

@@ -280,7 +280,7 @@ const OrderHistoryPage = () => {
           marginBottom: '1.5rem',
         }}
       >
-        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: 'rgba(15, 23, 42, 0.6)' }}>
+        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Matched Orders
           </p>
@@ -290,21 +290,21 @@ const OrderHistoryPage = () => {
           <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>In selected filter range</span>
         </div>
 
-        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: 'rgba(15, 23, 42, 0.6)' }}>
+        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Gross Sales
           </p>
-          <h3 style={{ fontSize: '1.65rem', fontWeight: '700', color: '#4ade80', margin: '0.25rem 0 0 0' }}>
+          <h3 style={{ fontSize: '1.65rem', fontWeight: '700', color: '#16a34a', margin: '0.25rem 0 0 0' }}>
             {currencySymbol}{(summary?.totalSales || 0).toLocaleString()}
           </h3>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Excludes cancelled orders</span>
         </div>
 
-        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: 'rgba(15, 23, 42, 0.6)' }}>
+        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Settlement Status
           </p>
-          <h3 style={{ fontSize: '1.65rem', fontWeight: '700', color: '#818cf8', margin: '0.25rem 0 0 0' }}>
+          <h3 style={{ fontSize: '1.65rem', fontWeight: '700', color: '#4f46e5', margin: '0.25rem 0 0 0' }}>
             {summary?.paidCount ?? 0} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>Paid</span>
           </h3>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -312,11 +312,11 @@ const OrderHistoryPage = () => {
           </span>
         </div>
 
-        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: 'rgba(15, 23, 42, 0.6)' }}>
+        <div className="glass-panel" style={{ padding: '1.25rem', borderRadius: '12px', background: '#ffffff', border: '1px solid var(--border-subtle)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Average Order Value
           </p>
-          <h3 style={{ fontSize: '1.65rem', fontWeight: '700', color: '#fbbf24', margin: '0.25rem 0 0 0' }}>
+          <h3 style={{ fontSize: '1.65rem', fontWeight: '700', color: '#d97706', margin: '0.25rem 0 0 0' }}>
             {currencySymbol}{(summary?.aov || 0).toLocaleString()}
           </h3>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Per fulfilled order</span>
@@ -329,6 +329,9 @@ const OrderHistoryPage = () => {
         style={{
           padding: '1.25rem',
           borderRadius: '14px',
+          background: '#ffffff',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
           marginBottom: '1.5rem',
           display: 'flex',
           flexDirection: 'column',
@@ -351,7 +354,7 @@ const OrderHistoryPage = () => {
               style={{
                 width: '100%',
                 padding: '0.55rem 0.75rem 0.55rem 2.25rem',
-                background: 'rgba(0, 0, 0, 0.25)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 color: 'var(--text-main)',
@@ -361,7 +364,7 @@ const OrderHistoryPage = () => {
           </div>
 
           {/* Date Presets */}
-          <div style={{ display: 'flex', background: 'rgba(0, 0, 0, 0.3)', borderRadius: '8px', padding: '0.25rem', flexWrap: 'wrap', gap: '0.2rem' }}>
+          <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '8px', padding: '0.25rem', flexWrap: 'wrap', gap: '0.2rem' }}>
             {[
               { id: 'today', label: 'Today' },
               { id: 'yesterday', label: 'Yesterday' },
@@ -380,8 +383,8 @@ const OrderHistoryPage = () => {
                   padding: '0.35rem 0.75rem',
                   borderRadius: '6px',
                   border: 'none',
-                  background: datePreset === preset.id ? 'var(--primary)' : 'transparent',
-                  color: datePreset === preset.id ? '#fff' : 'var(--text-muted)',
+                  background: datePreset === preset.id ? 'var(--accent-primary)' : 'transparent',
+                  color: datePreset === preset.id ? '#ffffff' : 'var(--text-muted)',
                   fontSize: '0.8rem',
                   fontWeight: '600',
                   cursor: 'pointer',
@@ -396,7 +399,7 @@ const OrderHistoryPage = () => {
 
         {/* Custom Date Range Row (visible if 'custom' is selected) */}
         {datePreset === 'custom' && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', background: 'rgba(0, 0, 0, 0.2)', padding: '0.75rem', borderRadius: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <Calendar size={14} /> Custom Date Bounds:
             </span>
@@ -409,7 +412,7 @@ const OrderHistoryPage = () => {
               }}
               style={{
                 padding: '0.45rem 0.65rem',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '6px',
                 color: 'var(--text-main)',
@@ -426,7 +429,7 @@ const OrderHistoryPage = () => {
               }}
               style={{
                 padding: '0.45rem 0.65rem',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '6px',
                 color: 'var(--text-main)',
@@ -452,7 +455,7 @@ const OrderHistoryPage = () => {
               style={{
                 width: '100%',
                 padding: '0.5rem 0.65rem',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 color: 'var(--text-main)',
@@ -482,7 +485,7 @@ const OrderHistoryPage = () => {
               style={{
                 width: '100%',
                 padding: '0.5rem 0.65rem',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 color: 'var(--text-main)',
@@ -513,7 +516,7 @@ const OrderHistoryPage = () => {
               style={{
                 width: '100%',
                 padding: '0.5rem 0.65rem',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 color: 'var(--text-main)',
@@ -540,7 +543,7 @@ const OrderHistoryPage = () => {
               style={{
                 width: '100%',
                 padding: '0.5rem 0.65rem',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: '#ffffff',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: '8px',
                 color: 'var(--text-main)',
@@ -606,14 +609,16 @@ const OrderHistoryPage = () => {
           style={{
             borderRadius: '12px',
             overflow: 'hidden',
+            background: '#ffffff',
             border: '1px solid var(--border-subtle)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
             marginBottom: '1.5rem',
           }}
         >
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
-                <tr style={{ background: 'rgba(15, 23, 42, 0.8)', borderBottom: '1px solid var(--border-subtle)' }}>
+                <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--border-subtle)' }}>
                   <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>Order #</th>
                   <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>Date & Time</th>
                   <th style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>Table & Guest</th>
@@ -633,8 +638,8 @@ const OrderHistoryPage = () => {
                     <tr
                       key={order._id}
                       style={{
-                        borderBottom: '1px solid var(--border-subtle)',
-                        background: 'rgba(15, 23, 42, 0.4)',
+                        borderBottom: '1px solid #f1f5f9',
+                        background: '#ffffff',
                         transition: 'background 0.15s',
                       }}
                     >
@@ -694,7 +699,7 @@ const OrderHistoryPage = () => {
                             style={{
                               fontSize: '0.75rem',
                               fontWeight: '600',
-                              color: isPaid ? '#4ade80' : isCancelled ? '#f87171' : '#fbbf24',
+                              color: isPaid ? '#16a34a' : isCancelled ? '#dc2626' : '#d97706',
                             }}
                           >
                             {isPaid ? 'PAID' : isCancelled ? 'CANCELLED' : 'PENDING'}
@@ -705,8 +710,8 @@ const OrderHistoryPage = () => {
                                 fontSize: '0.7rem',
                                 padding: '0.1rem 0.35rem',
                                 borderRadius: '4px',
-                                background: 'rgba(99, 102, 241, 0.15)',
-                                color: '#818cf8',
+                                background: 'rgba(79, 70, 229, 0.08)',
+                                color: 'var(--accent-primary)',
                                 fontWeight: '600',
                               }}
                             >
@@ -727,16 +732,17 @@ const OrderHistoryPage = () => {
                             setIsModalOpen(true);
                           }}
                           style={{
-                            background: 'rgba(255, 255, 255, 0.05)',
+                            background: '#f8fafc',
                             border: '1px solid var(--border-subtle)',
                             borderRadius: '6px',
                             padding: '0.4rem 0.65rem',
-                            color: 'var(--text-muted)',
+                            color: 'var(--text-main)',
                             cursor: 'pointer',
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '0.35rem',
                             fontSize: '0.75rem',
+                            fontWeight: '600',
                           }}
                         >
                           <Eye size={13} />
@@ -756,7 +762,7 @@ const OrderHistoryPage = () => {
               style={{
                 padding: '0.85rem 1.25rem',
                 borderTop: '1px solid var(--border-subtle)',
-                background: 'rgba(15, 23, 42, 0.6)',
+                background: '#f8fafc',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -771,16 +777,17 @@ const OrderHistoryPage = () => {
                   disabled={pagination.page <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: '6px',
                     padding: '0.35rem 0.75rem',
-                    color: pagination.page <= 1 ? 'rgba(255, 255, 255, 0.2)' : 'var(--text-main)',
+                    color: pagination.page <= 1 ? '#cbd5e1' : 'var(--text-main)',
                     cursor: pagination.page <= 1 ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.3rem',
                     fontSize: '0.8rem',
+                    fontWeight: '600',
                   }}
                 >
                   <ChevronLeft size={14} /> Previous
@@ -789,16 +796,17 @@ const OrderHistoryPage = () => {
                   disabled={pagination.page >= pagination.totalPages}
                   onClick={() => setPage((p) => p + 1)}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: '6px',
                     padding: '0.35rem 0.75rem',
-                    color: pagination.page >= pagination.totalPages ? 'rgba(255, 255, 255, 0.2)' : 'var(--text-main)',
+                    color: pagination.page >= pagination.totalPages ? '#cbd5e1' : 'var(--text-main)',
                     cursor: pagination.page >= pagination.totalPages ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.3rem',
                     fontSize: '0.8rem',
+                    fontWeight: '600',
                   }}
                 >
                   Next <ChevronRight size={14} />

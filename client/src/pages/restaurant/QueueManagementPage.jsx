@@ -246,18 +246,18 @@ const QueueManagementPage = () => {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#f1f5f9',
+                color: 'var(--text-main)',
                 fontSize: '0.82rem',
                 cursor: 'pointer',
                 outline: 'none',
                 fontWeight: 600,
               }}
             >
-              <option value={0} style={{ background: '#0f172a' }}>Manual</option>
-              <option value={10} style={{ background: '#0f172a' }}>10s</option>
-              <option value={15} style={{ background: '#0f172a' }}>15s (Live)</option>
-              <option value={30} style={{ background: '#0f172a' }}>30s</option>
-              <option value={60} style={{ background: '#0f172a' }}>60s</option>
+              <option value={0} style={{ background: '#ffffff', color: '#0f172a' }}>Manual</option>
+              <option value={10} style={{ background: '#ffffff', color: '#0f172a' }}>10s</option>
+              <option value={15} style={{ background: '#ffffff', color: '#0f172a' }}>15s (Live)</option>
+              <option value={30} style={{ background: '#ffffff', color: '#0f172a' }}>30s</option>
+              <option value={60} style={{ background: '#ffffff', color: '#0f172a' }}>60s</option>
             </select>
           </div>
 
@@ -290,12 +290,12 @@ const QueueManagementPage = () => {
           style={{
             padding: '0.85rem 1.25rem',
             borderRadius: 'var(--radius-md)',
-            background: notice.type === 'error' ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)',
-            border: `1px solid ${notice.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
+            background: notice.type === 'error' ? '#fef2f2' : '#ecfdf5',
+            border: `1px solid ${notice.type === 'error' ? '#fecaca' : '#a7f3d0'}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            color: notice.type === 'error' ? 'var(--accent-danger)' : 'var(--accent-success)',
+            color: notice.type === 'error' ? '#b91c1c' : '#047857',
             fontSize: '0.9rem',
           }}
         >
@@ -498,7 +498,7 @@ const QueueManagementPage = () => {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
               <thead>
-                <tr style={{ background: 'rgba(255, 255, 255, 0.02)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)' }}>
+                <tr style={{ background: '#f8fafc', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>POS / ARRIVAL</th>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>CUSTOMER</th>
                   <th style={{ padding: '0.85rem 1.25rem', fontWeight: 600 }}>PARTY SIZE</th>

@@ -89,7 +89,7 @@ const HomePage = () => {
         }}>
           The Operating System for <br />
           <span style={{
-            background: 'linear-gradient(135deg, #818cf8 0%, #38bdf8 50%, #34d399 100%)',
+            background: 'linear-gradient(135deg, #4f46e5 0%, #0284c7 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}>
@@ -144,14 +144,15 @@ const HomePage = () => {
                   flexDirection: 'column', 
                   gap: '1rem',
                   transition: 'transform 0.2s ease, border-color 0.2s ease',
+                  backgroundColor: '#ffffff',
                 }}
               >
                 <div style={{
                   width: '46px',
                   height: '46px',
                   borderRadius: '12px',
-                  background: `${item.color}20`,
-                  border: `1px solid ${item.color}40`,
+                  background: `${item.color}15`,
+                  border: `1px solid ${item.color}30`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -178,7 +179,7 @@ const HomePage = () => {
         margin: '0 auto',
         width: '100%',
         padding: '2.5rem 2rem',
-        background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%)',
+        background: '#ffffff',
       }}>
         <div style={{
           display: 'grid',
@@ -215,7 +216,7 @@ const HomePage = () => {
           </div>
 
           <div style={{
-            background: 'rgba(15, 23, 42, 0.8)',
+            background: '#f8fafc',
             padding: '2rem',
             borderRadius: 'var(--radius-lg)',
             border: '1px solid var(--border-subtle)',

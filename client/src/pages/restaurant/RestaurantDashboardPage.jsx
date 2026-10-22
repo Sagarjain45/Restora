@@ -216,12 +216,12 @@ const RestaurantDashboardPage = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            background: notice.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-            border: `1px solid ${notice.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`,
+            background: notice.type === 'error' ? '#fef2f2' : '#ecfdf5',
+            border: `1px solid ${notice.type === 'error' ? '#fecaca' : '#a7f3d0'}`,
             borderRadius: 'var(--radius-sm)',
             padding: '0.85rem 1.25rem',
             fontSize: '0.9rem',
-            color: notice.type === 'error' ? '#fca5a5' : '#a7f3d0',
+            color: notice.type === 'error' ? '#b91c1c' : '#047857',
           }}
         >
           <span>{notice.text}</span>
@@ -392,18 +392,19 @@ const RestaurantDashboardPage = () => {
                 <div
                   key={t.id}
                   style={{
-                    background: 'rgba(15, 23, 42, 0.7)',
+                    background: '#ffffff',
                     padding: '1.25rem',
                     borderRadius: 'var(--radius-md)',
                     border: `1px solid ${
                       t.status === 'AVAILABLE'
-                        ? 'rgba(16, 185, 129, 0.3)'
+                        ? 'rgba(16, 185, 129, 0.4)'
                         : t.status === 'OCCUPIED'
-                        ? 'rgba(99, 102, 241, 0.3)'
+                        ? 'rgba(79, 70, 229, 0.4)'
                         : t.status === 'BILLING'
-                        ? 'rgba(168, 85, 247, 0.3)'
+                        ? 'rgba(168, 85, 247, 0.4)'
                         : 'var(--border-subtle)'
                     }`,
+                    boxShadow: 'var(--shadow-xs)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '0.5rem',

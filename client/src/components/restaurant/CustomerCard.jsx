@@ -49,12 +49,13 @@ const CustomerCard = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: 'rgba(15, 23, 42, 0.75)',
+        background: '#ffffff',
         border: isVIP
-          ? '1px solid rgba(245, 158, 11, 0.35)'
+          ? '1px solid #fcd34d'
           : isFrequent
-          ? '1px solid rgba(99, 102, 241, 0.3)'
+          ? '1px solid #c7d2fe'
           : '1px solid var(--border-subtle)',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
         position: 'relative',
         transition: 'all 0.2s ease',
       }}
@@ -144,7 +145,8 @@ const CustomerCard = ({
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '0.5rem',
-            background: 'rgba(0, 0, 0, 0.25)',
+            background: '#f8fafc',
+            border: '1px solid var(--border-subtle)',
             padding: '0.6rem 0.75rem',
             borderRadius: 'var(--radius-sm)',
             marginBottom: '0.85rem',

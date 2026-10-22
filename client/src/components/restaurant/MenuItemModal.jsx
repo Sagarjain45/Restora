@@ -100,8 +100,8 @@ const MenuItemModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.75)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(4px)',
         zIndex: 50,
         display: 'flex',
         alignItems: 'center',
@@ -116,8 +116,10 @@ const MenuItemModal = ({
           maxWidth: '560px',
           padding: '2rem',
           position: 'relative',
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border-highlight)',
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid var(--border-subtle)',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
           maxHeight: '90vh',
           overflowY: 'auto',
         }}
@@ -125,19 +127,27 @@ const MenuItemModal = ({
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.4rem', margin: 0 }}>
+            <h2 style={{ fontSize: '1.4rem', margin: 0, color: 'var(--text-main)', fontWeight: 700 }}>
               {item ? 'Edit Menu Item' : 'Add New Menu Item'}
             </h2>
-            <p style={{ color: 'var(--text-dim)', fontSize: '0.85rem', marginTop: '0.2rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.2rem' }}>
               Configure dish details, category, pricing, and dietary labels
             </p>
           </div>
           <button
             onClick={onClose}
-            style={{ color: 'var(--text-muted)', padding: '0.4rem' }}
+            style={{
+              background: '#f1f5f9',
+              border: 'none',
+              color: 'var(--text-muted)',
+              borderRadius: '8px',
+              padding: '0.4rem',
+              cursor: 'pointer',
+              display: 'flex',
+            }}
             title="Close"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
@@ -148,10 +158,10 @@ const MenuItemModal = ({
               alignItems: 'center',
               gap: '0.5rem',
               padding: '0.75rem 1rem',
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: '#fef2f2',
+              border: '1px solid #fecaca',
               borderRadius: 'var(--radius-sm)',
-              color: '#fca5a5',
+              color: '#dc2626',
               fontSize: '0.85rem',
               marginBottom: '1.25rem',
             }}
@@ -164,7 +174,7 @@ const MenuItemModal = ({
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {/* Dish Name */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
               Dish / Item Name <span style={{ color: 'var(--accent-danger)' }}>*</span>
             </label>
             <input
@@ -178,7 +188,7 @@ const MenuItemModal = ({
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.3)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.9rem',
               }}
@@ -188,7 +198,7 @@ const MenuItemModal = ({
           {/* Category & Price */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
                 Category <span style={{ color: 'var(--accent-danger)' }}>*</span>
               </label>
               <input
@@ -203,7 +213,7 @@ const MenuItemModal = ({
                   padding: '0.65rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--border-subtle)',
-                  background: 'rgba(0, 0, 0, 0.3)',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.9rem',
                 }}
@@ -216,7 +226,7 @@ const MenuItemModal = ({
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
                 Price ({currency}) <span style={{ color: 'var(--accent-danger)' }}>*</span>
               </label>
               <input
@@ -232,7 +242,7 @@ const MenuItemModal = ({
                   padding: '0.65rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--border-subtle)',
-                  background: 'rgba(0, 0, 0, 0.3)',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.9rem',
                 }}
@@ -242,7 +252,7 @@ const MenuItemModal = ({
 
           {/* Description */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
               Description & Ingredients
             </label>
             <textarea
@@ -255,7 +265,7 @@ const MenuItemModal = ({
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
                 border: '1px solid var(--border-subtle)',
-                background: 'rgba(0, 0, 0, 0.3)',
+                background: '#ffffff',
                 color: 'var(--text-main)',
                 fontSize: '0.9rem',
                 resize: 'vertical',
@@ -266,7 +276,7 @@ const MenuItemModal = ({
           {/* Prep time & Image URL */}
           <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: '1rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
                 Prep Time (min)
               </label>
               <input
@@ -280,7 +290,7 @@ const MenuItemModal = ({
                   padding: '0.65rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--border-subtle)',
-                  background: 'rgba(0, 0, 0, 0.3)',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.9rem',
                 }}
@@ -288,7 +298,7 @@ const MenuItemModal = ({
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
                 Image URL (optional)
               </label>
               <input
@@ -301,7 +311,7 @@ const MenuItemModal = ({
                   padding: '0.65rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   border: '1px solid var(--border-subtle)',
-                  background: 'rgba(0, 0, 0, 0.3)',
+                  background: '#ffffff',
                   color: 'var(--text-main)',
                   fontSize: '0.9rem',
                 }}
@@ -316,7 +326,7 @@ const MenuItemModal = ({
               gridTemplateColumns: '1fr 1fr',
               gap: '1rem',
               padding: '1rem',
-              background: 'rgba(0, 0, 0, 0.25)',
+              background: '#f8fafc',
               borderRadius: 'var(--radius-sm)',
               border: '1px solid var(--border-subtle)',
             }}
@@ -329,7 +339,7 @@ const MenuItemModal = ({
                 onChange={(e) => setFormData({ ...formData, isVegetarian: e.target.checked })}
                 style={{ width: '16px', height: '16px', cursor: 'pointer' }}
               />
-              <label htmlFor="isVegCheckbox" style={{ fontSize: '0.85rem', cursor: 'pointer' }}>
+              <label htmlFor="isVegCheckbox" style={{ fontSize: '0.85rem', cursor: 'pointer', color: 'var(--text-main)' }}>
                 <strong>Vegetarian</strong> (Green icon)
               </label>
             </div>

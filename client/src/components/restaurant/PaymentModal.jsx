@@ -97,8 +97,8 @@ const PaymentModal = ({
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(5, 8, 16, 0.8)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backdropFilter: 'blur(6px)',
         zIndex: 60,
         display: 'flex',
         alignItems: 'center',
@@ -116,9 +116,10 @@ const PaymentModal = ({
           display: 'flex',
           flexDirection: 'column',
           padding: 0,
-          border: '1px solid var(--border-glow)',
+          background: '#ffffff',
+          border: '1px solid var(--border-subtle)',
           overflow: 'hidden',
-          boxShadow: '0 20px 45px rgba(0, 0, 0, 0.6)',
+          boxShadow: 'var(--shadow-xl)',
         }}
       >
         {/* Header */}
@@ -129,7 +130,7 @@ const PaymentModal = ({
             justifyContent: 'space-between',
             padding: '1.25rem 1.5rem',
             borderBottom: '1px solid var(--border-subtle)',
-            background: 'rgba(255, 255, 255, 0.02)',
+            background: '#ffffff',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -273,13 +274,13 @@ const PaymentModal = ({
           {/* Invoice Summary Details */}
           <div
             style={{
-              background: 'rgba(0, 0, 0, 0.25)',
+              background: '#f8fafc',
               borderRadius: 'var(--radius-sm)',
               padding: '1rem',
               border: '1px solid var(--border-subtle)',
             }}
           >
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-dim)', marginBottom: '0.75rem' }}>
+            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.75rem', fontWeight: 600 }}>
               Itemized Order Summary
             </div>
 
@@ -294,7 +295,7 @@ const PaymentModal = ({
                     justifyContent: 'space-between',
                     fontSize: '0.85rem',
                     paddingBottom: '0.4rem',
-                    borderBottom: idx < bill.items.length - 1 ? '1px dashed rgba(255, 255, 255, 0.06)' : 'none',
+                    borderBottom: idx < bill.items.length - 1 ? '1px dashed var(--border-subtle)' : 'none',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -336,7 +337,7 @@ const PaymentModal = ({
                   color: 'var(--text-main)',
                   marginTop: '0.4rem',
                   paddingTop: '0.4rem',
-                  borderTop: '1px solid var(--border-glow)',
+                  borderTop: '1px solid var(--border-subtle)',
                 }}
               >
                 <span>Grand Total</span>
@@ -373,8 +374,8 @@ const PaymentModal = ({
                         padding: '0.85rem 0.5rem',
                         borderRadius: 'var(--radius-sm)',
                         border: isSelected ? '2px solid var(--accent-primary)' : '1px solid var(--border-subtle)',
-                        background: isSelected ? 'rgba(99, 102, 241, 0.15)' : 'rgba(15, 23, 42, 0.5)',
-                        color: isSelected ? 'var(--text-main)' : 'var(--text-muted)',
+                        background: isSelected ? 'rgba(79, 70, 229, 0.08)' : '#ffffff',
+                        color: isSelected ? 'var(--accent-primary)' : 'var(--text-muted)',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease',
                       }}

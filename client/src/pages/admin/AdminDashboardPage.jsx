@@ -439,7 +439,7 @@ const AdminDashboardPage = () => {
               Platform Admin Workflow
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <span className="badge badge-cyan">Step 1</span>
                   <strong>Review Applications</strong>
@@ -449,7 +449,7 @@ const AdminDashboardPage = () => {
                 </p>
               </div>
 
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <span className="badge badge-success">Step 2</span>
                   <strong>Automated Restaurant Creation</strong>
@@ -459,7 +459,7 @@ const AdminDashboardPage = () => {
                 </p>
               </div>
 
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <span className="badge badge-danger">Step 3</span>
                   <strong>Status Governance</strong>
@@ -561,14 +561,14 @@ const AdminDashboardPage = () => {
               ))}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(15, 23, 42, 0.8)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#ffffff', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
               <Search size={16} color="var(--text-muted)" />
               <input
                 type="text"
                 placeholder="Search applicant or restaurant..."
                 value={appSearch}
                 onChange={(e) => setAppSearch(e.target.value)}
-                style={{ background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '0.85rem' }}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', outline: 'none', fontSize: '0.85rem' }}
               />
             </div>
           </div>
@@ -697,14 +697,14 @@ const AdminDashboardPage = () => {
               ))}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(15, 23, 42, 0.8)', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#ffffff', padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
               <Search size={16} color="var(--text-muted)" />
               <input
                 type="text"
                 placeholder="Search restaurant by name or city..."
                 value={restSearch}
                 onChange={(e) => setRestSearch(e.target.value)}
-                style={{ background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '0.85rem' }}
+                style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', outline: 'none', fontSize: '0.85rem' }}
               />
             </div>
           </div>
@@ -819,7 +819,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. Spice Symphony"
                   value={form.restaurantName}
                   onChange={(e) => setForm({ ...form, restaurantName: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
 
@@ -833,7 +833,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. Ramesh Patel"
                   value={form.applicantName}
                   onChange={(e) => setForm({ ...form, applicantName: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
             </div>
@@ -849,7 +849,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. ramesh@spicesymphony.com"
                   value={form.applicantEmail}
                   onChange={(e) => setForm({ ...form, applicantEmail: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
 
@@ -863,7 +863,7 @@ const AdminDashboardPage = () => {
                   placeholder="+91 98000 12345"
                   value={form.applicantPhone}
                   onChange={(e) => setForm({ ...form, applicantPhone: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
             </div>
@@ -879,7 +879,7 @@ const AdminDashboardPage = () => {
                   placeholder="14-digit FSSAI (e.g. 11521018000452)"
                   value={form.fssaiNumber}
                   onChange={(e) => setForm({ ...form, fssaiNumber: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(52, 211, 153, 0.4)', borderRadius: 'var(--radius-sm)', color: '#4ade80', fontFamily: 'monospace' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid #10b981', borderRadius: 'var(--radius-sm)', color: '#059669', fontFamily: 'monospace' }}
                 />
               </div>
 
@@ -893,7 +893,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. 45"
                   value={form.seatingCapacity}
                   onChange={(e) => setForm({ ...form, seatingCapacity: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
 
@@ -906,7 +906,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. 380054"
                   value={form.postalCode}
                   onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
             </div>
@@ -922,7 +922,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. Ahmedabad"
                   value={form.city}
                   onChange={(e) => setForm({ ...form, city: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
 
@@ -936,7 +936,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. Gujarat"
                   value={form.state}
                   onChange={(e) => setForm({ ...form, state: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
 
@@ -949,7 +949,7 @@ const AdminDashboardPage = () => {
                   placeholder="e.g. Mughlai, North Indian"
                   value={form.cuisine}
                   onChange={(e) => setForm({ ...form, cuisine: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                  style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
                 />
               </div>
             </div>
@@ -964,7 +964,7 @@ const AdminDashboardPage = () => {
                 placeholder="e.g. 55 SG Highway"
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff' }}
+                style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)' }}
               />
             </div>
 
@@ -988,7 +988,7 @@ const AdminDashboardPage = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(6px)',
           display: 'flex',
           alignItems: 'center',
@@ -1009,8 +1009,8 @@ const AdminDashboardPage = () => {
 
             {/* FSSAI Verification Box */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%)',
-              border: '1px solid rgba(52, 211, 153, 0.4)',
+              background: '#f0fdf4',
+              border: '1px solid #a7f3d0',
               padding: '1rem 1.25rem',
               borderRadius: 'var(--radius-md)',
               display: 'flex',
@@ -1020,10 +1020,10 @@ const AdminDashboardPage = () => {
               gap: '0.75rem',
             }}>
               <div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   FSSAI Food License Credentials
                 </div>
-                <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#4ade80', fontFamily: 'monospace', letterSpacing: '0.05em' }}>
+                <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#059669', fontFamily: 'monospace', letterSpacing: '0.05em' }}>
                   {selectedApp.fssaiNumber || 'No license number provided'}
                 </div>
               </div>
@@ -1084,7 +1084,7 @@ const AdminDashboardPage = () => {
             {/* Approval Plan Picker and Actions */}
             {selectedApp.status === 'PENDING' && (
               <div style={{
-                background: 'rgba(15, 23, 42, 0.6)',
+                background: '#f8fafc',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-md)',
                 padding: '1rem',
@@ -1103,10 +1103,10 @@ const AdminDashboardPage = () => {
                   onChange={(e) => setApprovalPlan(e.target.value)}
                   style={{
                     padding: '0.45rem 0.85rem',
-                    background: '#0f172a',
+                    background: '#ffffff',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-sm)',
-                    color: '#fff',
+                    color: 'var(--text-main)',
                     fontSize: '0.85rem',
                   }}
                 >
@@ -1156,7 +1156,7 @@ const AdminDashboardPage = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(6px)',
           display: 'flex',
           alignItems: 'center',
@@ -1176,7 +1176,7 @@ const AdminDashboardPage = () => {
               placeholder="e.g. Incomplete restaurant address or verification documents could not be validated."
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: '#fff', fontSize: '0.85rem' }}
+              style={{ width: '100%', padding: '0.75rem', background: '#ffffff', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', color: 'var(--text-main)', fontSize: '0.85rem' }}
             />
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
               <button onClick={() => setRejectModalApp(null)} className="btn-secondary" style={{ padding: '0.5rem 1rem' }}>
@@ -1203,7 +1203,7 @@ const AdminDashboardPage = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
+          background: 'rgba(15, 23, 42, 0.45)',
           backdropFilter: 'blur(6px)',
           display: 'flex',
           alignItems: 'center',
@@ -1229,19 +1229,19 @@ const AdminDashboardPage = () => {
 
             {/* Quick Metrics */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>TABLES</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>{selectedRestaurant.stats?.totalTables ?? 0}</div>
               </div>
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>MENU ITEMS</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>{selectedRestaurant.stats?.totalMenuItems ?? 0}</div>
               </div>
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>ORDERS</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>{selectedRestaurant.stats?.totalOrders ?? 0}</div>
               </div>
-              <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
+              <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>REVENUE</div>
                 <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--accent-success)' }}>
                   ₹{(selectedRestaurant.stats?.totalRevenue ?? 0).toLocaleString('en-IN')}
