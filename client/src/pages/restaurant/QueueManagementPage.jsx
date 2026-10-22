@@ -51,6 +51,7 @@ const QueueManagementPage = () => {
   // Modals State
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedEntryForSeat, setSelectedEntryForSeat] = useState(null);
+  const [autoRefreshSecs, setAutoRefreshSecs] = useState(15);
 
   // 1. Load Queue and Prerequisites
   const loadQueueData = useCallback(async () => {
@@ -92,6 +93,15 @@ const QueueManagementPage = () => {
   useEffect(() => {
     loadQueueData();
   }, [loadQueueData]);
+
+  // Periodic Auto-Refresh for real-time waitlist polling
+  useEffect(() => {
+    if (!autoRefreshSecs || autoRefreshSecs <= 0) return;
+    const interval = setInterval(() => {
+      loadQueueData();
+    }, autoRefreshSecs * 1000);
+    return () => clearInterval(interval);
+  }, [autoRefreshSecs, loadQueueData]);
 
   // Handle Add To Queue
   const handleAddToQueue = async (partyData) => {
@@ -215,6 +225,42 @@ const QueueManagementPage = () => {
 
         {/* Action Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {/* Real-time Waitlist Polling */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              background: 'rgba(255, 255, 255, 0.04)',
+              padding: '0.4rem 0.75rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border-subtle)',
+              fontSize: '0.82rem',
+            }}
+          >
+            <Clock size={13} color="var(--accent-primary)" />
+            <span style={{ color: 'var(--text-muted)' }}>Live Poll:</span>
+            <select
+              value={autoRefreshSecs}
+              onChange={(e) => setAutoRefreshSecs(Number(e.target.value))}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#f1f5f9',
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                outline: 'none',
+                fontWeight: 600,
+              }}
+            >
+              <option value={0} style={{ background: '#0f172a' }}>Manual</option>
+              <option value={10} style={{ background: '#0f172a' }}>10s</option>
+              <option value={15} style={{ background: '#0f172a' }}>15s (Live)</option>
+              <option value={30} style={{ background: '#0f172a' }}>30s</option>
+              <option value={60} style={{ background: '#0f172a' }}>60s</option>
+            </select>
+          </div>
+
           <button
             type="button"
             onClick={loadQueueData}

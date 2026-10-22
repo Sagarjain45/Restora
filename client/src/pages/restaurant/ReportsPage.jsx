@@ -17,6 +17,8 @@ import {
   Clock,
   AlertCircle,
   X,
+  Download,
+  Printer,
 } from 'lucide-react';
 import { getRestaurantReportsApi } from '../../services/reportService';
 
@@ -63,6 +65,68 @@ const ReportsPage = () => {
     : reports?.monthlySales || [];
 
   const maxRevenueInTrend = Math.max(...currentTrendData.map((d) => d.revenue || 0), 1);
+
+  // Export Analytics Summary to CSV
+  const handleExportCSV = () => {
+    if (!reports) {
+      setNotice({ type: 'warning', text: 'No report data available to export yet.' });
+      return;
+    }
+
+    const lines = [];
+    lines.push('RESTORA RESTAURANT ANALYTICS REPORT');
+    lines.push(`Generated: ${new Date().toLocaleString()}`);
+    lines.push(`Report Range: ${datePreset}`);
+    lines.push('');
+
+    // KPI Summary
+    lines.push('--- KEY PERFORMANCE INDICATORS ---');
+    lines.push('Metric,Value');
+    lines.push(`Gross Sales Revenue,${(reports?.kpis?.totalRevenue || 0).toFixed(2)}`);
+    lines.push(`Total Settled Orders,${reports?.kpis?.totalOrders || 0}`);
+    lines.push(`Average Order Value,${(reports?.kpis?.avgOrderValue || 0).toFixed(2)}`);
+    lines.push(`Table Utilization Rate,${reports?.kpis?.tableUtilizationRate || 0}%`);
+    lines.push('');
+
+    // Sales Trend
+    lines.push(`--- SALES TREND (${activeTrendView.toUpperCase()}) ---`);
+    lines.push('Period/Date,Orders Count,Total Revenue');
+    currentTrendData.forEach((row) => {
+      lines.push(`"${row.date || row.week || row.month || 'N/A'}",${row.orders || 0},${(row.revenue || 0).toFixed(2)}`);
+    });
+    lines.push('');
+
+    // Top Selling Dishes
+    lines.push('--- TOP SELLING DISHES ---');
+    lines.push('Rank,Item Name,Category,Units Sold,Revenue Generated');
+    (reports?.topSellingItems || []).forEach((item, index) => {
+      lines.push(`${index + 1},"${(item.name || '').replace(/"/g, '""')}","${item.category || ''}",${item.quantity || 0},${(item.totalRevenue || 0).toFixed(2)}`);
+    });
+    lines.push('');
+
+    // Payment Methods Breakdown
+    lines.push('--- PAYMENT METHODS BREAKDOWN ---');
+    lines.push('Payment Method,Transactions Count,Total Amount');
+    (reports?.paymentBreakdown || []).forEach((p) => {
+      lines.push(`"${p.method || 'OTHER'}",${p.count || 0},${(p.totalRevenue || 0).toFixed(2)}`);
+    });
+
+    const csvContent = '\uFEFF' + lines.join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `restora_analytics_${datePreset}_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Print Report Handler
+  const handlePrintReport = () => {
+    window.print();
+  };
 
   return (
     <div style={{ padding: '1.5rem', maxWidth: '1400px', margin: '0 auto' }}>
@@ -133,6 +197,26 @@ const ReportsPage = () => {
               </button>
             ))}
           </div>
+
+          <button
+            onClick={handleExportCSV}
+            className="btn btn-secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 1.1rem' }}
+            title="Download CSV spreadsheet of this analytics report"
+          >
+            <Download size={15} color="var(--accent-primary)" />
+            <span>Export CSV</span>
+          </button>
+
+          <button
+            onClick={handlePrintReport}
+            className="btn btn-secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 1rem' }}
+            title="Print or save PDF of this report"
+          >
+            <Printer size={15} />
+            <span>Print Report</span>
+          </button>
 
           <button
             onClick={loadReports}

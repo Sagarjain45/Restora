@@ -16,6 +16,7 @@ import CustomerManagementPage from '../pages/restaurant/CustomerManagementPage';
 import StaffManagementPage from '../pages/restaurant/StaffManagementPage';
 import OrderHistoryPage from '../pages/restaurant/OrderHistoryPage';
 import ReportsPage from '../pages/restaurant/ReportsPage';
+import RestaurantSettingsPage from '../pages/restaurant/RestaurantSettingsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import ProtectedRoute from '../components/common/ProtectedRoute';
 
@@ -125,6 +126,22 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
               <ReportsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="restaurant/settings"
+          element={
+            <ProtectedRoute allowedRoles={['RESTAURANT_OWNER']}>
+              <RestaurantSettingsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="restaurant/profile"
+          element={
+            <ProtectedRoute allowedRoles={['RESTAURANT_OWNER', 'RESTAURANT_STAFF']}>
+              <RestaurantSettingsPage />
             </ProtectedRoute>
           }
         />

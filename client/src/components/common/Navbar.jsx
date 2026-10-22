@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, LogIn, LogOut, LayoutDashboard, User, ShieldCheck } from 'lucide-react';
+import { UtensilsCrossed, LogIn, LogOut, LayoutDashboard, User, ShieldCheck, Settings } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
@@ -107,6 +107,24 @@ const Navbar = () => {
                 <LayoutDashboard size={15} />
                 Dashboard
               </Link>
+
+              {role === 'RESTAURANT_OWNER' && (
+                <Link
+                  to="/restaurant/settings"
+                  className="btn-secondary"
+                  style={{
+                    padding: '0.45rem 0.85rem',
+                    fontSize: '0.85rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                  }}
+                  title="Restaurant Profile & Settings"
+                >
+                  <Settings size={14} />
+                  Settings
+                </Link>
+              )}
 
               {/* User badge */}
               <div style={{

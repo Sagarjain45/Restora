@@ -145,7 +145,7 @@ const AdminDashboardPage = () => {
       const res = await approveApplicationApi(token, appId, { subscriptionPlan: plan });
       setNotice({
         type: 'success',
-        text: `Application for "${res.data.restaurant.name}" approved successfully! Created owner account for ${res.data.owner.email}. Restaurant is now live and ready!`,
+        text: `Application for "${res.data.restaurant.name}" approved successfully! Created owner account for ${res.data.owner.email} and automatically dispatched onboarding activation email. Restaurant is live and ready!`,
       });
       setSelectedApp(null);
       await Promise.all([loadApplications(), loadRestaurants(), loadDashboardStats()]);
@@ -164,7 +164,7 @@ const AdminDashboardPage = () => {
       await rejectApplicationApi(token, rejectModalApp._id, rejectReason);
       setNotice({
         type: 'warning',
-        text: `Application for "${rejectModalApp.restaurantName}" has been rejected.`,
+        text: `Application for "${rejectModalApp.restaurantName}" has been rejected. Compliance notification email dispatched to ${rejectModalApp.applicantEmail || 'applicant'}.`,
       });
       setRejectModalApp(null);
       setRejectReason('');

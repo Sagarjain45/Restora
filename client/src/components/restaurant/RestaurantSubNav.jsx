@@ -12,6 +12,7 @@ import {
   Utensils,
   ShieldCheck,
   BarChart3,
+  Settings,
 } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 
@@ -31,6 +32,7 @@ const RestaurantSubNav = () => {
     { to: '/restaurant/menu', label: 'Menu Catalog', icon: Utensils },
     ...(isOwner ? [{ to: '/restaurant/staff', label: 'Staff Roster', icon: ShieldCheck }] : []),
     { to: '/restaurant/reports', label: 'Reports & Analytics', icon: BarChart3 },
+    ...(isOwner ? [{ to: '/restaurant/settings', label: 'Store Settings', icon: Settings }] : []),
   ];
 
   return (

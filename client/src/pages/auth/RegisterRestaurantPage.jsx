@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Building2,
   ShieldCheck,
@@ -19,6 +19,7 @@ import {
   Copy,
   Check,
   UtensilsCrossed,
+  Inbox,
 } from 'lucide-react';
 import { submitApplicationApi, checkApplicationStatusApi } from '../../services/adminService';
 
@@ -49,6 +50,7 @@ const BUSINESS_TYPES = [
 
 const RegisterRestaurantPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Active Main View: 'register' | 'track' | 'success'
   const [activeView, setActiveView] = useState('register');
@@ -86,6 +88,30 @@ const RegisterRestaurantPage = () => {
   const [trackingLoading, setTrackingLoading] = useState(false);
   const [trackedApp, setTrackedApp] = useState(null);
   const [trackError, setTrackError] = useState(null);
+
+  // Auto-track if URL query parameter 'track' is present (e.g. from email link)
+  useEffect(() => {
+    const trackParam = searchParams.get('track');
+    if (trackParam) {
+      setActiveView('track');
+      setTrackQuery(trackParam);
+      const fetchDirectStatus = async () => {
+        setTrackingLoading(true);
+        setTrackError(null);
+        try {
+          const isEmail = trackParam.includes('@');
+          const params = isEmail ? { email: trackParam.trim() } : { id: trackParam.trim() };
+          const data = await checkApplicationStatusApi(params);
+          setTrackedApp(data);
+        } catch (err) {
+          setTrackError(err.message || 'No application found with the provided details.');
+        } finally {
+          setTrackingLoading(false);
+        }
+      };
+      fetchDirectStatus();
+    }
+  }, [searchParams]);
 
   // Toggle Cuisine tag
   const toggleCuisine = (cuisine) => {
@@ -917,6 +943,29 @@ const RegisterRestaurantPage = () => {
             <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
               Your restaurant <strong>"{submittedApp.restaurantName}"</strong> has been successfully submitted. It is now awaiting review by the Restora platform administration team.
             </p>
+          </div>
+
+          {/* Automated Email Notice */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.65rem',
+              background: 'rgba(99, 102, 241, 0.12)',
+              border: '1px solid rgba(99, 102, 241, 0.35)',
+              borderRadius: 'var(--radius-md)',
+              padding: '0.85rem 1.25rem',
+              color: '#c7d2fe',
+              fontSize: '0.9rem',
+              maxWidth: '540px',
+              width: '100%',
+              textAlign: 'left',
+            }}
+          >
+            <Inbox size={20} color="var(--accent-primary)" style={{ flexShrink: 0 }} />
+            <span>
+              An automated email with your <strong>Status Tracking ID</strong> and registration summary has been sent to <strong>{submittedApp.applicantEmail}</strong>.
+            </span>
           </div>
 
           {/* Application Details Card */}

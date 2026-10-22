@@ -59,6 +59,7 @@ const OrderManagementPage = () => {
   // Filter State
   const [selectedTab, setSelectedTab] = useState('ACTIVE');
   const [searchQuery, setSearchQuery] = useState('');
+  const [autoRefreshSecs, setAutoRefreshSecs] = useState(15);
 
   // Modals State
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -115,6 +116,15 @@ const OrderManagementPage = () => {
   useEffect(() => {
     loadOrders();
   }, [loadOrders]);
+
+  // Periodic Auto-Refresh for real-time kitchen display and floor status
+  useEffect(() => {
+    if (!autoRefreshSecs || autoRefreshSecs <= 0) return;
+    const interval = setInterval(() => {
+      loadOrders();
+    }, autoRefreshSecs * 1000);
+    return () => clearInterval(interval);
+  }, [autoRefreshSecs, loadOrders]);
 
   // Handle Order Status Update
   const handleUpdateStatus = async (orderId, nextStatus) => {
@@ -226,6 +236,42 @@ const OrderManagementPage = () => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {/* Real-time Auto Refresh Control */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              background: 'rgba(255, 255, 255, 0.04)',
+              padding: '0.4rem 0.75rem',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border-subtle)',
+              fontSize: '0.82rem',
+            }}
+          >
+            <Clock size={13} color="var(--accent-primary)" />
+            <span style={{ color: 'var(--text-muted)' }}>Live Poll:</span>
+            <select
+              value={autoRefreshSecs}
+              onChange={(e) => setAutoRefreshSecs(Number(e.target.value))}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#f1f5f9',
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                outline: 'none',
+                fontWeight: 600,
+              }}
+            >
+              <option value={0} style={{ background: '#0f172a' }}>Manual</option>
+              <option value={10} style={{ background: '#0f172a' }}>10s</option>
+              <option value={15} style={{ background: '#0f172a' }}>15s (Live)</option>
+              <option value={30} style={{ background: '#0f172a' }}>30s</option>
+              <option value={60} style={{ background: '#0f172a' }}>60s</option>
+            </select>
+          </div>
+
           <button
             onClick={loadOrders}
             disabled={loading}

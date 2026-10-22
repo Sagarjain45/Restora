@@ -6,6 +6,11 @@ import MenuItem from '../models/MenuItem.js';
 import Order from '../models/Order.js';
 import Bill from '../models/Bill.js';
 import { hashPassword } from '../utils/password.js';
+import {
+  sendApplicationSubmittedEmail,
+  sendApplicationApprovedEmail,
+  sendApplicationRejectedEmail,
+} from './emailService.js';
 
 /**
  * Service handling Platform Admin operations:
@@ -175,7 +180,7 @@ export const submitApplication = async (data) => {
     parsedCuisine = cuisine.split(',').map((c) => c.trim()).filter(Boolean);
   }
 
-  return await RestaurantApplication.create({
+  const createdApp = await RestaurantApplication.create({
     restaurantName: restaurantName.trim(),
     applicantName: applicantName.trim(),
     applicantEmail: applicantEmail.toLowerCase().trim(),
@@ -194,6 +199,21 @@ export const submitApplication = async (data) => {
     notes: (notes || '').trim(),
     status: 'PENDING',
   });
+
+  // Automatically dispatch confirmation email containing the Status Tracking ID to the owner
+  sendApplicationSubmittedEmail({
+    applicantEmail: createdApp.applicantEmail,
+    applicantName: createdApp.applicantName,
+    restaurantName: createdApp.restaurantName,
+    applicationId: createdApp._id.toString(),
+    fssaiNumber: createdApp.fssaiNumber,
+    city: createdApp.city,
+    state: createdApp.state,
+  }).catch((err) => {
+    console.warn('[Email Warning] Could not dispatch submission confirmation email:', err.message);
+  });
+
+  return createdApp;
 };
 
 /**
@@ -320,6 +340,17 @@ export const approveApplication = async (applicationId, reviewerId, options = {}
   application.reviewedAt = new Date();
   await application.save();
 
+  // Automatically dispatch congratulations & activation email to the owner
+  sendApplicationApprovedEmail({
+    applicantEmail: application.applicantEmail,
+    applicantName: application.applicantName,
+    restaurantName: restaurant.name,
+    loginEmail: owner.email,
+    subscriptionPlan: restaurant.subscriptionPlan,
+  }).catch((err) => {
+    console.warn('[Email Warning] Could not dispatch approval email:', err.message);
+  });
+
   return {
     application,
     restaurant,
@@ -354,6 +385,16 @@ export const rejectApplication = async (applicationId, reviewerId, rejectionReas
   application.reviewedBy = reviewerId;
   application.reviewedAt = new Date();
   await application.save();
+
+  // Dispatch rejection feedback notification email to the applicant
+  sendApplicationRejectedEmail({
+    applicantEmail: application.applicantEmail,
+    applicantName: application.applicantName,
+    restaurantName: application.restaurantName,
+    rejectionReason: application.rejectionReason,
+  }).catch((err) => {
+    console.warn('[Email Warning] Could not dispatch rejection notification email:', err.message);
+  });
 
   return application;
 };

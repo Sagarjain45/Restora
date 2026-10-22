@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   AlertCircle,
   X,
+  Download,
 } from 'lucide-react';
 import { getOrderHistoryApi } from '../../services/reportService';
 import { getTablesApi } from '../../services/tableService';
@@ -114,6 +115,73 @@ const OrderHistoryPage = () => {
     setPage(1);
   };
 
+  // Export filtered order history to CSV
+  const handleExportCSV = () => {
+    if (!orders || orders.length === 0) {
+      setNotice({ type: 'warning', text: 'No order history rows available to export for the current filters.' });
+      return;
+    }
+
+    const headers = [
+      'Order Number',
+      'Date',
+      'Time',
+      'Table',
+      'Guest / Customer',
+      'Phone',
+      'Items Count',
+      'Items Summary',
+      'Subtotal',
+      'Tax Amount',
+      'Discount Amount',
+      'Total Amount',
+      'Order Status',
+      'Payment Status',
+      'Payment Method',
+    ];
+
+    const rows = orders.map((o) => {
+      const date = o.createdAt ? new Date(o.createdAt).toLocaleDateString() : '';
+      const time = o.createdAt ? new Date(o.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+      const tableNum = o.tableId?.tableNumber || o.tableNumber || 'N/A';
+      const guestName = o.customerId?.name || o.guestName || 'Walk-in Guest';
+      const guestPhone = o.customerId?.phone || o.guestPhone || '';
+      const itemsCount = (o.items || []).reduce((acc, it) => acc + (it.quantity || 1), 0);
+      const itemsDetail = (o.items || [])
+        .map((it) => `${it.name || it.menuItemId?.name || 'Item'} x${it.quantity} (${it.price})`)
+        .join('; ');
+
+      return [
+        `"${o.orderNumber || o._id}"`,
+        `"${date}"`,
+        `"${time}"`,
+        `"${tableNum}"`,
+        `"${guestName.replace(/"/g, '""')}"`,
+        `"${guestPhone}"`,
+        itemsCount,
+        `"${itemsDetail.replace(/"/g, '""')}"`,
+        (o.subtotal || 0).toFixed(2),
+        (o.taxAmount || 0).toFixed(2),
+        (o.discountAmount || 0).toFixed(2),
+        (o.totalAmount || 0).toFixed(2),
+        `"${o.status || ''}"`,
+        `"${o.paymentStatus || ''}"`,
+        `"${o.paymentMethod || 'N/A'}"`,
+      ].join(',');
+    });
+
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `restora_orders_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div style={{ padding: '1.5rem', maxWidth: '1400px', margin: '0 auto' }}>
       {/* Header */}
@@ -155,15 +223,27 @@ const OrderHistoryPage = () => {
           </div>
         </div>
 
-        <button
-          onClick={loadOrderHistory}
-          className="btn btn-secondary"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1rem' }}
-          title="Refresh History"
-        >
-          <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
-          Refresh
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+          <button
+            onClick={handleExportCSV}
+            className="btn btn-secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 1.1rem' }}
+            title="Download CSV spreadsheet of current orders"
+          >
+            <Download size={15} color="var(--accent-primary)" />
+            <span>Export CSV</span>
+          </button>
+
+          <button
+            onClick={loadOrderHistory}
+            className="btn btn-secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1rem' }}
+            title="Refresh History"
+          >
+            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+            Refresh
+          </button>
+        </div>
       </div>
 
       {/* Notice Alert */}
