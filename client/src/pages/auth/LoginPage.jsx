@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import { Lock, Mail, ArrowRight, ShieldCheck, Store, Users, AlertCircle, UtensilsCrossed } from 'lucide-react';
+import { Lock, Mail, ArrowRight, AlertCircle, UtensilsCrossed } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -41,12 +41,6 @@ const LoginPage = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickFill = (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
-    setError(null);
   };
 
   return (
@@ -196,50 +190,6 @@ const LoginPage = () => {
           >
             Register on Restora <ArrowRight size={13} />
           </Link>
-        </div>
-
-        {/* Quick Demo Logins Section */}
-        <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', textAlign: 'center', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Quick Demo Sign-In
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <button
-              type="button"
-              onClick={() => handleQuickFill('admin@restora.com', 'Admin@123')}
-              className="btn-secondary"
-              style={{ justifyContent: 'space-between', padding: '0.6rem 0.9rem', fontSize: '0.85rem' }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <ShieldCheck size={16} color="var(--accent-primary)" /> Platform Admin
-              </span>
-              <span className="badge badge-cyan" style={{ fontSize: '0.7rem' }}>admin@restora.com</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickFill('owner@bistro.com', 'Owner@123')}
-              className="btn-secondary"
-              style={{ justifyContent: 'space-between', padding: '0.6rem 0.9rem', fontSize: '0.85rem' }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Store size={16} color="var(--accent-success)" /> Restaurant Owner
-              </span>
-              <span className="badge badge-success" style={{ fontSize: '0.7rem' }}>owner@bistro.com</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickFill('staff@bistro.com', 'Staff@123')}
-              className="btn-secondary"
-              style={{ justifyContent: 'space-between', padding: '0.6rem 0.9rem', fontSize: '0.85rem' }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Users size={16} color="var(--accent-warning)" /> Restaurant Staff
-              </span>
-              <span className="badge badge-warning" style={{ fontSize: '0.7rem' }}>staff@bistro.com</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
