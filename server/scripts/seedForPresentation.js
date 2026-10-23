@@ -241,7 +241,7 @@ export const runPresentationSeed = async () => {
     billId: bill1._id,
     amount: 1126,
     method: 'UPI',
-    status: 'COMPLETED',
+    status: 'SUCCESS',
     transactionReference: 'UPI-TXN-88721',
   });
 
@@ -423,7 +423,7 @@ export const runPresentationSeed = async () => {
     billId: bill2._id,
     amount: 1349,
     method: 'CARD',
-    status: 'COMPLETED',
+    status: 'SUCCESS',
     transactionReference: 'CARD-AUTH-99104',
   });
 
