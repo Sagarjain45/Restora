@@ -159,9 +159,104 @@ const LoginPage = () => {
           </button>
         </form>
 
-        {/* Restaurant Owner Registration Link */}
+        {/* Presentation Demo Logins */}
         <div style={{
           marginTop: '1.25rem',
+          padding: '1rem',
+          borderRadius: 'var(--radius-md)',
+          background: 'rgba(248, 250, 252, 0.8)',
+          border: '1px solid var(--border-subtle)',
+        }}>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.6rem' }}>
+            ⚡ Presentation 1-Click Role Logins
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.4rem' }}>
+            <button
+              type="button"
+              onClick={() => { setEmail('admin@restora.com'); setPassword('Admin@123'); }}
+              style={{
+                padding: '0.45rem 0.6rem',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                border: '1px solid #cbd5e1',
+                background: '#ffffff',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              👑 <b>Admin</b>
+            </button>
+            <button
+              type="button"
+              onClick={() => { setEmail('owner@roma.com'); setPassword('Owner@123'); }}
+              style={{
+                padding: '0.45rem 0.6rem',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                border: '1px solid #fed7aa',
+                background: '#fff7ed',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              🍕 <b>Roma Owner</b>
+            </button>
+            <button
+              type="button"
+              onClick={() => { setEmail('staff@roma.com'); setPassword('Staff@123'); }}
+              style={{
+                padding: '0.45rem 0.6rem',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                border: '1px solid #fed7aa',
+                background: '#fff7ed',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              🧑‍🍳 <b>Roma Staff</b>
+            </button>
+            <button
+              type="button"
+              onClick={() => { setEmail('owner@spicesymphony.com'); setPassword('Owner@123'); }}
+              style={{
+                padding: '0.45rem 0.6rem',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                border: '1px solid #bbf7d0',
+                background: '#f0fdf4',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              🍛 <b>Spice Owner</b>
+            </button>
+            <button
+              type="button"
+              onClick={() => { setEmail('staff@spicesymphony.com'); setPassword('Staff@123'); }}
+              style={{
+                padding: '0.45rem 0.6rem',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                border: '1px solid #bbf7d0',
+                background: '#f0fdf4',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              👨‍🍳 <b>Spice Staff</b>
+            </button>
+          </div>
+        </div>
+
+        {/* Restaurant Owner Registration Link */}
+        <div style={{
+          marginTop: '1rem',
           padding: '0.9rem',
           borderRadius: 'var(--radius-sm)',
           background: 'rgba(99, 102, 241, 0.08)',

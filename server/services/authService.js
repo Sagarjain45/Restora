@@ -126,107 +126,235 @@ export const getCurrentUser = async (userId) => {
  */
 export const seedInitialAccounts = async () => {
   try {
-    const count = await User.countDocuments();
-    if (count > 0) {
-      return { seeded: false, message: 'Accounts already exist' };
-    }
-
-    // 1. Create a demo restaurant
     const adminPasswordHash = await hashPassword('Admin@123');
     const ownerPasswordHash = await hashPassword('Owner@123');
     const staffPasswordHash = await hashPassword('Staff@123');
 
-    // Platform Admin (restaurantId = null)
-    const admin = await User.create({
-      name: 'Platform Administrator',
-      email: 'admin@restora.com',
-      passwordHash: adminPasswordHash,
-      role: 'PLATFORM_ADMIN',
-      restaurantId: null,
-      status: 'ACTIVE',
-    });
+    // 1. Platform Admin
+    let admin = await User.findOne({ email: 'admin@restora.com' });
+    if (!admin) {
+      admin = await User.create({
+        name: 'Platform Administrator',
+        email: 'admin@restora.com',
+        passwordHash: adminPasswordHash,
+        role: 'PLATFORM_ADMIN',
+        restaurantId: null,
+        status: 'ACTIVE',
+        phone: '+91 99000 00001',
+        designation: 'Super Administrator',
+      });
+    } else {
+      admin.passwordHash = adminPasswordHash;
+      admin.status = 'ACTIVE';
+      await admin.save();
+    }
 
-    // Restaurant Owner
-    const owner = await User.create({
-      name: 'Mario Rossi',
-      email: 'owner@bistro.com',
-      passwordHash: ownerPasswordHash,
-      role: 'RESTAURANT_OWNER',
-      status: 'ACTIVE',
-    });
+    // 2. RESTAURANT 1: Trattoria Roma
+    let owner1 = await User.findOne({ email: 'owner@roma.com' });
+    if (!owner1) {
+      owner1 = await User.create({
+        name: 'Chef Marco Rossi',
+        email: 'owner@roma.com',
+        passwordHash: ownerPasswordHash,
+        role: 'RESTAURANT_OWNER',
+        status: 'ACTIVE',
+        phone: '+91 98201 11222',
+        designation: 'Head Chef & Owner',
+      });
+    } else {
+      owner1.passwordHash = ownerPasswordHash;
+      owner1.status = 'ACTIVE';
+      await owner1.save();
+    }
 
-    // Demo Restaurant
-    const demoRestaurant = await Restaurant.create({
-      name: 'Trattoria Roma Demo',
-      ownerId: owner._id,
-      email: 'contact@trattoriaroma.com',
-      phone: '+91 98765 43210',
-      address: '42 Culinary Boulevard',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      country: 'India',
-      cuisine: ['Italian', 'Continental'],
-      status: 'ACTIVE',
-      subscriptionPlan: 'PREMIUM',
-    });
+    let rest1 = await Restaurant.findOne({ name: 'Trattoria Roma' });
+    if (!rest1) {
+      rest1 = await Restaurant.create({
+        name: 'Trattoria Roma',
+        ownerId: owner1._id,
+        email: 'contact@trattoriaroma.com',
+        phone: '+91 98201 11222',
+        address: '42 Culinary Boulevard, Bandra West',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        country: 'India',
+        cuisine: ['Italian', 'Continental', 'Wood-Fired Pizza'],
+        description: 'Authentic Italian bistro serving handcrafted pastas and Neapolitan pizzas.',
+        status: 'ACTIVE',
+        seatingCapacity: 45,
+        settings: { currency: 'INR', taxRatePercent: 5, autoAcceptReservations: true },
+      });
+    }
+    owner1.restaurantId = rest1._id;
+    await owner1.save();
 
-    // Link owner to restaurant
-    owner.restaurantId = demoRestaurant._id;
-    await owner.save();
+    // Owner 1 alias (owner@bistro.com)
+    let owner1Alias = await User.findOne({ email: 'owner@bistro.com' });
+    if (!owner1Alias) {
+      await User.create({
+        name: 'Chef Marco Rossi',
+        email: 'owner@bistro.com',
+        passwordHash: ownerPasswordHash,
+        role: 'RESTAURANT_OWNER',
+        restaurantId: rest1._id,
+        status: 'ACTIVE',
+      });
+    } else {
+      owner1Alias.restaurantId = rest1._id;
+      owner1Alias.passwordHash = ownerPasswordHash;
+      await owner1Alias.save();
+    }
 
-    // Restaurant Staff
-    const staff = await User.create({
-      name: 'Luigi Floor Lead',
-      email: 'staff@bistro.com',
-      passwordHash: staffPasswordHash,
-      role: 'RESTAURANT_STAFF',
-      restaurantId: demoRestaurant._id,
-      status: 'ACTIVE',
-    });
+    // Staff 1 for Restaurant 1
+    let staff1 = await User.findOne({ email: 'staff@roma.com' });
+    if (!staff1) {
+      staff1 = await User.create({
+        name: 'Luigi Floor Lead',
+        email: 'staff@roma.com',
+        passwordHash: staffPasswordHash,
+        role: 'RESTAURANT_STAFF',
+        restaurantId: rest1._id,
+        status: 'ACTIVE',
+        phone: '+91 98201 33445',
+        designation: 'Floor Captain',
+      });
+    } else {
+      staff1.restaurantId = rest1._id;
+      staff1.passwordHash = staffPasswordHash;
+      await staff1.save();
+    }
 
-    // Seed Demo Tables
-    await Table.insertMany([
-      { restaurantId: demoRestaurant._id, tableNumber: 'T-01', capacity: 2, section: 'Main Dining', status: 'AVAILABLE' },
-      { restaurantId: demoRestaurant._id, tableNumber: 'T-02', capacity: 4, section: 'Main Dining', status: 'AVAILABLE' },
-      { restaurantId: demoRestaurant._id, tableNumber: 'T-03', capacity: 4, section: 'Patio', status: 'AVAILABLE' },
-      { restaurantId: demoRestaurant._id, tableNumber: 'T-04', capacity: 6, section: 'Rooftop', status: 'AVAILABLE' },
-      { restaurantId: demoRestaurant._id, tableNumber: 'T-05', capacity: 8, section: 'Private Dining', status: 'AVAILABLE' },
-    ]);
+    // Staff 1 alias (staff@bistro.com)
+    let staff1Alias = await User.findOne({ email: 'staff@bistro.com' });
+    if (!staff1Alias) {
+      await User.create({
+        name: 'Luigi Floor Lead',
+        email: 'staff@bistro.com',
+        passwordHash: staffPasswordHash,
+        role: 'RESTAURANT_STAFF',
+        restaurantId: rest1._id,
+        status: 'ACTIVE',
+      });
+    } else {
+      staff1Alias.restaurantId = rest1._id;
+      staff1Alias.passwordHash = staffPasswordHash;
+      await staff1Alias.save();
+    }
 
-    // Seed Demo Menu Items
-    await MenuItem.insertMany([
-      { restaurantId: demoRestaurant._id, name: 'Truffle Bruschetta', category: 'Starters', price: 320, isVegetarian: true, isAvailable: true, description: 'Toasted ciabatta with wild mushrooms and white truffle oil.' },
-      { restaurantId: demoRestaurant._id, name: 'Margherita Burrata Pizza', category: 'Mains', price: 650, isVegetarian: true, isAvailable: true, description: 'San Marzano tomatoes, artisanal burrata, and fresh basil.' },
-      { restaurantId: demoRestaurant._id, name: 'Fettuccine Alfredo Con Pollo', category: 'Mains', price: 580, isVegetarian: false, isAvailable: true, description: 'Handmade pasta, creamy parmesan sauce, and grilled chicken.' },
-      { restaurantId: demoRestaurant._id, name: 'Classic Tiramisu', category: 'Desserts', price: 380, isVegetarian: true, isAvailable: true, description: 'Espresso-soaked ladyfingers with mascarpone cream.' },
-      { restaurantId: demoRestaurant._id, name: 'San Pellegrino Sparkling', category: 'Beverages', price: 220, isVegetarian: true, isAvailable: true, description: 'Chilled natural sparkling mineral water.' },
-    ]);
+    // Seed/Ensure tables and menus for Rest 1
+    const tCount1 = await Table.countDocuments({ restaurantId: rest1._id });
+    if (tCount1 === 0) {
+      await Table.insertMany([
+        { restaurantId: rest1._id, tableNumber: 'T-01', capacity: 2, section: 'Main Dining', status: 'AVAILABLE' },
+        { restaurantId: rest1._id, tableNumber: 'T-02', capacity: 4, section: 'Main Dining', status: 'AVAILABLE' },
+        { restaurantId: rest1._id, tableNumber: 'T-03', capacity: 4, section: 'Patio Terrace', status: 'AVAILABLE' },
+        { restaurantId: rest1._id, tableNumber: 'T-04', capacity: 6, section: 'Rooftop Lounge', status: 'AVAILABLE' },
+        { restaurantId: rest1._id, tableNumber: 'T-05', capacity: 8, section: 'Private Cellar', status: 'AVAILABLE' },
+      ]);
+    }
 
-    // Seed Demo Customers
-    await Customer.insertMany([
-      { restaurantId: demoRestaurant._id, name: 'Aarav Sharma', phone: '9820011223', email: 'aarav@example.com', visitCount: 5, totalSpent: 4200 },
-      { restaurantId: demoRestaurant._id, name: 'Pooja Hegde', phone: '9811223344', email: 'pooja@example.com', visitCount: 3, totalSpent: 2850 },
-    ]);
+    const mCount1 = await MenuItem.countDocuments({ restaurantId: rest1._id });
+    if (mCount1 === 0) {
+      await MenuItem.insertMany([
+        { restaurantId: rest1._id, name: 'Truffle Mushroom Bruschetta', category: 'Starters', price: 340, isVegetarian: true, isAvailable: true, description: 'Crusty sourdough, wild mushrooms, white truffle oil.' },
+        { restaurantId: rest1._id, name: 'Burrata Margherita Pizza', category: 'Mains', price: 680, isVegetarian: true, isAvailable: true, description: 'San Marzano DOP tomato sauce, fresh artisanal burrata, basil leaves.' },
+        { restaurantId: rest1._id, name: 'Fettuccine Alfredo Pollo', category: 'Mains', price: 590, isVegetarian: false, isAvailable: true, description: 'Egg fettuccine, parmigiano-reggiano emulsion, herb chicken.' },
+        { restaurantId: rest1._id, name: 'Signature Tiramisu Tradizionale', category: 'Desserts', price: 390, isVegetarian: true, isAvailable: true, description: 'Espresso-dipped savoiardi with silky mascarpone.' },
+        { restaurantId: rest1._id, name: 'San Pellegrino Sparkling', category: 'Beverages', price: 240, isVegetarian: true, isAvailable: true, description: 'Natural sparkling Italian mineral water.' },
+      ]);
+    }
 
-    // Seed Demo Waiting Queue
-    await QueueEntry.insertMany([
-      { restaurantId: demoRestaurant._id, customerName: 'Rohan Mehra', customerPhone: '9876543210', guestCount: 2, position: 1, status: 'WAITING' },
-      { restaurantId: demoRestaurant._id, customerName: 'Simran Kaur', customerPhone: '9899887766', guestCount: 4, position: 2, status: 'WAITING' },
-    ]);
+    // 3. RESTAURANT 2: Spice Symphony
+    let owner2 = await User.findOne({ email: 'owner@spicesymphony.com' });
+    if (!owner2) {
+      owner2 = await User.create({
+        name: 'Vikramaditya Singhania',
+        email: 'owner@spicesymphony.com',
+        passwordHash: ownerPasswordHash,
+        role: 'RESTAURANT_OWNER',
+        status: 'ACTIVE',
+        phone: '+91 99880 11223',
+        designation: 'Managing Director & Owner',
+      });
+    } else {
+      owner2.passwordHash = ownerPasswordHash;
+      owner2.status = 'ACTIVE';
+      await owner2.save();
+    }
 
-    // Seed Demo Reservations
-    const todayStr = new Date().toISOString().split('T')[0];
-    await Reservation.insertMany([
-      { restaurantId: demoRestaurant._id, customerName: 'Vikram Malhotra', customerPhone: '9988776655', guestCount: 4, date: todayStr, startTime: '19:30', endTime: '21:00', status: 'CONFIRMED' },
-      { restaurantId: demoRestaurant._id, customerName: 'Ananya Roy', customerPhone: '9871122334', guestCount: 2, date: todayStr, startTime: '20:00', endTime: '21:30', status: 'CONFIRMED' },
-    ]);
+    let rest2 = await Restaurant.findOne({ name: 'Spice Symphony' });
+    if (!rest2) {
+      rest2 = await Restaurant.create({
+        name: 'Spice Symphony',
+        ownerId: owner2._id,
+        email: 'contact@spicesymphony.com',
+        phone: '+91 99880 11223',
+        address: '18 Indiranagar 100ft Road',
+        city: 'Bangalore',
+        state: 'Karnataka',
+        country: 'India',
+        cuisine: ['North Indian', 'Tandoor', 'Mughlai', 'Biryani'],
+        description: 'Royal Indian culinary house with charcoal clay oven kebabs and slow-cooked curries.',
+        status: 'ACTIVE',
+        seatingCapacity: 60,
+        settings: { currency: 'INR', taxRatePercent: 5, autoAcceptReservations: true },
+      });
+    }
+    owner2.restaurantId = rest2._id;
+    await owner2.save();
+
+    // Staff 2 for Restaurant 2
+    let staff2 = await User.findOne({ email: 'staff@spicesymphony.com' });
+    if (!staff2) {
+      staff2 = await User.create({
+        name: 'Kabir Singh',
+        email: 'staff@spicesymphony.com',
+        passwordHash: staffPasswordHash,
+        role: 'RESTAURANT_STAFF',
+        restaurantId: rest2._id,
+        status: 'ACTIVE',
+        phone: '+91 99880 33445',
+        designation: 'Head Steward',
+      });
+    } else {
+      staff2.restaurantId = rest2._id;
+      staff2.passwordHash = staffPasswordHash;
+      await staff2.save();
+    }
+
+    // Seed/Ensure tables and menus for Rest 2
+    const tCount2 = await Table.countDocuments({ restaurantId: rest2._id });
+    if (tCount2 === 0) {
+      await Table.insertMany([
+        { restaurantId: rest2._id, tableNumber: 'S-01', capacity: 2, section: 'Royal Courtyard', status: 'AVAILABLE' },
+        { restaurantId: rest2._id, tableNumber: 'S-02', capacity: 4, section: 'Royal Courtyard', status: 'AVAILABLE' },
+        { restaurantId: rest2._id, tableNumber: 'S-03', capacity: 4, section: 'Mughal Hall', status: 'AVAILABLE' },
+        { restaurantId: rest2._id, tableNumber: 'S-04', capacity: 6, section: 'Mughal Hall', status: 'AVAILABLE' },
+        { restaurantId: rest2._id, tableNumber: 'S-05', capacity: 10, section: 'Maharaja Suite', status: 'AVAILABLE' },
+      ]);
+    }
+
+    const mCount2 = await MenuItem.countDocuments({ restaurantId: rest2._id });
+    if (mCount2 === 0) {
+      await MenuItem.insertMany([
+        { restaurantId: rest2._id, name: 'Paneer Tikka Angara', category: 'Starters', price: 360, isVegetarian: true, isAvailable: true, description: 'Cottage cheese marinated in smoked hung curd and ajwain.' },
+        { restaurantId: rest2._id, name: 'Murgh Malai Tandoori Kebab', category: 'Starters', price: 440, isVegetarian: false, isAvailable: true, description: 'Tender chicken infused with cardamom and cream cheese.' },
+        { restaurantId: rest2._id, name: 'Butter Chicken Aslam Style', category: 'Mains', price: 540, isVegetarian: false, isAvailable: true, description: 'Roasted tandoori chicken simmered in rich velvety tomato gravy.' },
+        { restaurantId: rest2._id, name: 'Dal Makhani Slow-Cooked 24h', category: 'Mains', price: 390, isVegetarian: true, isAvailable: true, description: 'Black urad lentils slow-cooked overnight with white butter.' },
+        { restaurantId: rest2._id, name: 'Garlic Chur Chur Naan', category: 'Mains', price: 110, isVegetarian: true, isAvailable: true, description: 'Clay-oven leavened bread layered with roasted garlic and butter.' },
+        { restaurantId: rest2._id, name: 'Shahi Kesari Phirni', category: 'Desserts', price: 260, isVegetarian: true, isAvailable: true, description: 'Traditional Kashmiri rice pudding with saffron and pistachios.' },
+        { restaurantId: rest2._id, name: 'Alphonso Mango Lassi', category: 'Beverages', price: 190, isVegetarian: true, isAvailable: true, description: 'Chilled rich yogurt blended with Ratnagiri mango pulp.' },
+      ]);
+    }
 
     return {
       seeded: true,
       accounts: [
-        { email: admin.email, role: admin.role, restaurantId: null },
-        { email: owner.email, role: owner.role, restaurantId: demoRestaurant._id },
-        { email: staff.email, role: staff.role, restaurantId: demoRestaurant._id },
+        { role: 'PLATFORM_ADMIN', email: admin.email, password: 'Admin@123' },
+        { role: 'RESTAURANT_OWNER', restaurant: 'Trattoria Roma', email: owner1.email, password: 'Owner@123' },
+        { role: 'RESTAURANT_STAFF', restaurant: 'Trattoria Roma', email: staff1.email, password: 'Staff@123' },
+        { role: 'RESTAURANT_OWNER', restaurant: 'Spice Symphony', email: owner2.email, password: 'Owner@123' },
+        { role: 'RESTAURANT_STAFF', restaurant: 'Spice Symphony', email: staff2.email, password: 'Staff@123' },
       ],
     };
   } catch (err) {

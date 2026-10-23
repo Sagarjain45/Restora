@@ -113,13 +113,15 @@ Open your browser at `http://localhost:5173`.
 
 The login screen includes 1-click **Instant Role Login** buttons with pre-configured demo credentials:
 
-| Role | Email | Password | Scope |
-| :--- | :--- | :--- | :--- |
-| **Platform Admin** | `admin@restora.com` | `Admin@123` | Platform-wide oversight & onboarding |
-| **Restaurant Owner** | `owner@bistro.com` | `Owner@123` | Trattoria Roma (Full operations & staff) |
-| **Restaurant Staff** | `staff@bistro.com` | `Staff@123` | Trattoria Roma (Floor tables, orders & queue) |
+| Role | Restaurant | Email | Password | Scope / Responsibility |
+| :--- | :--- | :--- | :--- | :--- |
+| **Platform Admin** | Platform-Wide | `admin@restora.com` | `Admin@123` | Global analytics, tenant approval & platform governance |
+| **Restaurant Owner** | **Trattoria Roma** (Italian) | `owner@roma.com` | `Owner@123` | Full dining operations, staff roster & Italian menu catalog |
+| **Restaurant Staff** | **Trattoria Roma** (Italian) | `staff@roma.com` | `Staff@123` | Floor tables, live order management & waiting queue |
+| **Restaurant Owner** | **Spice Symphony** (Indian) | `owner@spicesymphony.com` | `Owner@123` | Full dining operations, staff roster & Indian menu catalog |
+| **Restaurant Staff** | **Spice Symphony** (Indian) | `staff@spicesymphony.com` | `Staff@123` | Floor tables, live order management & waiting queue |
 
-> **Note:** Demo seed data is automatically created on first run (or via `POST /api/auth/seed-demo`).
+> **Note:** Demo seed data is automatically created on first run (or via `POST /api/auth/seed-demo` or `node scripts/seedForPresentation.js`). For backward compatibility, `owner@bistro.com` and `staff@bistro.com` are also mapped to Trattoria Roma.
 
 ---
 
